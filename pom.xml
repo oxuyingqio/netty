@@ -17,7 +17,7 @@
 
 		<xuyingqi.version>0.0.1</xuyingqi.version>
 
-		<io.netty.version>4.0.0.Alpha8</io.netty.version>
+		<io.netty.version>5.0.0.Alpha2</io.netty.version>
 
 		<maven-compiler-plugin.version>3.5</maven-compiler-plugin.version>
 		<maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
@@ -35,7 +35,7 @@
 
 		<dependency>
 			<groupId>io.netty</groupId>
-			<artifactId>netty</artifactId>
+			<artifactId>netty-all</artifactId>
 			<version>${io.netty.version}</version>
 		</dependency>
 	</dependencies>

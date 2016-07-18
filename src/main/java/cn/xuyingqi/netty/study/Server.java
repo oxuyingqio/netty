@@ -8,8 +8,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.LineBasedFrameDecoder;
-import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 
 public class Server {
 
@@ -22,8 +22,15 @@ public class Server {
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
 
 		ServerBootstrap b = new ServerBootstrap();
-		b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).option(ChannelOption.SO_BACKLOG, 1024)
-				.childHandler(new ChildChannelHandler());
+		b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).option(ChannelOption.SO_BACKLOG, 100)
+				.handler(new LoggingHandler(LogLevel.INFO)).childHandler(new ChannelInitializer<SocketChannel>() {
+					@Override
+					protected void initChannel(SocketChannel ch) throws Exception {
+						ch.pipeline().addLast(new MessageDecoder(1024 * 1024, 0, 4));
+						ch.pipeline().addLast(new MessageEncoder());
+						ch.pipeline().addLast(new LoginAuthReqHandler());
+					}
+				});
 
 		try {
 			// 同步绑定端口号
@@ -39,18 +46,7 @@ public class Server {
 		}
 	}
 
-	private class ChildChannelHandler extends ChannelInitializer<SocketChannel> {
-
-		@Override
-		protected void initChannel(SocketChannel arg0) throws Exception {
-			arg0.pipeline().addLast(new LineBasedFrameDecoder(1024));
-			arg0.pipeline().addLast(new StringDecoder());
-			arg0.pipeline().addLast(new ServerHandler());
-		}
-	}
-
 	public static void main(String[] args) {
-
 		new Server().bind(9999);
 	}
 }

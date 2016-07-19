@@ -65,69 +65,93 @@ public final class ServerConfigFactory {
 	public static final class ServerConfig {
 
 		/**
-		 * 连接配置
+		 * 服务配置
 		 */
-		@XmlElement(name = "connector")
-		private Connector connector;
+		@XmlElement(name = "service")
+		private Service service;
 
 		/**
-		 * 获取连接配置
+		 * 获取服务配置
 		 * 
 		 * @return
 		 */
-		public Connector getConnector() {
-			return connector;
+		public Service getService() {
+			return service;
 		}
 
 		/**
-		 * 连接配置
+		 * 服务配置
 		 * 
 		 * @author XuYQ
 		 *
 		 */
-		public static final class Connector {
+		public static final class Service {
 
 			/**
-			 * 主机地址
+			 * 连接配置
 			 */
-			@XmlAttribute(name = "host")
-			private String host;
-			/**
-			 * 端口号
-			 */
-			@XmlAttribute(name = "port")
-			private int port;
-			/**
-			 * 超时时间
-			 */
-			@XmlAttribute(name = "timeout")
-			private int timeout;
+			@XmlElement(name = "connector")
+			private Connector connector;
 
 			/**
-			 * 获取主机地址
+			 * 获取连接配置
 			 * 
 			 * @return
 			 */
-			public String getHost() {
-				return host;
+			public Connector getConnector() {
+				return connector;
 			}
 
 			/**
-			 * 获取端口号
+			 * 连接配置
 			 * 
-			 * @return
+			 * @author XuYQ
+			 *
 			 */
-			public int getPort() {
-				return port;
-			}
+			public static final class Connector {
 
-			/**
-			 * 获取超时时间
-			 * 
-			 * @return
-			 */
-			public int getTimeout() {
-				return timeout;
+				/**
+				 * 主机地址
+				 */
+				@XmlAttribute(name = "host")
+				private String host;
+				/**
+				 * 端口号
+				 */
+				@XmlAttribute(name = "port")
+				private int port;
+				/**
+				 * 超时时间
+				 */
+				@XmlAttribute(name = "timeout")
+				private int timeout;
+
+				/**
+				 * 获取主机地址
+				 * 
+				 * @return
+				 */
+				public String getHost() {
+					return host;
+				}
+
+				/**
+				 * 获取端口号
+				 * 
+				 * @return
+				 */
+				public int getPort() {
+					return port;
+				}
+
+				/**
+				 * 获取超时时间
+				 * 
+				 * @return
+				 */
+				public int getTimeout() {
+					return timeout;
+				}
 			}
 		}
 	}

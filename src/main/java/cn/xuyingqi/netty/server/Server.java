@@ -56,7 +56,7 @@ public class Server {
 					@Override
 					protected void initChannel(SocketChannel sc) throws Exception {
 						// 超时时间
-						sc.pipeline().addLast(new ReadTimeoutHandler(config.getConnector().getTimeout()));
+						sc.pipeline().addLast(new ReadTimeoutHandler(config.getService().getConnector().getTimeout()));
 						sc.pipeline().addLast(new MessageDecoder(1024 * 1024, 0, 4));
 						sc.pipeline().addLast(new MessageEncoder());
 						sc.pipeline().addLast(new LoginAuthReqHandler());
@@ -66,8 +66,8 @@ public class Server {
 
 		try {
 			// 同步绑定主机名,端口号
-			ChannelFuture f = bootstrap.bind(this.config.getConnector().getHost(), this.config.getConnector().getPort())
-					.sync();
+			ChannelFuture f = bootstrap.bind(this.config.getService().getConnector().getHost(),
+					this.config.getService().getConnector().getPort()).sync();
 			// 同步等待服务关闭
 			f.channel().closeFuture().sync();
 		} catch (InterruptedException e) {

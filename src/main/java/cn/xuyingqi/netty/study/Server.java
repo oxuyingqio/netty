@@ -10,6 +10,7 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
+import io.netty.handler.timeout.ReadTimeoutHandler;
 
 public class Server {
 
@@ -26,9 +27,11 @@ public class Server {
 				.handler(new LoggingHandler(LogLevel.INFO)).childHandler(new ChannelInitializer<SocketChannel>() {
 					@Override
 					protected void initChannel(SocketChannel ch) throws Exception {
-						ch.pipeline().addLast(new MessageDecoder(1024 * 1024, 0, 4));
-						ch.pipeline().addLast(new MessageEncoder());
-						ch.pipeline().addLast(new LoginAuthReqHandler());
+						ch.pipeline().addLast("0", new MessageDecoder(1024 * 1024, 0, 4));
+						ch.pipeline().addLast("1", new MessageEncoder());
+						ch.pipeline().addLast("2", new ReadTimeoutHandler(500));
+						ch.pipeline().addLast("3", new LoginAuthReqHandler());
+						ch.pipeline().addLast("4", new LoginAuthReqHandler2());
 					}
 				});
 

@@ -1,17 +1,23 @@
 package cn.xuyingqi.netty.study;
 
-import java.util.Arrays;
+import java.util.Random;
 
-import cn.xuyingqi.netty.study.datagram.Message;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.util.Attribute;
+import io.netty.util.AttributeKey;
 
 public class LoginAuthReqHandler extends ChannelHandlerAdapter {
 
+	/**
+	 * 属性key
+	 */
+	private AttributeKey<Integer> attrKey = AttributeKey.valueOf("key");
+
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+
+		// 异常则关闭连接
 		ctx.close();
 	}
 
@@ -19,6 +25,11 @@ public class LoginAuthReqHandler extends ChannelHandlerAdapter {
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 
 		System.out.println("客户端连接");
+
+		Attribute<Integer> attr = ctx.attr(attrKey);
+		int i = new Random().nextInt();
+		System.out.println("分配的int值为：" + i);
+		attr.set(i);
 	}
 
 	@Override
@@ -30,7 +41,9 @@ public class LoginAuthReqHandler extends ChannelHandlerAdapter {
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
-		Message demo = (Message) msg;
+		System.out.println("登录获取分配的int值为：" + ctx.attr(attrKey).get());
+
+		ctx.fireChannelRead(msg);
 	}
 
 	@Override

@@ -32,8 +32,8 @@ public class MessageDecoder extends LengthFieldBasedFrameDecoder {
 		Body body = new Body();
 
 		header.setLength(frame.readInt());
-		byte[] str = new byte[5];
-		in.readBytes(str);
+		byte[] str = new byte[frame.readableBytes()];
+		frame.readBytes(str);
 		body.setBody(new String(str, "GBK"));
 
 		message.setHeader(header);

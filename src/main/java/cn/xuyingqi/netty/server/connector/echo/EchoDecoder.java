@@ -21,9 +21,13 @@ public class EchoDecoder extends LengthFieldBasedFrameDecoder implements Decoder
 	 */
 	public EchoDecoder() {
 		/**
-		 * 最大长度1M,报体长度偏移24,长度2字节
+		 * @maxFrameLength 最大长度1M
+		 * @lengthFieldOffset 报体长度偏移24字节
+		 * @lengthFieldLength 报体长度2字节
+		 * @lengthAdjustment 报体长度修正值1
+		 * @initialBytesToStrip 报体长度忽略0字节
 		 */
-		super(1024 * 1024, 24, 2);
+		super(1024 * 1024, 24, 2, 1, 0);
 	}
 
 	/**

@@ -12,7 +12,7 @@ public class Bootstrap {
 
 	public static void main(String[] args) {
 
-		@SuppressWarnings("unused")
 		Connector connector = new Connector();
+		connector.startup();
 	}
 }

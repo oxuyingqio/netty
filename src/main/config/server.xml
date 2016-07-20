@@ -2,7 +2,6 @@
 <server>
 
 	<protocol name="echo" className="cn.xuyingqi.netty.server.connector.echo.EchoProtocol" />
-	<protocol name="echo1" className="cn.xuyingqi.netty.server.connector.echo.EchoProtocol1" />
 
 	<service>
 		<connector protocol="echo" host="127.0.0.1" port="60000" timeout="200" />

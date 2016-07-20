@@ -22,8 +22,14 @@ import io.netty.handler.timeout.ReadTimeoutHandler;
  */
 public final class Connector {
 
+	/**
+	 * 连接器配置
+	 */
 	private cn.xuyingqi.netty.server.core.ServerXml.Service.Connector connector;
 
+	/**
+	 * 协议
+	 */
 	private Protocol protocol;
 
 	/**
@@ -31,11 +37,16 @@ public final class Connector {
 	 */
 	public Connector() {
 
+		// 获取连接器配置
 		this.connector = ServerXml.getInstance().getService().getConnector();
+		// 获取协议
 		this.protocol = ProtocolContainer.getInstance().getProtocol(this.connector.getProtocol());
 	}
 
-	public final void startup() {
+	/**
+	 * 连接
+	 */
+	public final void connect() {
 
 		// 服务器线程组
 		// 用于接收客户端连接

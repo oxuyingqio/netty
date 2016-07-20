@@ -3,7 +3,6 @@ package cn.xuyingqi.netty.server.connector.echo;
 import cn.xuyingqi.netty.server.connector.Decoder;
 import cn.xuyingqi.netty.server.connector.datagram.echo.EchoDatagram;
 import cn.xuyingqi.netty.server.connector.datagram.echo.EchoHeader;
-import cn.xuyingqi.netty.server.connector.datagram.echo.EchoPayload;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
@@ -45,9 +44,8 @@ public class EchoDecoder extends LengthFieldBasedFrameDecoder implements Decoder
 		EchoDatagram datagram = new EchoDatagram();
 		// 报头
 		EchoHeader header = new EchoHeader();
-		// 报体
-		EchoPayload payload = new EchoPayload();
 
+		// 读取报头信息
 		frame.readBytes(header.getCommandId());
 		frame.readBytes(header.getTerminalType());
 		frame.readBytes(header.getTerminalDeviceNo());
@@ -57,9 +55,12 @@ public class EchoDecoder extends LengthFieldBasedFrameDecoder implements Decoder
 		frame.readBytes(header.getDataLength());
 		frame.readBytes(header.getIsNextPacket());
 
-		frame.readBytes(payload.getTerminalRandom());
-		frame.readBytes(payload.getTerminalTimeStamp());
+		// 读取报体信息
+		int size = frame.readableBytes();
+		byte[] payload = new byte[size];
+		frame.readBytes(payload);
 
+		// 设置报头,报体
 		datagram.setHeader(header);
 		datagram.setPayload(payload);
 

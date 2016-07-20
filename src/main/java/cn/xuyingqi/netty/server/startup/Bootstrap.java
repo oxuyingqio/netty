@@ -8,11 +8,21 @@ import cn.xuyingqi.netty.server.connector.Connector;
  * @author XuYQ
  *
  */
-public class Bootstrap {
+public final class Bootstrap {
+
+	/**
+	 * 启动
+	 */
+	public static final void startup() {
+
+		// 连接器
+		Connector connector = new Connector();
+		// 连接
+		connector.connect();
+	}
 
 	public static void main(String[] args) {
 
-		Connector connector = new Connector();
-		connector.startup();
+		Bootstrap.startup();
 	}
 }

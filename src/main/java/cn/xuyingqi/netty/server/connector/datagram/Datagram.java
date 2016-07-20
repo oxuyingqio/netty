@@ -20,5 +20,5 @@ public interface Datagram {
 	 * 
 	 * @return
 	 */
-	public Payload getPayload();
+	public byte[] getPayload();
 }

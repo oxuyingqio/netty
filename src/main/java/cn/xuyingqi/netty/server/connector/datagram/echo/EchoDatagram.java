@@ -2,7 +2,6 @@ package cn.xuyingqi.netty.server.connector.datagram.echo;
 
 import cn.xuyingqi.netty.server.connector.datagram.Datagram;
 import cn.xuyingqi.netty.server.connector.datagram.Header;
-import cn.xuyingqi.netty.server.connector.datagram.Payload;
 
 /**
  * 应答数据报文
@@ -16,10 +15,11 @@ public class EchoDatagram implements Datagram {
 	 * 报头
 	 */
 	private EchoHeader header;
+
 	/**
 	 * 报体
 	 */
-	private EchoPayload payload;
+	private byte[] payload;
 
 	@Override
 	public Header getHeader() {
@@ -36,7 +36,7 @@ public class EchoDatagram implements Datagram {
 	}
 
 	@Override
-	public Payload getPayload() {
+	public byte[] getPayload() {
 		return payload;
 	}
 
@@ -45,7 +45,7 @@ public class EchoDatagram implements Datagram {
 	 * 
 	 * @param payload
 	 */
-	public void setPayload(EchoPayload payload) {
+	public void setPayload(byte[] payload) {
 		this.payload = payload;
 	}
 }

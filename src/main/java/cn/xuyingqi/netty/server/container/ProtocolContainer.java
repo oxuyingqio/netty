@@ -35,7 +35,7 @@ public final class ProtocolContainer {
 
 		try {
 
-			// 遍历协议集合
+			// 遍历协议配置集合
 			for (int i = 0, length = protocols.size(); i < length; i++) {
 
 				// 实例化协议

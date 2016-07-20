@@ -19,6 +19,7 @@ public class EchoEncoder extends MessageToMessageEncoder<Message> implements Enc
 
 	@Override
 	protected void encode(ChannelHandlerContext ctx, Message msg, List<Object> out) throws Exception {
+
 		ByteBuf sendBuf = Unpooled.buffer();
 
 		sendBuf.writeInt(msg.getHeader().getLength());

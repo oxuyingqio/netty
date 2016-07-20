@@ -1,9 +1,9 @@
 package cn.xuyingqi.netty.server.connector.echo;
 
 import cn.xuyingqi.netty.server.connector.Decoder;
-import cn.xuyingqi.netty.study.datagram.Body;
-import cn.xuyingqi.netty.study.datagram.Header;
-import cn.xuyingqi.netty.study.datagram.Message;
+import cn.xuyingqi.netty.server.connector.datagram.echo.EchoDatagram;
+import cn.xuyingqi.netty.server.connector.datagram.echo.EchoHeader;
+import cn.xuyingqi.netty.server.connector.datagram.echo.EchoPayload;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
@@ -20,7 +20,10 @@ public class EchoDecoder extends LengthFieldBasedFrameDecoder implements Decoder
 	 * 应答解码器
 	 */
 	public EchoDecoder() {
-		super(1024 * 1024, 0, 4);
+		/**
+		 * 最大长度1M,报体长度偏移24,长度2字节
+		 */
+		super(1024 * 1024, 24, 2);
 	}
 
 	/**
@@ -34,17 +37,28 @@ public class EchoDecoder extends LengthFieldBasedFrameDecoder implements Decoder
 			return null;
 		}
 
-		Message message = new Message();
-		Header header = new Header();
-		Body body = new Body();
+		// 数据报文
+		EchoDatagram datagram = new EchoDatagram();
+		// 报头
+		EchoHeader header = new EchoHeader();
+		// 报体
+		EchoPayload payload = new EchoPayload();
 
-		header.setLength(frame.readInt());
-		byte[] str = new byte[frame.readableBytes()];
-		frame.readBytes(str);
-		body.setBody(new String(str, "GBK"));
+		frame.readBytes(header.getCommandId());
+		frame.readBytes(header.getTerminalType());
+		frame.readBytes(header.getTerminalDeviceNo());
+		frame.readBytes(header.getMessageSD());
+		frame.readBytes(header.getTimeStamp());
+		frame.readBytes(header.getRespondState());
+		frame.readBytes(header.getDataLength());
+		frame.readBytes(header.getIsNextPacket());
 
-		message.setHeader(header);
-		message.setBody(body);
-		return message;
+		frame.readBytes(payload.getTerminalRandom());
+		frame.readBytes(payload.getTerminalTimeStamp());
+
+		datagram.setHeader(header);
+		datagram.setPayload(payload);
+
+		return datagram;
 	}
 }

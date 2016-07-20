@@ -13,26 +13,57 @@ import cn.xuyingqi.util.util.MapFactory;
  */
 public final class ProtocolContainer {
 
+	/**
+	 * 协议容器
+	 */
+	private static ProtocolContainer protocolContainer;
+
+	/**
+	 * 协议集合
+	 */
 	private static Map<String, Protocol> protocols = MapFactory.newInstance();
 
+	/**
+	 * 私有构造方法
+	 */
 	private ProtocolContainer() {
 
 	}
 
+	/**
+	 * 获取协议容器实例
+	 * 
+	 * @return
+	 */
 	public static ProtocolContainer getInstance() {
 
-		return new ProtocolContainer();
+		if (protocolContainer == null) {
+			protocolContainer = new ProtocolContainer();
+		}
+
+		return protocolContainer;
 	}
 
-	public static void addProtocol(String name, Protocol protocol) {
+	/**
+	 * 添加协议
+	 * 
+	 * @param name
+	 *            协议名称
+	 * @param protocol
+	 *            协议
+	 */
+	private void addProtocol(String name, Protocol protocol) {
 		protocols.put(name, protocol);
 	}
 
-	public static void removeProtocol(String name) {
-		protocols.remove(name);
-	}
-
-	public static Protocol getProtocol(String name) {
+	/**
+	 * 获取协议
+	 * 
+	 * @param name
+	 *            协议名称
+	 * @return
+	 */
+	public Protocol getProtocol(String name) {
 		return protocols.get(name);
 	}
 }

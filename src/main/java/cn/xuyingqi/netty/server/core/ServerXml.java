@@ -102,6 +102,7 @@ public final class ServerXml {
 		 */
 		@XmlAttribute(name = "name")
 		private String name;
+
 		/**
 		 * 协议类路径
 		 */
@@ -159,20 +160,37 @@ public final class ServerXml {
 		public static final class Connector {
 
 			/**
+			 * 协议名称
+			 */
+			@XmlAttribute(name = "protocol")
+			private String protocol;
+
+			/**
 			 * 主机地址
 			 */
 			@XmlAttribute(name = "host")
 			private String host;
+
 			/**
 			 * 端口号
 			 */
 			@XmlAttribute(name = "port")
 			private int port;
+
 			/**
 			 * 超时时间
 			 */
 			@XmlAttribute(name = "timeout")
 			private int timeout;
+
+			/**
+			 * 获取协议名称
+			 * 
+			 * @return
+			 */
+			public String getProtocol() {
+				return protocol;
+			}
 
 			/**
 			 * 获取主机地址

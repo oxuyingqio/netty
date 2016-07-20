@@ -8,4 +8,17 @@ package cn.xuyingqi.netty.server.connector;
  */
 public interface Protocol {
 
+	/**
+	 * 获取编码器
+	 * 
+	 * @return
+	 */
+	public Encoder getEncoder();
+
+	/**
+	 * 获取解码器
+	 * 
+	 * @return
+	 */
+	public Decoder getDecoder();
 }

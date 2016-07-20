@@ -3,6 +3,7 @@ package cn.xuyingqi.netty.server.container;
 import java.util.Map;
 
 import cn.xuyingqi.netty.server.connector.Protocol;
+import cn.xuyingqi.util.util.MapFactory;
 
 /**
  * 协议容器
@@ -12,7 +13,7 @@ import cn.xuyingqi.netty.server.connector.Protocol;
  */
 public final class ProtocolContainer {
 
-	private static Map<String, Protocol> protocols;
+	private static Map<String, Protocol> protocols = MapFactory.newInstance();
 
 	private ProtocolContainer() {
 
@@ -33,11 +34,5 @@ public final class ProtocolContainer {
 
 	public static Protocol getProtocol(String name) {
 		return protocols.get(name);
-	}
-
-	public static void main(String[] args) {
-
-		ProtocolContainer p = ProtocolContainer.getInstance();
-		p.addProtocol("demo1", null);
 	}
 }

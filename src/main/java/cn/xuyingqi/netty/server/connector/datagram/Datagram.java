@@ -7,6 +7,18 @@ package cn.xuyingqi.netty.server.connector.datagram;
  *
  */
 public interface Datagram {
-	
-	
+
+	/**
+	 * 获取报头
+	 * 
+	 * @return
+	 */
+	public Header getHeader();
+
+	/**
+	 * 获取报体
+	 * 
+	 * @return
+	 */
+	public Payload getPayload();
 }

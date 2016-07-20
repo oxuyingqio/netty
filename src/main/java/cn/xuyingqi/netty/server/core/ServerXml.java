@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "server")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ServerXml {
+public final class ServerXml {
 
 	/**
 	 * server.xml配置
@@ -52,7 +52,7 @@ public class ServerXml {
 	 * 
 	 * @return
 	 */
-	public static ServerXml getInstance() {
+	public static final ServerXml getInstance() {
 
 		if (serverXml == null) {
 
@@ -95,7 +95,7 @@ public class ServerXml {
 	 * @author XuYQ
 	 *
 	 */
-	public static class Protocol {
+	public static final class Protocol {
 
 		/**
 		 * 协议名称
@@ -133,7 +133,7 @@ public class ServerXml {
 	 * @author XuYQ
 	 *
 	 */
-	public static class Service {
+	public static final class Service {
 
 		/**
 		 * 连接器配置
@@ -142,19 +142,64 @@ public class ServerXml {
 		private Connector connector;
 
 		/**
+		 * 获取连接器配置
+		 * 
+		 * @return
+		 */
+		public Connector getConnector() {
+			return connector;
+		}
+
+		/**
 		 * 连接器配置
 		 * 
 		 * @author XuYQ
 		 *
 		 */
-		public static class Connector {
+		public static final class Connector {
 
+			/**
+			 * 主机地址
+			 */
+			@XmlAttribute(name = "host")
+			private String host;
+			/**
+			 * 端口号
+			 */
+			@XmlAttribute(name = "port")
+			private int port;
+			/**
+			 * 超时时间
+			 */
+			@XmlAttribute(name = "timeout")
+			private int timeout;
+
+			/**
+			 * 获取主机地址
+			 * 
+			 * @return
+			 */
+			public String getHost() {
+				return host;
+			}
+
+			/**
+			 * 获取端口号
+			 * 
+			 * @return
+			 */
+			public int getPort() {
+				return port;
+			}
+
+			/**
+			 * 获取超时时间
+			 * 
+			 * @return
+			 */
+			public int getTimeout() {
+				return timeout;
+			}
 		}
-	}
-
-	public static void main(String[] args) {
-
-		ServerXml xml = ServerXml.getInstance();
-		System.out.println(xml);
 	}
 }

@@ -1,8 +1,10 @@
 package cn.xuyingqi.netty.server.container;
 
+import java.util.List;
 import java.util.Map;
 
 import cn.xuyingqi.netty.server.connector.Protocol;
+import cn.xuyingqi.netty.server.core.ServerXml;
 import cn.xuyingqi.util.util.MapFactory;
 
 /**
@@ -28,6 +30,23 @@ public final class ProtocolContainer {
 	 */
 	private ProtocolContainer() {
 
+		// 获取协议配置集合
+		List<cn.xuyingqi.netty.server.core.ServerXml.Protocol> protocols = ServerXml.getInstance().getProtocols();
+
+		try {
+
+			// 遍历协议集合
+			for (int i = 0, length = protocols.size(); i < length; i++) {
+
+				// 实例化协议
+				Protocol protocol = (Protocol) Class.forName(protocols.get(i).getClassName()).newInstance();
+				// 添加协议
+				this.addProtocol(protocols.get(i).getName(), protocol);
+			}
+
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -35,7 +54,7 @@ public final class ProtocolContainer {
 	 * 
 	 * @return
 	 */
-	public static ProtocolContainer getInstance() {
+	public static final ProtocolContainer getInstance() {
 
 		if (protocolContainer == null) {
 			protocolContainer = new ProtocolContainer();

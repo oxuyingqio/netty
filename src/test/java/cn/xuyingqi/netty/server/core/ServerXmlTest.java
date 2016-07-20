@@ -6,6 +6,7 @@ public class ServerXmlTest {
 
 	@Test
 	public void test() {
+
 		ServerXml xml = ServerXml.getInstance();
 		System.out.println(xml);
 	}

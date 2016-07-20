@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <server>
+
+	<protocols>
+		<protocol name="" encoderClassName="" decoderClassName=""></protocol>
+		<protocol name="" encoderClassName="" decoderClassName=""></protocol>
+	</protocols>
+
 	<service>
 		<connector host="127.0.0.1" port="60000" timeout="200" />
 	</service>
+
 </server>

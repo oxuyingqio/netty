@@ -12,13 +12,31 @@ import cn.xuyingqi.netty.server.connector.Protocol;
  */
 public class EchoProtocol implements Protocol {
 
+	/**
+	 * 编码器
+	 */
+	private Encoder encoder;
+	/**
+	 * 解码器
+	 */
+	private Decoder decoder;
+
+	/**
+	 * 应答协议
+	 */
+	public EchoProtocol() {
+
+		this.encoder = new EchoEncoder();
+		this.decoder = new EchoDecoder();
+	}
+
 	@Override
 	public Encoder getEncoder() {
-		return null;
+		return encoder;
 	}
 
 	@Override
 	public Decoder getDecoder() {
-		return null;
+		return decoder;
 	}
 }

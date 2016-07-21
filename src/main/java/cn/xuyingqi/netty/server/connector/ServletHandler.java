@@ -22,12 +22,14 @@ public class ServletHandler extends ChannelHandlerAdapter {
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 
 		System.out.println("客户端连接");
+		ctx.fireChannelActive();
 	}
 
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
 
 		System.out.println("客户端断开连接");
+		ctx.fireChannelInactive();
 	}
 
 	@Override

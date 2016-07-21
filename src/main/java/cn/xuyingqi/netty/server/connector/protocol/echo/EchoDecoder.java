@@ -1,9 +1,9 @@
-package cn.xuyingqi.netty.server.connector.echo;
+package cn.xuyingqi.netty.server.connector.protocol.echo;
 
-import cn.xuyingqi.netty.server.connector.Decoder;
-import cn.xuyingqi.netty.server.connector.datagram.echo.EchoDatagram;
-import cn.xuyingqi.netty.server.connector.datagram.echo.EchoHeader;
-import cn.xuyingqi.netty.server.connector.datagram.echo.facade.EchoDatagramFacade;
+import cn.xuyingqi.netty.server.connector.protocol.Decoder;
+import cn.xuyingqi.netty.server.connector.protocol.datagram.echo.EchoDatagram;
+import cn.xuyingqi.netty.server.connector.protocol.datagram.echo.EchoHeader;
+import cn.xuyingqi.netty.server.connector.protocol.datagram.echo.facade.EchoDatagramFacade;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;

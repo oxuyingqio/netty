@@ -1,7 +1,7 @@
-package cn.xuyingqi.netty.server.connector.datagram.echo;
+package cn.xuyingqi.netty.server.connector.protocol.datagram.echo;
 
-import cn.xuyingqi.netty.server.connector.datagram.Datagram;
-import cn.xuyingqi.netty.server.connector.datagram.Header;
+import cn.xuyingqi.netty.server.connector.protocol.datagram.Datagram;
+import cn.xuyingqi.netty.server.connector.protocol.datagram.Header;
 
 /**
  * 应答数据报文

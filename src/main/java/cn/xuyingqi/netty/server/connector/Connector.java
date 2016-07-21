@@ -1,5 +1,6 @@
 package cn.xuyingqi.netty.server.connector;
 
+import cn.xuyingqi.netty.server.connector.protocol.Protocol;
 import cn.xuyingqi.netty.server.container.ProtocolContainer;
 import cn.xuyingqi.netty.server.core.ServerXml;
 import io.netty.bootstrap.ServerBootstrap;

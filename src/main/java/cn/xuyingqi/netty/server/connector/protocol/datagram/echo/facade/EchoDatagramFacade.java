@@ -1,9 +1,9 @@
-package cn.xuyingqi.netty.server.connector.datagram.echo.facade;
+package cn.xuyingqi.netty.server.connector.protocol.datagram.echo.facade;
 
-import cn.xuyingqi.netty.server.connector.datagram.Datagram;
-import cn.xuyingqi.netty.server.connector.datagram.Header;
-import cn.xuyingqi.netty.server.connector.datagram.echo.EchoDatagram;
-import cn.xuyingqi.netty.server.connector.datagram.echo.EchoHeader;
+import cn.xuyingqi.netty.server.connector.protocol.datagram.Datagram;
+import cn.xuyingqi.netty.server.connector.protocol.datagram.Header;
+import cn.xuyingqi.netty.server.connector.protocol.datagram.echo.EchoDatagram;
+import cn.xuyingqi.netty.server.connector.protocol.datagram.echo.EchoHeader;
 
 /**
  * 应答数据报文外观类

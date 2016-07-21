@@ -1,9 +1,9 @@
-package cn.xuyingqi.netty.server.connector.echo;
+package cn.xuyingqi.netty.server.connector.protocol.echo;
 
 import java.util.List;
 
-import cn.xuyingqi.netty.server.connector.Encoder;
-import cn.xuyingqi.netty.server.connector.datagram.echo.facade.EchoDatagramFacade;
+import cn.xuyingqi.netty.server.connector.protocol.Encoder;
+import cn.xuyingqi.netty.server.connector.protocol.datagram.echo.facade.EchoDatagramFacade;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageEncoder;
 

@@ -3,7 +3,7 @@ package cn.xuyingqi.netty.server.container;
 import java.util.List;
 import java.util.Map;
 
-import cn.xuyingqi.netty.server.connector.Protocol;
+import cn.xuyingqi.netty.server.connector.protocol.Protocol;
 import cn.xuyingqi.netty.server.core.ServerXml;
 import cn.xuyingqi.util.util.MapFactory;
 

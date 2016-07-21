@@ -11,8 +11,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.logging.LogLevel;
-import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 
 /**
@@ -57,14 +55,15 @@ public final class Connector {
 
 		ServerBootstrap bootstrap = new ServerBootstrap();
 		bootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
-				.option(ChannelOption.SO_BACKLOG, 100).handler(new LoggingHandler(LogLevel.ERROR))
-				.childHandler(new ChannelInitializer<SocketChannel>() {
+				.option(ChannelOption.SO_BACKLOG, 100).childHandler(new ChannelInitializer<SocketChannel>() {
 					@Override
 					protected void initChannel(SocketChannel ch) throws Exception {
-						ch.pipeline().addLast(new LoggingHandler(LogLevel.ERROR));
+						// 超时
 						ch.pipeline().addLast(new ReadTimeoutHandler(connector.getTimeout()));
-						ch.pipeline().addLast(protocol.getDecoder());
+						// 编码
 						ch.pipeline().addLast(protocol.getEncoder());
+						// 解码
+						ch.pipeline().addLast(protocol.getDecoder());
 					}
 				});
 

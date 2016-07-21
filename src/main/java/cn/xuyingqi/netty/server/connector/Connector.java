@@ -65,6 +65,8 @@ public final class Connector {
 						ch.pipeline().addLast(protocolClass.newInstance().getEncoder());
 						// 解码
 						ch.pipeline().addLast(protocolClass.newInstance().getDecoder());
+						// Servlet
+						ch.pipeline().addLast(new ServletHandler());
 					}
 				});
 

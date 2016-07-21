@@ -1,7 +1,7 @@
 package cn.xuyingqi.netty.server.connector;
 
 import cn.xuyingqi.netty.server.connector.protocol.Protocol;
-import cn.xuyingqi.netty.server.container.ProtocolContainer;
+import cn.xuyingqi.netty.server.container.ProtocolClassContainer;
 import cn.xuyingqi.netty.server.core.ServerXml;
 import cn.xuyingqi.netty.server.core.ServerXml.ServiceConfig.ConnectorConfig;
 import io.netty.bootstrap.ServerBootstrap;
@@ -28,9 +28,9 @@ public final class Connector {
 	private ConnectorConfig connectorConfig;
 
 	/**
-	 * 协议
+	 * 协议类
 	 */
-	private Protocol protocol;
+	private Class<Protocol> protocolClass;
 
 	/**
 	 * 连接器
@@ -39,8 +39,8 @@ public final class Connector {
 
 		// 获取连接器配置
 		this.connectorConfig = ServerXml.getInstance().getServiceConfig().getConnectorConfig();
-		// 获取协议
-		this.protocol = ProtocolContainer.getInstance().getProtocol(this.connectorConfig.getProtocol());
+		// 获取协议类
+		this.protocolClass = ProtocolClassContainer.getInstance().getProtocolClass(this.connectorConfig.getProtocol());
 	}
 
 	/**
@@ -62,9 +62,9 @@ public final class Connector {
 						// 超时
 						ch.pipeline().addLast(new ReadTimeoutHandler(connectorConfig.getTimeout()));
 						// 编码
-						ch.pipeline().addLast(protocol.getEncoder());
+						ch.pipeline().addLast(protocolClass.newInstance().getEncoder());
 						// 解码
-						ch.pipeline().addLast(protocol.getDecoder());
+						ch.pipeline().addLast(protocolClass.newInstance().getDecoder());
 					}
 				});
 

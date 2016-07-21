@@ -31,14 +31,14 @@ public final class ServerXml {
 	/**
 	 * 协议配置集合
 	 */
-	@XmlElements(value = { @XmlElement(name = "protocol", type = Protocol.class) })
-	private List<Protocol> protocols;
+	@XmlElements(value = { @XmlElement(name = "protocol", type = ProtocolConfig.class) })
+	private List<ProtocolConfig> protocolConfigs;
 
 	/**
 	 * 服务配置
 	 */
 	@XmlElement(name = "service")
-	private Service service;
+	private ServiceConfig serviceConfig;
 
 	/**
 	 * 私有构造方法
@@ -76,8 +76,8 @@ public final class ServerXml {
 	 * 
 	 * @return
 	 */
-	public List<Protocol> getProtocols() {
-		return protocols;
+	public List<ProtocolConfig> getProtocolConfigs() {
+		return protocolConfigs;
 	}
 
 	/**
@@ -85,8 +85,8 @@ public final class ServerXml {
 	 * 
 	 * @return
 	 */
-	public Service getService() {
-		return service;
+	public ServiceConfig getServiceConfig() {
+		return serviceConfig;
 	}
 
 	/**
@@ -95,7 +95,7 @@ public final class ServerXml {
 	 * @author XuYQ
 	 *
 	 */
-	public static final class Protocol {
+	public static final class ProtocolConfig {
 
 		/**
 		 * 协议名称
@@ -134,21 +134,21 @@ public final class ServerXml {
 	 * @author XuYQ
 	 *
 	 */
-	public static final class Service {
+	public static final class ServiceConfig {
 
 		/**
 		 * 连接器配置
 		 */
 		@XmlElement(name = "connector")
-		private Connector connector;
+		private ConnectorConfig connectorConfig;
 
 		/**
 		 * 获取连接器配置
 		 * 
 		 * @return
 		 */
-		public Connector getConnector() {
-			return connector;
+		public ConnectorConfig getConnectorConfig() {
+			return connectorConfig;
 		}
 
 		/**
@@ -157,7 +157,7 @@ public final class ServerXml {
 		 * @author XuYQ
 		 *
 		 */
-		public static final class Connector {
+		public static final class ConnectorConfig {
 
 			/**
 			 * 协议名称

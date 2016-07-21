@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <server-app>
 
+	<servlet name="demo" className="cn.xuyingqi.netty.server.servlet.echo.EchoServlet">
+		<context className="cn.xuyingqi.netty.server.servlet.echo.EchoServletContext" />
+	</servlet>
 </server-app>

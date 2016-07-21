@@ -1,12 +1,16 @@
 package cn.xuyingqi.netty.server.core;
 
 import java.io.File;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -15,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author XuYQ
  *
  */
-@XmlRootElement(name = "server.app")
+@XmlRootElement(name = "server-app")
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class ServerAppXml {
 
@@ -23,6 +27,12 @@ public final class ServerAppXml {
 	 * server.app.xml配置
 	 */
 	private static ServerAppXml serverAppXml;
+
+	/**
+	 * Servlet配置集合
+	 */
+	@XmlElements(value = { @XmlElement(name = "servlet", type = ServletConfig.class) })
+	private List<ServletConfig> servletConfigs;
 
 	/**
 	 * 私有构造方法
@@ -55,4 +65,90 @@ public final class ServerAppXml {
 		return serverAppXml;
 	}
 
+	/**
+	 * 获取Servlet配置集合
+	 * 
+	 * @return
+	 */
+	public List<ServletConfig> getServletConfigs() {
+		return servletConfigs;
+	}
+
+	/**
+	 * Servlet配置
+	 * 
+	 * @author XuYQ
+	 *
+	 */
+	public static final class ServletConfig {
+
+		/**
+		 * Servlet名称
+		 */
+		@XmlAttribute(name = "name")
+		private String name;
+
+		/**
+		 * Servlet类路径
+		 */
+		@XmlAttribute(name = "className")
+		private String className;
+
+		/**
+		 * Servlet上下文配置
+		 */
+		@XmlElement(name = "context")
+		private ServletContextConfig contextConfig;
+
+		/**
+		 * 获取Servlet名称
+		 * 
+		 * @return
+		 */
+		public String getName() {
+			return name;
+		}
+
+		/**
+		 * 获取Servlet类路径
+		 * 
+		 * @return
+		 */
+		public String getClassName() {
+			return className;
+		}
+
+		/**
+		 * 获取Servlet上下文配置
+		 * 
+		 * @return
+		 */
+		public ServletContextConfig getContextConfig() {
+			return contextConfig;
+		}
+
+		/**
+		 * Servlet上下文配置
+		 * 
+		 * @author XuYQ
+		 *
+		 */
+		public static final class ServletContextConfig {
+
+			/**
+			 * Servlet上下文类路径
+			 */
+			@XmlAttribute(name = "className")
+			private String className;
+
+			/**
+			 * 获取Servlet上下文类路径
+			 * 
+			 * @return
+			 */
+			public String getClassName() {
+				return className;
+			}
+		}
+	}
 }

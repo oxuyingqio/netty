@@ -20,9 +20,4 @@ public final class Bootstrap {
 		// 连接
 		connector.connect();
 	}
-
-	public static void main(String[] args) {
-
-		Bootstrap.startup();
-	}
 }

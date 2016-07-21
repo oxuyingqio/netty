@@ -56,10 +56,11 @@ public final class Connector {
 
 		ServerBootstrap bootstrap = new ServerBootstrap();
 		bootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
-				.option(ChannelOption.SO_BACKLOG, 100).handler(new LoggingHandler(LogLevel.INFO))
+				.option(ChannelOption.SO_BACKLOG, 100).handler(new LoggingHandler(LogLevel.ERROR))
 				.childHandler(new ChannelInitializer<SocketChannel>() {
 					@Override
 					protected void initChannel(SocketChannel ch) throws Exception {
+						ch.pipeline().addLast(new LoggingHandler(LogLevel.ERROR));
 						ch.pipeline().addLast(new ReadTimeoutHandler(connector.getTimeout()));
 						ch.pipeline().addLast(protocol.getDecoder());
 						ch.pipeline().addLast(protocol.getEncoder());

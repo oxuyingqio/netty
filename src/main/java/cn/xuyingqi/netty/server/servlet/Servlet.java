@@ -12,6 +12,7 @@ public interface Servlet {
 	 * 初始化Servlet
 	 * 
 	 * @param servletConfig
+	 *            servlet配置
 	 */
 	public void init(ServletConfig servletConfig);
 
@@ -26,7 +27,9 @@ public interface Servlet {
 	 * Servlet服务
 	 * 
 	 * @param request
+	 *            请求
 	 * @param response
+	 *            响应
 	 */
 	public void service(ServletRequest request, ServletResponse response);
 

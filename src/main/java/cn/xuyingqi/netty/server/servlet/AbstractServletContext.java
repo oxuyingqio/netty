@@ -1,6 +1,7 @@
 package cn.xuyingqi.netty.server.servlet;
 
 import java.util.Map;
+import java.util.Set;
 
 import cn.xuyingqi.util.util.MapFactory;
 
@@ -25,5 +26,10 @@ public abstract class AbstractServletContext implements ServletContext {
 	@Override
 	public Object getAttribute(String name) {
 		return attributes.get(name);
+	}
+
+	@Override
+	public Set<String> getAttributeNames() {
+		return attributes.keySet();
 	}
 }

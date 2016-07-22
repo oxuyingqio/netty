@@ -1,8 +1,8 @@
 package cn.xuyingqi.netty.server.servlet.echo;
 
-import cn.xuyingqi.netty.server.servlet.AbstractServlet;
-import cn.xuyingqi.netty.server.servlet.ServletRequest;
-import cn.xuyingqi.netty.server.servlet.ServletResponse;
+import cn.xuyingqi.socket.servlet.AbstractServlet;
+import cn.xuyingqi.socket.servlet.ServletRequest;
+import cn.xuyingqi.socket.servlet.ServletResponse;
 
 /**
  * 应答Servlet

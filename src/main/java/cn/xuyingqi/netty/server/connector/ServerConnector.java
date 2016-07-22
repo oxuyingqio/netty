@@ -1,6 +1,7 @@
 package cn.xuyingqi.netty.server.connector;
 
-import cn.xuyingqi.netty.server.container.ProtocolContainer;
+import cn.xuyingqi.net.server.connector.Connector;
+import cn.xuyingqi.netty.server.container.ServerProtocolContainer;
 import cn.xuyingqi.netty.server.core.ServerXml;
 import cn.xuyingqi.netty.server.core.ServerXml.ServiceConfig.ConnectorConfig;
 import io.netty.bootstrap.ServerBootstrap;
@@ -19,25 +20,26 @@ import io.netty.handler.timeout.ReadTimeoutHandler;
  * @author XuYQ
  *
  */
-public final class Connector {
+public final class ServerConnector implements Connector {
 
 	/**
 	 * 连接器配置
 	 */
-	private ConnectorConfig connectorConfig;
+	private ConnectorConfig config;
 
 	/**
 	 * 连接器
 	 */
-	public Connector() {
+	public ServerConnector() {
 
 		// 获取连接器配置
-		this.connectorConfig = ServerXml.getInstance().getServiceConfig().getConnectorConfig();
+		this.config = ServerXml.getInstance().getServiceConfig().getConnectorConfig();
 	}
 
 	/**
 	 * 连接
 	 */
+	@Override
 	public final void connect() {
 
 		// 服务器线程组
@@ -52,13 +54,13 @@ public final class Connector {
 					@Override
 					protected void initChannel(SocketChannel ch) throws Exception {
 						// 超时
-						ch.pipeline().addLast(new ReadTimeoutHandler(connectorConfig.getTimeout()));
+						ch.pipeline().addLast(new ReadTimeoutHandler(config.getTimeout()));
 						// 编码
-						ch.pipeline().addLast(ProtocolContainer.getInstance().getProtocol(connectorConfig.getProtocol())
-								.getEncoder());
+						ch.pipeline().addLast(
+								ServerProtocolContainer.getInstance().getProtocol(config.getProtocol()).getEncoder());
 						// 解码
-						ch.pipeline().addLast(ProtocolContainer.getInstance().getProtocol(connectorConfig.getProtocol())
-								.getDecoder());
+						ch.pipeline().addLast(
+								ServerProtocolContainer.getInstance().getProtocol(config.getProtocol()).getDecoder());
 						// Servlet
 						ch.pipeline().addLast(new ServletHandler());
 					}
@@ -66,7 +68,7 @@ public final class Connector {
 
 		try {
 			// 同步绑定端口号
-			ChannelFuture future = bootstrap.bind(connectorConfig.getHost(), connectorConfig.getPort()).sync();
+			ChannelFuture future = bootstrap.bind(config.getHost(), config.getPort()).sync();
 			// 同步等待端口关闭
 			future.channel().closeFuture().sync();
 		} catch (InterruptedException e) {

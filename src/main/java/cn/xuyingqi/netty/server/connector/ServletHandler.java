@@ -2,9 +2,9 @@ package cn.xuyingqi.netty.server.connector;
 
 import java.util.Iterator;
 import java.util.Random;
-import java.util.Set;
 
-import cn.xuyingqi.netty.server.container.ServletContainer;
+import cn.xuyingqi.net.server.container.ServletContainer;
+import cn.xuyingqi.netty.server.container.ServerServletContainer;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.Attribute;
@@ -19,9 +19,9 @@ import io.netty.util.AttributeKey;
 public class ServletHandler extends ChannelHandlerAdapter {
 
 	/**
-	 * Servlet名称集合
+	 * Servlet容器
 	 */
-	private Set<String> servletNames = ServletContainer.getInstance().getServletNames();
+	private ServletContainer servletContainer = ServerServletContainer.getInstance();
 
 	/**
 	 * 属性值:session
@@ -67,11 +67,11 @@ public class ServletHandler extends ChannelHandlerAdapter {
 		System.out.println("我这个客户端的是" + ctx.attr(sessionKey).get());
 
 		// 获取Servlet名称集合
-		Iterator<String> it = servletNames.iterator();
+		Iterator<String> it = this.servletContainer.getServletNames().iterator();
 		// 遍历Servlet名称集合
 		while (it.hasNext()) {
 			// 调用Servlet
-			ServletContainer.getInstance().getServlet(it.next()).service(null, null);
+			this.servletContainer.getServlet(it.next()).service(null, null);
 		}
 
 		ctx.fireChannelRead(msg);

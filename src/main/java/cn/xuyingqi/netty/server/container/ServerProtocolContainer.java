@@ -16,12 +16,12 @@ import cn.xuyingqi.util.util.MapFactory;
  * @author XuYQ
  *
  */
-public final class ProtocolContainer {
+public final class ServerProtocolContainer {
 
 	/**
 	 * 协议容器
 	 */
-	private static ProtocolContainer protocolContainer;
+	private static ServerProtocolContainer container;
 
 	/**
 	 * 协议类对象集合
@@ -31,7 +31,7 @@ public final class ProtocolContainer {
 	/**
 	 * 私有构造方法
 	 */
-	private ProtocolContainer() {
+	private ServerProtocolContainer() {
 
 		// 获取协议配置集合
 		List<ProtocolConfig> protocolConfigs = ServerXml.getInstance().getProtocolConfigs();
@@ -59,13 +59,13 @@ public final class ProtocolContainer {
 	 * 
 	 * @return
 	 */
-	public static final ProtocolContainer getInstance() {
+	public static final ServerProtocolContainer getInstance() {
 
-		if (protocolContainer == null) {
-			protocolContainer = new ProtocolContainer();
+		if (container == null) {
+			container = new ServerProtocolContainer();
 		}
 
-		return protocolContainer;
+		return container;
 	}
 
 	/**

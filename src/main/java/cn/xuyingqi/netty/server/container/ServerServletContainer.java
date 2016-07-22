@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import cn.xuyingqi.net.server.container.ServletContainer;
 import cn.xuyingqi.net.servlet.Servlet;
 import cn.xuyingqi.netty.server.core.ServerAppXml;
 import cn.xuyingqi.netty.server.core.ServerAppXml.ServletConfig;
@@ -17,12 +18,12 @@ import cn.xuyingqi.util.util.MapFactory;
  * @author XuYQ
  *
  */
-public final class NettyServerServletContainer {
+public final class ServerServletContainer implements ServletContainer {
 
 	/**
 	 * Servlet容器
 	 */
-	private static ServletContainer servletContainer;
+	private static ServletContainer container;
 
 	/**
 	 * Servlet集合
@@ -32,7 +33,7 @@ public final class NettyServerServletContainer {
 	/**
 	 * 私有构造方法
 	 */
-	private ServletContainer() {
+	private ServerServletContainer() {
 
 		// 获取Servlet配置集合
 		List<ServletConfig> servletConfigs = ServerAppXml.getInstance().getServletConfigs();
@@ -74,11 +75,11 @@ public final class NettyServerServletContainer {
 	 */
 	public static final ServletContainer getInstance() {
 
-		if (servletContainer == null) {
-			servletContainer = new ServletContainer();
+		if (container == null) {
+			container = new ServerServletContainer();
 		}
 
-		return servletContainer;
+		return container;
 	}
 
 	/**
@@ -90,25 +91,17 @@ public final class NettyServerServletContainer {
 	 *            Servlet
 	 */
 	private void addServlet(String name, Servlet servlet) {
+
 		servlets.put(name, servlet);
 	}
 
-	/**
-	 * 获取Servlet
-	 * 
-	 * @param name
-	 *            Servlet名称
-	 * @return
-	 */
+	@Override
 	public Servlet getServlet(String name) {
+
 		return servlets.get(name);
 	}
 
-	/**
-	 * 获取所有Servlet的名称集合
-	 * 
-	 * @return
-	 */
+	@Override
 	public Set<String> getServletNames() {
 
 		return servlets.keySet();

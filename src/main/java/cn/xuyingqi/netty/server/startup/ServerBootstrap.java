@@ -11,9 +11,6 @@ import cn.xuyingqi.netty.server.connector.Connector;
  */
 public final class ServerBootstrap implements Bootstrap {
 
-	/**
-	 * 启动
-	 */
 	@Override
 	public void startup() {
 

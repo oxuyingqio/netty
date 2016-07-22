@@ -1,5 +1,7 @@
 package cn.xuyingqi.netty.server.servlet;
 
+import java.util.Set;
+
 /**
  * Servlet会话
  * 
@@ -33,4 +35,11 @@ public interface ServletSession {
 	 * @return
 	 */
 	public Object getAttribute(String name);
+
+	/**
+	 * 获取属性名称集合
+	 * 
+	 * @return
+	 */
+	public Set<String> getAttributeNames();
 }

@@ -6,7 +6,7 @@ package cn.xuyingqi.netty.server.connector.protocol;
  * @author XuYQ
  *
  */
-public interface Protocol {
+public interface ServerProtocol {
 
 	/**
 	 * 获取编码器

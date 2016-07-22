@@ -3,7 +3,7 @@ package cn.xuyingqi.netty.server.container;
 import java.util.List;
 import java.util.Map;
 
-import cn.xuyingqi.netty.server.connector.protocol.Protocol;
+import cn.xuyingqi.netty.server.connector.protocol.ServerProtocol;
 import cn.xuyingqi.netty.server.core.ServerXml;
 import cn.xuyingqi.netty.server.core.ServerXml.ProtocolConfig;
 import cn.xuyingqi.util.util.MapFactory;
@@ -26,7 +26,7 @@ public final class ServerProtocolContainer {
 	/**
 	 * 协议类对象集合
 	 */
-	private static Map<String, Class<Protocol>> protocolClasses = MapFactory.newInstance();
+	private static Map<String, Class<ServerProtocol>> protocolClasses = MapFactory.newInstance();
 
 	/**
 	 * 私有构造方法
@@ -43,7 +43,7 @@ public final class ServerProtocolContainer {
 
 				// 获取协议类对象
 				@SuppressWarnings("unchecked")
-				Class<Protocol> protocol = (Class<Protocol>) this.getClass().getClassLoader()
+				Class<ServerProtocol> protocol = (Class<ServerProtocol>) this.getClass().getClassLoader()
 						.loadClass(protocolConfigs.get(i).getClassName());
 				// 添加协议类对象
 				this.addProtocolClass(protocolConfigs.get(i).getName(), protocol);
@@ -76,7 +76,7 @@ public final class ServerProtocolContainer {
 	 * @param protocol
 	 *            协议类对象
 	 */
-	private void addProtocolClass(String name, Class<Protocol> protocol) {
+	private void addProtocolClass(String name, Class<ServerProtocol> protocol) {
 		protocolClasses.put(name, protocol);
 	}
 
@@ -89,7 +89,7 @@ public final class ServerProtocolContainer {
 	 * @throws IllegalAccessException
 	 * @throws InstantiationException
 	 */
-	public Protocol getProtocol(String name) throws InstantiationException, IllegalAccessException {
+	public ServerProtocol getProtocol(String name) throws InstantiationException, IllegalAccessException {
 		return protocolClasses.get(name).newInstance();
 	}
 }

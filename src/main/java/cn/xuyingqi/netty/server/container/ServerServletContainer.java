@@ -36,32 +36,31 @@ public final class ServerServletContainer implements ServletContainer {
 	private ServerServletContainer() {
 
 		// 获取Servlet配置集合
-		List<ServletConfig> servletConfigs = ServerAppXml.getInstance().getServletConfigs();
+		List<ServletConfig> configs = ServerAppXml.getInstance().getServletConfigs();
 
 		try {
 
 			// 遍历Servlet配置集合
-			for (int i = 0, length = servletConfigs.size(); i < length; i++) {
+			for (int i = 0, length = configs.size(); i < length; i++) {
 
 				// Servlet配置
-				ServletConfig servletConfig = servletConfigs.get(i);
+				ServletConfig config = configs.get(i);
 
 				// 实例化Servlet
-				Servlet servlet = (Servlet) this.getClass().getClassLoader().loadClass(servletConfig.getClassName())
+				Servlet servlet = (Servlet) this.getClass().getClassLoader().loadClass(config.getClassName())
 						.newInstance();
 				// 初始化Servlet
-				if (servletConfig.getContextConfig() == null) {
+				if (config.getContextConfig() == null) {
 					// 未配置上下文,使用默认上下文
 					servlet.init(new DefaultServletConfig());
 				} else {
 					// 自定义上下文,使用自定义上下文
-					servlet.init(new DefaultServletConfig(
-							(cn.xuyingqi.net.servlet.ServletContext) this.getClass().getClassLoader()
-									.loadClass(servletConfig.getContextConfig().getClassName()).newInstance()));
+					servlet.init(new DefaultServletConfig((cn.xuyingqi.net.servlet.ServletContext) this.getClass()
+							.getClassLoader().loadClass(config.getContextConfig().getClassName()).newInstance()));
 				}
 
 				// 添加Servlet
-				this.addServlet(servletConfig.getName(), servlet);
+				this.addServlet(config.getName(), servlet);
 			}
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 			e.printStackTrace();

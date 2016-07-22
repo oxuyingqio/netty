@@ -2,10 +2,10 @@ package cn.xuyingqi.netty.server.startup;
 
 import org.junit.Test;
 
-public class NettyServerBootstrapTest {
+public class ServerBootstrapTest {
 
 	@Test
 	public void test() {
-		new NettyServerBootstrap().startup();
+		new ServerBootstrap().startup();
 	}
 }

@@ -17,7 +17,7 @@ import cn.xuyingqi.util.util.MapFactory;
  * @author XuYQ
  *
  */
-public final class ServletContainer {
+public final class NettyServerServletContainer {
 
 	/**
 	 * Servlet容器

@@ -9,7 +9,7 @@ import cn.xuyingqi.netty.server.connector.Connector;
  * @author XuYQ
  *
  */
-public final class NettyServerBootstrap implements Bootstrap {
+public final class ServerBootstrap implements Bootstrap {
 
 	/**
 	 * 启动

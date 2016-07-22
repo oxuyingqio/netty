@@ -13,8 +13,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import cn.xuyingqi.net.server.core.Constant;
-
 /**
  * server.xml配置
  * 

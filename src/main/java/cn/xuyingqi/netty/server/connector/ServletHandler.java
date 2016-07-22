@@ -58,14 +58,14 @@ public class ServletHandler extends ChannelHandlerAdapter {
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
+		System.out.println("我这个客户端的是" + ctx.attr(sessionKey).get());
+
 		// 遍历Servlet集合
 		for (int i = 0, length = servlets.size(); i < length; i++) {
 
 			// 调用Servlet
 			servlets.get(i).service(null, null);
 		}
-
-		System.out.println("我这个客户端的是" + ctx.attr(sessionKey).get());
 
 		ctx.fireChannelRead(msg);
 	}

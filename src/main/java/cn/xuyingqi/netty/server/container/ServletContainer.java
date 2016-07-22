@@ -1,5 +1,6 @@
 package cn.xuyingqi.netty.server.container;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +8,7 @@ import cn.xuyingqi.netty.server.core.ServerAppXml;
 import cn.xuyingqi.netty.server.core.ServerAppXml.ServletConfig;
 import cn.xuyingqi.netty.server.servlet.DefaultServletConfig;
 import cn.xuyingqi.netty.server.servlet.Servlet;
+import cn.xuyingqi.util.util.ListFactory;
 import cn.xuyingqi.util.util.MapFactory;
 
 /**
@@ -92,5 +94,24 @@ public final class ServletContainer {
 	 */
 	public Servlet getServlet(String name) {
 		return servlets.get(name);
+	}
+
+	/**
+	 * 获取所有Servlet
+	 * 
+	 * @return
+	 */
+	public List<Servlet> getAllServlets() {
+
+		// 返回的List
+		List<Servlet> servletList = ListFactory.newInstance();
+
+		// 遍历Servlet集合
+		Iterator<String> it = servlets.keySet().iterator();
+		while (it.hasNext()) {
+			servletList.add(servlets.get(it.next()));
+		}
+
+		return servletList;
 	}
 }

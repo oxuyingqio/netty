@@ -3,7 +3,8 @@ package cn.xuyingqi.netty.server.container;
 import java.util.List;
 import java.util.Map;
 
-import cn.xuyingqi.netty.server.connector.protocol.ServerProtocol;
+import cn.xuyingqi.net.server.container.ProtocolContainer;
+import cn.xuyingqi.netty.server.connector.ServerProtocol;
 import cn.xuyingqi.netty.server.core.ServerXml;
 import cn.xuyingqi.netty.server.core.ServerXml.ProtocolConfig;
 import cn.xuyingqi.util.util.MapFactory;
@@ -16,12 +17,12 @@ import cn.xuyingqi.util.util.MapFactory;
  * @author XuYQ
  *
  */
-public final class ServerProtocolContainer {
+public final class ServerProtocolContainer implements ProtocolContainer {
 
 	/**
 	 * 协议容器
 	 */
-	private static ServerProtocolContainer container;
+	private static ProtocolContainer container;
 
 	/**
 	 * 协议类对象集合
@@ -34,19 +35,20 @@ public final class ServerProtocolContainer {
 	private ServerProtocolContainer() {
 
 		// 获取协议配置集合
-		List<ProtocolConfig> protocolConfigs = ServerXml.getInstance().getProtocolConfigs();
+		List<ProtocolConfig> configs = ServerXml.getInstance().getProtocolConfigs();
 
 		try {
 
 			// 遍历协议配置集合
-			for (int i = 0, length = protocolConfigs.size(); i < length; i++) {
+			for (int i = 0, length = configs.size(); i < length; i++) {
 
 				// 获取协议类对象
 				@SuppressWarnings("unchecked")
 				Class<ServerProtocol> protocol = (Class<ServerProtocol>) this.getClass().getClassLoader()
-						.loadClass(protocolConfigs.get(i).getClassName());
+						.loadClass(configs.get(i).getClassName());
+
 				// 添加协议类对象
-				this.addProtocolClass(protocolConfigs.get(i).getName(), protocol);
+				this.addProtocolClass(configs.get(i).getName(), protocol);
 			}
 
 		} catch (ClassNotFoundException e) {
@@ -59,7 +61,7 @@ public final class ServerProtocolContainer {
 	 * 
 	 * @return
 	 */
-	public static final ServerProtocolContainer getInstance() {
+	public static final ProtocolContainer getInstance() {
 
 		if (container == null) {
 			container = new ServerProtocolContainer();
@@ -80,16 +82,17 @@ public final class ServerProtocolContainer {
 		protocolClasses.put(name, protocol);
 	}
 
-	/**
-	 * 获取协议对象
-	 * 
-	 * @param name
-	 *            协议名称
-	 * @return
-	 * @throws IllegalAccessException
-	 * @throws InstantiationException
-	 */
-	public ServerProtocol getProtocol(String name) throws InstantiationException, IllegalAccessException {
-		return protocolClasses.get(name).newInstance();
+	@Override
+	public ServerProtocol getProtocol(String name) {
+
+		try {
+			return protocolClasses.get(name).newInstance();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 }

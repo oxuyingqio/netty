@@ -1,6 +1,7 @@
 package cn.xuyingqi.netty.server.connector;
 
 import cn.xuyingqi.net.server.connector.Connector;
+import cn.xuyingqi.net.server.container.ProtocolContainer;
 import cn.xuyingqi.netty.server.container.ServerProtocolContainer;
 import cn.xuyingqi.netty.server.core.ServerXml;
 import cn.xuyingqi.netty.server.core.ServerXml.ServiceConfig.ConnectorConfig;
@@ -28,17 +29,22 @@ public final class ServerConnector implements Connector {
 	private ConnectorConfig config;
 
 	/**
+	 * 协议容器
+	 */
+	private ProtocolContainer protocolContainer;
+
+	/**
 	 * 连接器
 	 */
 	public ServerConnector() {
 
 		// 获取连接器配置
 		this.config = ServerXml.getInstance().getServiceConfig().getConnectorConfig();
+
+		// 获取协议容器
+		this.protocolContainer = ServerProtocolContainer.getInstance();
 	}
 
-	/**
-	 * 连接
-	 */
 	@Override
 	public final void connect() {
 
@@ -57,10 +63,10 @@ public final class ServerConnector implements Connector {
 						ch.pipeline().addLast(new ReadTimeoutHandler(config.getTimeout()));
 						// 编码
 						ch.pipeline().addLast(
-								ServerProtocolContainer.getInstance().getProtocol(config.getProtocol()).getEncoder());
+								((ServerProtocol) protocolContainer.getProtocol(config.getProtocol())).getEncoder());
 						// 解码
 						ch.pipeline().addLast(
-								ServerProtocolContainer.getInstance().getProtocol(config.getProtocol()).getDecoder());
+								((ServerProtocol) protocolContainer.getProtocol(config.getProtocol())).getDecoder());
 						// Servlet
 						ch.pipeline().addLast(new ServletHandler());
 					}

@@ -2,12 +2,14 @@ package cn.xuyingqi.netty.server.container;
 
 import org.junit.Test;
 
+import cn.xuyingqi.net.server.container.ProtocolContainer;
+
 public class ServerProtocolContainerTest {
 
 	@Test
 	public void test() {
 
-		ServerProtocolContainer serverProtocolContainer = ServerProtocolContainer.getInstance();
-		System.out.println(serverProtocolContainer);
+		ProtocolContainer protocolContainer = ServerProtocolContainer.getInstance();
+		System.out.println(protocolContainer);
 	}
 }

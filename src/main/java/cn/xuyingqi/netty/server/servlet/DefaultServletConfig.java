@@ -22,6 +22,7 @@ public class DefaultServletConfig extends AbstractServletConfig {
 	 * 默认的Servlet配置
 	 * 
 	 * @param servletContext
+	 *            servlet上下文
 	 */
 	public DefaultServletConfig(ServletContext servletContext) {
 		super(servletContext);

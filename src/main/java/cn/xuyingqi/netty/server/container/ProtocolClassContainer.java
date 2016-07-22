@@ -9,7 +9,8 @@ import cn.xuyingqi.netty.server.core.ServerXml.ProtocolConfig;
 import cn.xuyingqi.util.util.MapFactory;
 
 /**
- * 协议类容器
+ * 协议类容器.<br>
+ * 获取的是协议类对象.因此在调用时都需要调用其newInstance进行实例化.
  * 
  * @author XuYQ
  *

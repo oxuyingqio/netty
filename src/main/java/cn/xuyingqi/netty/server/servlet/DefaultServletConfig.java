@@ -15,6 +15,13 @@ public class DefaultServletConfig implements ServletConfig {
 
 	/**
 	 * 默认的Servlet配置
+	 */
+	public DefaultServletConfig() {
+		this.servletContext = new DefaultServletContext();
+	}
+
+	/**
+	 * 默认的Servlet配置
 	 * 
 	 * @param servletContext
 	 */

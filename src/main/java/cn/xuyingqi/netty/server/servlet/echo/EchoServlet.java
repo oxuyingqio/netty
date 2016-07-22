@@ -12,13 +12,8 @@ import cn.xuyingqi.netty.server.servlet.ServletResponse;
  */
 public class EchoServlet extends AbstractServlet {
 
-	private int i = 0;
-
 	@Override
 	public void service(ServletRequest request, ServletResponse response) {
 
-		i++;
-
-		System.out.println("EchoServlet执行" + i + "次");
 	}
 }

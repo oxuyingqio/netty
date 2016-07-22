@@ -12,7 +12,8 @@ import cn.xuyingqi.util.util.ListFactory;
 import cn.xuyingqi.util.util.MapFactory;
 
 /**
- * Servlet容器
+ * Servlet容器.<br>
+ * 获取的是已实例化的Servlet,因此在程序中每个Servlet都是单例.
  * 
  * @author XuYQ
  *
@@ -49,8 +50,15 @@ public final class ServletContainer {
 				Servlet servlet = (Servlet) this.getClass().getClassLoader().loadClass(servletConfig.getClassName())
 						.newInstance();
 				// 初始化Servlet
-				servlet.init(new DefaultServletConfig((cn.xuyingqi.netty.server.servlet.ServletContext) this.getClass()
-						.getClassLoader().loadClass(servletConfig.getContextConfig().getClassName()).newInstance()));
+				if (servletConfig.getContextConfig() == null) {
+					// 未配置上下文,使用默认上下文
+					servlet.init(new DefaultServletConfig());
+				} else {
+					// 自定义上下文,使用自定义上下文
+					servlet.init(new DefaultServletConfig(
+							(cn.xuyingqi.netty.server.servlet.ServletContext) this.getClass().getClassLoader()
+									.loadClass(servletConfig.getContextConfig().getClassName()).newInstance()));
+				}
 				// 添加Servlet
 				this.addServlet(servletConfig.getName(), servlet);
 			}

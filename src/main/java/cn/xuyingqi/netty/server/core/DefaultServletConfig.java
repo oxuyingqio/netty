@@ -1,7 +1,7 @@
 package cn.xuyingqi.netty.server.core;
 
-import cn.xuyingqi.net.servlet.AbstractServletConfig;
 import cn.xuyingqi.net.servlet.ServletContext;
+import cn.xuyingqi.net.servlet.impl.AbstractServletConfig;
 
 /**
  * 默认Servlet配置

@@ -1,5 +1,6 @@
 package cn.xuyingqi.netty.server.startup;
 
+import cn.xuyingqi.net.server.startup.Bootstrap;
 import cn.xuyingqi.netty.server.connector.Connector;
 
 /**
@@ -8,12 +9,13 @@ import cn.xuyingqi.netty.server.connector.Connector;
  * @author XuYQ
  *
  */
-public final class Bootstrap {
+public final class NettyServerBootstrap implements Bootstrap {
 
 	/**
 	 * 启动
 	 */
-	public static final void startup() {
+	@Override
+	public void startup() {
 
 		// 连接器
 		Connector connector = new Connector();

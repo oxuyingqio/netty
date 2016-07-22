@@ -2,7 +2,7 @@ package cn.xuyingqi.netty;
 
 import org.junit.Test;
 
-public class JunitTest {
+public class JUnitTest {
 
 	private int i = 0;
 
@@ -27,6 +27,6 @@ public class JunitTest {
 
 	@Test
 	public void test() {
-		new JunitTest().demo();
+		new JUnitTest().demo();
 	}
 }

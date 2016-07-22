@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.Set;
 
 import cn.xuyingqi.net.servlet.Servlet;
-import cn.xuyingqi.netty.server.core.DefaultServletConfig;
 import cn.xuyingqi.netty.server.core.ServerAppXml;
 import cn.xuyingqi.netty.server.core.ServerAppXml.ServletConfig;
+import cn.xuyingqi.netty.server.servlet.DefaultServletConfig;
 import cn.xuyingqi.util.util.MapFactory;
 
 /**

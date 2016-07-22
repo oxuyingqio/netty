@@ -1,4 +1,4 @@
-package cn.xuyingqi.netty.server.core;
+package cn.xuyingqi.netty.server.servlet;
 
 import cn.xuyingqi.net.servlet.impl.AbstractServletContext;
 

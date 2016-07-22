@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import cn.xuyingqi.net.servlet.Servlet;
 import cn.xuyingqi.netty.server.core.DefaultServletConfig;
 import cn.xuyingqi.netty.server.core.ServerAppXml;
 import cn.xuyingqi.netty.server.core.ServerAppXml.ServletConfig;
-import cn.xuyingqi.socket.servlet.Servlet;
 import cn.xuyingqi.util.util.MapFactory;
 
 /**
@@ -55,7 +55,7 @@ public final class ServletContainer {
 				} else {
 					// 自定义上下文,使用自定义上下文
 					servlet.init(new DefaultServletConfig(
-							(cn.xuyingqi.socket.servlet.ServletContext) this.getClass().getClassLoader()
+							(cn.xuyingqi.net.servlet.ServletContext) this.getClass().getClassLoader()
 									.loadClass(servletConfig.getContextConfig().getClassName()).newInstance()));
 				}
 

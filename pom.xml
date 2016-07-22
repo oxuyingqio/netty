@@ -28,7 +28,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>cn.xuyingqi</groupId>
-			<artifactId>socket</artifactId>
+			<artifactId>net</artifactId>
 			<version>${xuyingqi.version}</version>
 			<classifier>java</classifier>
 		</dependency>

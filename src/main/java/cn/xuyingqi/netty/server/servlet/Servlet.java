@@ -16,6 +16,13 @@ public interface Servlet {
 	public void init(ServletConfig servletConfig);
 
 	/**
+	 * 获取Servlet配置
+	 * 
+	 * @return
+	 */
+	public ServletConfig getServletConfig();
+
+	/**
 	 * Servlet服务
 	 * 
 	 * @param request
@@ -27,13 +34,6 @@ public interface Servlet {
 	 * 销毁Servlet
 	 */
 	public void destroy();
-
-	/**
-	 * 获取Servlet配置
-	 * 
-	 * @return
-	 */
-	public ServletConfig getServletConfig();
 
 	/**
 	 * 获取Servlet信息

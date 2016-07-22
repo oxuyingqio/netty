@@ -13,11 +13,18 @@ public abstract class AbstractServlet implements Servlet, ServletConfig {
 	 */
 	private ServletConfig config;
 
+	/**
+	 * 抽象公共Servlet
+	 */
+	public AbstractServlet() {
+
+	}
+
 	@Override
 	public ServletContext getServletContext() {
 
-		if (this.config != null) {
-			return this.config.getServletContext();
+		if (this.getServletConfig() != null) {
+			return this.getServletConfig().getServletContext();
 		}
 
 		return null;
@@ -30,16 +37,16 @@ public abstract class AbstractServlet implements Servlet, ServletConfig {
 	}
 
 	@Override
+	public ServletConfig getServletConfig() {
+		return this.config;
+	}
+
+	@Override
 	public abstract void service(ServletRequest request, ServletResponse response);
 
 	@Override
 	public void destroy() {
 
-	}
-
-	@Override
-	public ServletConfig getServletConfig() {
-		return this.config;
 	}
 
 	@Override

@@ -9,28 +9,29 @@ import cn.xuyingqi.netty.server.core.ServerXml.ProtocolConfig;
 import cn.xuyingqi.util.util.MapFactory;
 
 /**
- * 协议类容器.<br>
- * 获取的是协议类对象.因此在调用时都需要调用其newInstance进行实例化.
+ * 协议容器.<br>
+ * 获取该实例时,协议尚未实例化,在调用getProtocol时,才进行实例化.<br>
+ * 因此每次调用getProtocol时,获取的都是不同的协议对象
  * 
  * @author XuYQ
  *
  */
-public final class ProtocolClassContainer {
+public final class ProtocolContainer {
 
 	/**
-	 * 协议类容器
+	 * 协议容器
 	 */
-	private static ProtocolClassContainer protocolClassContainer;
+	private static ProtocolContainer protocolContainer;
 
 	/**
-	 * 协议类集合
+	 * 协议类对象集合
 	 */
 	private static Map<String, Class<Protocol>> protocolClasses = MapFactory.newInstance();
 
 	/**
 	 * 私有构造方法
 	 */
-	private ProtocolClassContainer() {
+	private ProtocolContainer() {
 
 		// 获取协议配置集合
 		List<ProtocolConfig> protocolConfigs = ServerXml.getInstance().getProtocolConfigs();
@@ -40,11 +41,11 @@ public final class ProtocolClassContainer {
 			// 遍历协议配置集合
 			for (int i = 0, length = protocolConfigs.size(); i < length; i++) {
 
-				// 获取协议类
+				// 获取协议类对象
 				@SuppressWarnings("unchecked")
 				Class<Protocol> protocol = (Class<Protocol>) this.getClass().getClassLoader()
 						.loadClass(protocolConfigs.get(i).getClassName());
-				// 添加协议类
+				// 添加协议类对象
 				this.addProtocolClass(protocolConfigs.get(i).getName(), protocol);
 			}
 
@@ -54,39 +55,41 @@ public final class ProtocolClassContainer {
 	}
 
 	/**
-	 * 获取协议类容器实例
+	 * 获取协议容器实例
 	 * 
 	 * @return
 	 */
-	public static final ProtocolClassContainer getInstance() {
+	public static final ProtocolContainer getInstance() {
 
-		if (protocolClassContainer == null) {
-			protocolClassContainer = new ProtocolClassContainer();
+		if (protocolContainer == null) {
+			protocolContainer = new ProtocolContainer();
 		}
 
-		return protocolClassContainer;
+		return protocolContainer;
 	}
 
 	/**
-	 * 添加协议类
+	 * 添加协议类对象
 	 * 
 	 * @param name
 	 *            协议名称
 	 * @param protocol
-	 *            协议类
+	 *            协议类对象
 	 */
 	private void addProtocolClass(String name, Class<Protocol> protocol) {
 		protocolClasses.put(name, protocol);
 	}
 
 	/**
-	 * 获取协议类
+	 * 获取协议对象
 	 * 
 	 * @param name
 	 *            协议名称
 	 * @return
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
 	 */
-	public Class<Protocol> getProtocolClass(String name) {
-		return protocolClasses.get(name);
+	public Protocol getProtocol(String name) throws InstantiationException, IllegalAccessException {
+		return protocolClasses.get(name).newInstance();
 	}
 }

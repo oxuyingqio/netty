@@ -1,19 +1,18 @@
 package cn.xuyingqi.netty.server.container;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import cn.xuyingqi.netty.server.core.ServerAppXml;
 import cn.xuyingqi.netty.server.core.ServerAppXml.ServletConfig;
 import cn.xuyingqi.netty.server.servlet.DefaultServletConfig;
 import cn.xuyingqi.netty.server.servlet.Servlet;
-import cn.xuyingqi.util.util.ListFactory;
 import cn.xuyingqi.util.util.MapFactory;
 
 /**
  * Servlet容器.<br>
- * 获取的是已实例化的Servlet,因此在程序中每个Servlet都是单例.
+ * 获取该实例时,Servlet已提前实例化,因此在程序中每个Servlet都是单例.
  * 
  * @author XuYQ
  *
@@ -59,6 +58,7 @@ public final class ServletContainer {
 							(cn.xuyingqi.netty.server.servlet.ServletContext) this.getClass().getClassLoader()
 									.loadClass(servletConfig.getContextConfig().getClassName()).newInstance()));
 				}
+
 				// 添加Servlet
 				this.addServlet(servletConfig.getName(), servlet);
 			}
@@ -105,21 +105,12 @@ public final class ServletContainer {
 	}
 
 	/**
-	 * 获取所有Servlet
+	 * 获取所有Servlet的名称集合
 	 * 
 	 * @return
 	 */
-	public List<Servlet> getAllServlets() {
+	public Set<String> getServletNames() {
 
-		// 返回的List
-		List<Servlet> servletList = ListFactory.newInstance();
-
-		// 遍历Servlet集合
-		Iterator<String> it = servlets.keySet().iterator();
-		while (it.hasNext()) {
-			servletList.add(servlets.get(it.next()));
-		}
-
-		return servletList;
+		return servlets.keySet();
 	}
 }

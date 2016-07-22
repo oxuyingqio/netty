@@ -6,18 +6,13 @@ package cn.xuyingqi.netty.server.servlet;
  * @author XuYQ
  *
  */
-public class DefaultServletConfig implements ServletConfig {
-
-	/**
-	 * Servlet上下文
-	 */
-	private ServletContext servletContext;
+public class DefaultServletConfig extends AbstractServletConfig {
 
 	/**
 	 * 默认的Servlet配置
 	 */
 	public DefaultServletConfig() {
-		this.servletContext = new DefaultServletContext();
+		super(new DefaultServletContext());
 	}
 
 	/**
@@ -26,11 +21,6 @@ public class DefaultServletConfig implements ServletConfig {
 	 * @param servletContext
 	 */
 	public DefaultServletConfig(ServletContext servletContext) {
-		this.servletContext = servletContext;
-	}
-
-	@Override
-	public ServletContext getServletContext() {
-		return this.servletContext;
+		super(servletContext);
 	}
 }

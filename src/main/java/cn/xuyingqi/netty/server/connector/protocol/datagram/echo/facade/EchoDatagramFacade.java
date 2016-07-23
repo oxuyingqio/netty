@@ -1,7 +1,7 @@
 package cn.xuyingqi.netty.server.connector.protocol.datagram.echo.facade;
 
-import cn.xuyingqi.netty.server.connector.protocol.datagram.Datagram;
-import cn.xuyingqi.netty.server.connector.protocol.datagram.Header;
+import cn.xuyingqi.net.server.connector.datagram.Datagram;
+import cn.xuyingqi.net.server.connector.datagram.Header;
 import cn.xuyingqi.netty.server.connector.protocol.datagram.echo.EchoDatagram;
 import cn.xuyingqi.netty.server.connector.protocol.datagram.echo.EchoHeader;
 

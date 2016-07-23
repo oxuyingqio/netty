@@ -1,6 +1,6 @@
 package cn.xuyingqi.netty.server.connector.protocol.datagram.echo;
 
-import cn.xuyingqi.netty.server.connector.protocol.datagram.Header;
+import cn.xuyingqi.net.server.connector.datagram.Header;
 
 /**
  * 应答报头

@@ -2,6 +2,7 @@ package cn.xuyingqi.netty.server.connector;
 
 import cn.xuyingqi.net.server.connector.Connector;
 import cn.xuyingqi.net.server.container.ProtocolContainer;
+import cn.xuyingqi.netty.server.connector.protocol.ServerProtocol;
 import cn.xuyingqi.netty.server.container.ServerProtocolContainer;
 import cn.xuyingqi.netty.server.core.ServerXml;
 import cn.xuyingqi.netty.server.core.ServerXml.ServiceConfig.ConnectorConfig;

@@ -1,8 +1,8 @@
 package cn.xuyingqi.netty.server.connector.protocol.echo;
 
-import cn.xuyingqi.netty.server.connector.ServerProtocol;
 import cn.xuyingqi.netty.server.connector.protocol.Decoder;
 import cn.xuyingqi.netty.server.connector.protocol.Encoder;
+import cn.xuyingqi.netty.server.connector.protocol.ServerProtocol;
 
 /**
  * 应答协议

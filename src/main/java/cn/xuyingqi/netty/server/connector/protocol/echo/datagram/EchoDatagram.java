@@ -1,4 +1,4 @@
-package cn.xuyingqi.netty.server.connector.protocol.datagram.echo;
+package cn.xuyingqi.netty.server.connector.protocol.echo.datagram;
 
 import cn.xuyingqi.net.server.connector.protocol.datagram.Datagram;
 import cn.xuyingqi.net.server.connector.protocol.datagram.Header;

@@ -1,11 +1,11 @@
-package cn.xuyingqi.netty.server.connector.protocol.datagram.echo.facade;
+package cn.xuyingqi.netty.server.connector.protocol.echo.datagram.facade;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import cn.xuyingqi.net.server.connector.protocol.datagram.Header;
-import cn.xuyingqi.netty.server.connector.protocol.datagram.echo.EchoHeader;
+import cn.xuyingqi.netty.server.connector.protocol.echo.datagram.EchoHeader;
 import cn.xuyingqi.util.util.ByteUtils;
 
 /**

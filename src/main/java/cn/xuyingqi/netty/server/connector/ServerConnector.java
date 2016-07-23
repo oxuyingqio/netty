@@ -2,10 +2,13 @@ package cn.xuyingqi.netty.server.connector;
 
 import cn.xuyingqi.net.server.connector.Connector;
 import cn.xuyingqi.net.server.connector.ConnectorConfig;
+import cn.xuyingqi.net.server.connector.ServletHandler;
 import cn.xuyingqi.net.server.container.ProtocolContainer;
 import cn.xuyingqi.netty.server.connector.protocol.ServerProtocol;
+import cn.xuyingqi.netty.server.container.ServerServletContainer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
@@ -33,10 +36,15 @@ public final class ServerConnector implements Connector {
 	private ProtocolContainer protocolContainer;
 
 	@Override
-	public final void init(ConnectorConfig config, ProtocolContainer protocolContainer) {
+	public final void init(ConnectorConfig config) {
 
 		// 获取连接器容器
 		this.config = config;
+	}
+
+	@Override
+	public final void setProtocolContainer(ProtocolContainer protocolContainer) {
+
 		// 获取协议容器
 		this.protocolContainer = protocolContainer;
 	}
@@ -63,8 +71,13 @@ public final class ServerConnector implements Connector {
 						// 解码
 						ch.pipeline().addLast(
 								((ServerProtocol) protocolContainer.getProtocol(config.getProtocol())).getDecoder());
+
+						// Servlet处理类
+						ServletHandler servletHandler = new ServerServletHandler();
+						// 配置Servlet容器
+						servletHandler.init(ServerServletContainer.getInstance());
 						// Servlet
-						ch.pipeline().addLast(new ServletHandler());
+						ch.pipeline().addLast((ChannelHandler) servletHandler);
 					}
 				});
 

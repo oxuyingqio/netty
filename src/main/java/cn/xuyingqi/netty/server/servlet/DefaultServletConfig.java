@@ -4,7 +4,7 @@ import cn.xuyingqi.net.servlet.ServletContext;
 import cn.xuyingqi.net.servlet.impl.AbstractServletConfig;
 
 /**
- * 默认Servlet配置
+ * 默认的Servlet配置
  * 
  * @author XuYQ
  *

@@ -3,8 +3,8 @@ package cn.xuyingqi.netty.server.connector;
 import java.util.Iterator;
 import java.util.Random;
 
+import cn.xuyingqi.net.server.connector.ServletHandler;
 import cn.xuyingqi.net.server.container.ServletContainer;
-import cn.xuyingqi.netty.server.container.ServerServletContainer;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.Attribute;
@@ -16,17 +16,24 @@ import io.netty.util.AttributeKey;
  * @author XuYQ
  *
  */
-public class ServletHandler extends ChannelHandlerAdapter {
+public class ServerServletHandler extends ChannelHandlerAdapter implements ServletHandler {
 
 	/**
 	 * Servlet容器
 	 */
-	private ServletContainer servletContainer = ServerServletContainer.getInstance();
+	private ServletContainer servletContainer;
 
 	/**
 	 * 属性值:session
 	 */
 	private AttributeKey<Integer> sessionKey = AttributeKey.valueOf("session");
+
+	@Override
+	public void init(ServletContainer servletContainer) {
+
+		// 获取Servlet容器
+		this.servletContainer = servletContainer;
+	}
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {

@@ -19,9 +19,10 @@ public final class ServerBootstrap implements Bootstrap {
 
 		// 连接器
 		Connector connector = new ServerConnector();
-		// 配置连接器配置,协议容器
-		connector.init(ServerXml.getInstance().getServiceConfig().getConnectorConfig(),
-				ServerProtocolContainer.getInstance());
+		// 配置连接器配置
+		connector.init(ServerXml.getInstance().getServiceConfig().getConnectorConfig());
+		// 设置协议容器
+		connector.setProtocolContainer(ServerProtocolContainer.getInstance());
 		// 连接
 		connector.connect();
 	}

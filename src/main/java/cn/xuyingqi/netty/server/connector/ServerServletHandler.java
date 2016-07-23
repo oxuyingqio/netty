@@ -1,10 +1,12 @@
 package cn.xuyingqi.netty.server.connector;
 
 import java.util.Iterator;
-import java.util.Random;
 
 import cn.xuyingqi.net.server.connector.ServletHandler;
 import cn.xuyingqi.net.server.container.ServletContainer;
+import cn.xuyingqi.net.servlet.ServletContext;
+import cn.xuyingqi.net.servlet.ServletSession;
+import cn.xuyingqi.netty.server.servlet.ServerServletSession;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.Attribute;
@@ -26,7 +28,7 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 	/**
 	 * 属性值:session
 	 */
-	private AttributeKey<Integer> sessionKey = AttributeKey.valueOf("session");
+	private AttributeKey<ServletSession> sessionKey = AttributeKey.valueOf("session");
 
 	@Override
 	public void init(ServletContainer servletContainer) {
@@ -45,25 +47,34 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 
-		System.out.println("客户端连接");
+		// Servlet上下文
+		ServletContext context = null;
 
-		// 获取该链接的session属性
-		Attribute<Integer> attr = ctx.attr(sessionKey);
-		// 设置随机数
-		int i = new Random().nextInt();
-		attr.set(i);
-		System.out.println("给你这个客户端分配的是" + i);
+		// 获取Servlet名称集合
+		Iterator<String> it = this.servletContainer.getServletNames().iterator();
+		// 遍历Servlet名称集合
+		while (it.hasNext()) {
+			// 获取Servlet上下文
+			context = this.servletContainer.getServlet(it.next()).getServletConfig().getServletContext();
+		}
 
-		// 继续后续处理
+		// 创建session对象
+		ServerServletSession session = new ServerServletSession(context);
+		session.setLocal(ctx.channel().localAddress());
+		session.setRemote(ctx.channel().remoteAddress());
+
+		// 设置该链接的session属性
+		Attribute<ServletSession> attr = ctx.attr(sessionKey);
+		attr.set(session);
+
+		// 后续处理
 		ctx.fireChannelActive();
 	}
 
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
 
-		System.out.println("客户端断开连接");
-
-		// 继续后续处理
+		// 后续处理
 		ctx.fireChannelInactive();
 	}
 

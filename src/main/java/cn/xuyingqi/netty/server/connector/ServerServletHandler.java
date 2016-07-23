@@ -3,9 +3,14 @@ package cn.xuyingqi.netty.server.connector;
 import java.util.Iterator;
 
 import cn.xuyingqi.net.server.connector.ServletHandler;
+import cn.xuyingqi.net.server.connector.protocol.datagram.Datagram;
 import cn.xuyingqi.net.server.container.ServletContainer;
 import cn.xuyingqi.net.servlet.ServletContext;
+import cn.xuyingqi.net.servlet.ServletRequest;
+import cn.xuyingqi.net.servlet.ServletResponse;
 import cn.xuyingqi.net.servlet.ServletSession;
+import cn.xuyingqi.netty.server.servlet.ServerServletRequest;
+import cn.xuyingqi.netty.server.servlet.ServerServletResponse;
 import cn.xuyingqi.netty.server.servlet.ServerServletSession;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
@@ -59,9 +64,8 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 		}
 
 		// 创建session对象
-		ServerServletSession session = new ServerServletSession(context);
-		session.setLocal(ctx.channel().localAddress());
-		session.setRemote(ctx.channel().remoteAddress());
+		ServletSession session = new ServerServletSession(context, ctx.channel().localAddress(),
+				ctx.channel().remoteAddress());
 
 		// 设置该链接的session属性
 		Attribute<ServletSession> attr = ctx.attr(sessionKey);
@@ -81,17 +85,20 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
-		// 获取session属性值
-		System.out.println("我这个客户端的是" + ctx.attr(sessionKey).get());
+		// 创建请求
+		ServletRequest request = new ServerServletRequest(ctx.attr(sessionKey).get(), (Datagram) msg);
+		// 创建响应
+		ServletResponse response = new ServerServletResponse(ctx.attr(sessionKey).get(), request);
 
 		// 获取Servlet名称集合
 		Iterator<String> it = this.servletContainer.getServletNames().iterator();
 		// 遍历Servlet名称集合
 		while (it.hasNext()) {
 			// 调用Servlet
-			this.servletContainer.getServlet(it.next()).service(null, null);
+			this.servletContainer.getServlet(it.next()).service(request, response);
 		}
 
+		// 后续处理
 		ctx.fireChannelRead(msg);
 	}
 

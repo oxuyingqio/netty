@@ -111,4 +111,9 @@ public class EchoHeaderFacade implements Header {
 	public void setDataLength(int dataLength) {
 		this.header.setDataLength(ByteUtils.short2ByteArray((short) dataLength));
 	}
+
+	@Override
+	public int getContentLength() {
+		return this.getDataLength();
+	}
 }

@@ -1,6 +1,7 @@
 package cn.xuyingqi.netty.server.connector.protocol.echo.datagram;
 
 import cn.xuyingqi.net.server.connector.protocol.datagram.Header;
+import cn.xuyingqi.util.util.ByteUtils;
 
 /**
  * 应答报头
@@ -114,5 +115,10 @@ public class EchoHeader implements Header {
 	 */
 	public void setDataLength(byte[] dataLength) {
 		this.dataLength = dataLength;
+	}
+
+	@Override
+	public int getContentLength() {
+		return ByteUtils.byteArray2Int(this.dataLength);
 	}
 }

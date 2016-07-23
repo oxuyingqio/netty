@@ -30,29 +30,16 @@ public class ServerServletSession extends AbstractServletSession {
 	 * 
 	 * @param servletContext
 	 *            Servlet上下文
+	 * @param local
+	 *            服务器地址
+	 * @param remote
+	 *            客户端地址
 	 */
-	public ServerServletSession(ServletContext servletContext) {
+	public ServerServletSession(ServletContext servletContext, SocketAddress local, SocketAddress remote) {
 
 		super(servletContext);
-	}
-
-	/**
-	 * 设置服务器地址
-	 * 
-	 * @param local
-	 */
-	public void setLocal(SocketAddress local) {
 
 		this.local = (InetSocketAddress) local;
-	}
-
-	/**
-	 * 设置客户端地址
-	 * 
-	 * @param remote
-	 */
-	public void setRemote(SocketAddress remote) {
-
 		this.remote = (InetSocketAddress) remote;
 	}
 

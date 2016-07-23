@@ -2,6 +2,7 @@ package cn.xuyingqi.netty.server.container;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import cn.xuyingqi.net.server.container.ProtocolContainer;
 import cn.xuyingqi.netty.server.connector.protocol.ServerProtocol;
@@ -94,5 +95,11 @@ public final class ServerProtocolContainer implements ProtocolContainer {
 		}
 
 		return null;
+	}
+
+	@Override
+	public Set<String> getProtocolNames() {
+
+		return protocolClasses.keySet();
 	}
 }

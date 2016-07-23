@@ -157,7 +157,7 @@ public final class ServerXml {
 		 * @author XuYQ
 		 *
 		 */
-		public static final class ConnectorConfig {
+		public static final class ConnectorConfig implements cn.xuyingqi.net.server.connector.ConnectorConfig {
 
 			/**
 			 * 协议名称
@@ -183,38 +183,22 @@ public final class ServerXml {
 			@XmlAttribute(name = "timeout")
 			private int timeout;
 
-			/**
-			 * 获取协议名称
-			 * 
-			 * @return
-			 */
+			@Override
 			public String getProtocol() {
 				return protocol;
 			}
 
-			/**
-			 * 获取主机地址
-			 * 
-			 * @return
-			 */
+			@Override
 			public String getHost() {
 				return host;
 			}
 
-			/**
-			 * 获取端口号
-			 * 
-			 * @return
-			 */
+			@Override
 			public int getPort() {
 				return port;
 			}
 
-			/**
-			 * 获取超时时间
-			 * 
-			 * @return
-			 */
+			@Override
 			public int getTimeout() {
 				return timeout;
 			}

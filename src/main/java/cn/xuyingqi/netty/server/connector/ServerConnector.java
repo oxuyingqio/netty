@@ -1,11 +1,9 @@
 package cn.xuyingqi.netty.server.connector;
 
 import cn.xuyingqi.net.server.connector.Connector;
+import cn.xuyingqi.net.server.connector.ConnectorConfig;
 import cn.xuyingqi.net.server.container.ProtocolContainer;
 import cn.xuyingqi.netty.server.connector.protocol.ServerProtocol;
-import cn.xuyingqi.netty.server.container.ServerProtocolContainer;
-import cn.xuyingqi.netty.server.core.ServerXml;
-import cn.xuyingqi.netty.server.core.ServerXml.ServiceConfig.ConnectorConfig;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -34,16 +32,13 @@ public final class ServerConnector implements Connector {
 	 */
 	private ProtocolContainer protocolContainer;
 
-	/**
-	 * 连接器
-	 */
-	public ServerConnector() {
+	@Override
+	public final void init(ConnectorConfig config, ProtocolContainer protocolContainer) {
 
-		// 获取连接器配置
-		this.config = ServerXml.getInstance().getServiceConfig().getConnectorConfig();
-
+		// 获取连接器容器
+		this.config = config;
 		// 获取协议容器
-		this.protocolContainer = ServerProtocolContainer.getInstance();
+		this.protocolContainer = protocolContainer;
 	}
 
 	@Override

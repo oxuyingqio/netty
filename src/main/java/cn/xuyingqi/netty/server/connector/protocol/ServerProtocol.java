@@ -1,6 +1,6 @@
 package cn.xuyingqi.netty.server.connector.protocol;
 
-import cn.xuyingqi.net.server.connector.protocol.Protocol;
+import cn.xuyingqi.net.server.protocol.Protocol;
 
 /**
  * 协议

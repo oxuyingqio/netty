@@ -1,4 +1,4 @@
-package cn.xuyingqi.netty.server.servlet.echo;
+package cn.xuyingqi.netty.server.echo.servlet;
 
 import java.util.Random;
 
@@ -42,5 +42,16 @@ public class EchoServlet extends AbstractServlet {
 			System.out.println("客户端" + request.getRemoteAddr() + ":" + request.getRemotePort() + "说到此一游");
 		}
 
+	}
+
+	@Override
+	public void destroy() {
+
+	}
+
+	@Override
+	public String getServletInfo() {
+
+		return "应答(Echo) Servlet";
 	}
 }

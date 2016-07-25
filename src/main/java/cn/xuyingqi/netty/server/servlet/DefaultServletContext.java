@@ -1,5 +1,7 @@
 package cn.xuyingqi.netty.server.servlet;
 
+import java.util.Set;
+
 import cn.xuyingqi.net.servlet.impl.AbstractServletContext;
 
 /**
@@ -10,4 +12,19 @@ import cn.xuyingqi.net.servlet.impl.AbstractServletContext;
  */
 public class DefaultServletContext extends AbstractServletContext {
 
+	/**
+	 * 未实现,不影响使用
+	 */
+	@Override
+	public Set<String> getInitParamterNames() {
+		return null;
+	}
+
+	/**
+	 * 未实现,不影响使用
+	 */
+	@Override
+	public Object getInitParameter(String name) {
+		return null;
+	}
 }

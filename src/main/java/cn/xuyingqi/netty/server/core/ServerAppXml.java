@@ -2,6 +2,7 @@ package cn.xuyingqi.netty.server.core;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -10,6 +11,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -95,10 +97,10 @@ public final class ServerAppXml {
 		private String className;
 
 		/**
-		 * Servlet上下文配置
+		 * Servlet初始化参数
 		 */
-		@XmlElement(name = "context")
-		private ServletContextConfig contextConfig;
+		@XmlElementWrapper(name = "init-param")
+		private Map<String, String> initParam;
 
 		/**
 		 * 获取Servlet名称
@@ -119,36 +121,12 @@ public final class ServerAppXml {
 		}
 
 		/**
-		 * 获取Servlet上下文配置
+		 * 获取Servlet初始化参数
 		 * 
 		 * @return
 		 */
-		public ServletContextConfig getContextConfig() {
-			return contextConfig;
-		}
-
-		/**
-		 * Servlet上下文配置
-		 * 
-		 * @author XuYQ
-		 *
-		 */
-		public static final class ServletContextConfig {
-
-			/**
-			 * Servlet上下文类路径
-			 */
-			@XmlAttribute(name = "className")
-			private String className;
-
-			/**
-			 * 获取Servlet上下文类路径
-			 * 
-			 * @return
-			 */
-			public String getClassName() {
-				return className;
-			}
+		public Map<String, String> getInitParam() {
+			return initParam;
 		}
 	}
 }

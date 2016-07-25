@@ -1,7 +1,9 @@
 package cn.xuyingqi.netty.server.servlet;
 
+import java.util.Map;
+import java.util.Set;
+
 import cn.xuyingqi.net.server.connector.protocol.datagram.Datagram;
-import cn.xuyingqi.net.servlet.ServletSession;
 import cn.xuyingqi.net.servlet.impl.AbstractServletRequest;
 
 /**
@@ -10,28 +12,51 @@ import cn.xuyingqi.net.servlet.impl.AbstractServletRequest;
  * @author XuYQ
  *
  */
-public class ServerServletRequest extends AbstractServletRequest {
+public abstract class ServerServletRequest extends AbstractServletRequest {
 
 	/**
-	 * 数据报文
+	 * 报头Map集合
 	 */
-	private Datagram datagram;
+	private Map<String, Object> headerMap;
 
 	/**
 	 * Servlet请求
 	 * 
 	 * @param servletSession
 	 */
-	public ServerServletRequest(ServletSession servletSession, Datagram datagram) {
+	public ServerServletRequest(ServerServletSession servletSession, Datagram datagram) {
 
 		super(servletSession);
+		// 更新最后一次请求时间
+		servletSession.updateLastAccessedTime();
 
-		this.datagram = datagram;
+		this.headerMap = datagram.getHeader().convertMap();
 	}
 
 	@Override
-	public int getContentLength() {
+	public Set<String> getHeaderNames() {
 
-		return this.datagram.getHeader().getContentLength();
+		return this.headerMap.keySet();
 	}
+
+	@Override
+	public Object getHeader(String name) {
+
+		return this.headerMap.get(name);
+	}
+
+	@Override
+	public abstract String getCharacterEncoding();
+
+	@Override
+	public abstract String getContentType();
+
+	@Override
+	public abstract int getContentLength();
+
+	@Override
+	public abstract Set<String> getParameterNames();
+
+	@Override
+	public abstract Object getParameter(String name);
 }

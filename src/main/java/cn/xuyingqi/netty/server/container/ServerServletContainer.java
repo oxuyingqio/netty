@@ -49,15 +49,8 @@ public final class ServerServletContainer implements ServletContainer {
 				// 实例化Servlet
 				Servlet servlet = (Servlet) this.getClass().getClassLoader().loadClass(config.getClassName())
 						.newInstance();
-				// 初始化Servlet
-				if (config.getContextConfig() == null) {
-					// 未配置上下文,使用默认上下文
-					servlet.init(new DefaultServletConfig());
-				} else {
-					// 自定义上下文,使用自定义上下文
-					servlet.init(new DefaultServletConfig((cn.xuyingqi.net.servlet.ServletContext) this.getClass()
-							.getClassLoader().loadClass(config.getContextConfig().getClassName()).newInstance()));
-				}
+				// 使用默认Servlet配置加载初始化参数
+				servlet.init(new DefaultServletConfig(config.getInitParam()));
 
 				// 添加Servlet
 				this.addServlet(config.getName(), servlet);

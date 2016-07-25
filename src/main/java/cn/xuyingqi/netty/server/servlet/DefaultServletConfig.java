@@ -18,12 +18,7 @@ public class DefaultServletConfig extends AbstractServletConfig {
 	/**
 	 * 初始化参数
 	 */
-	private Map<String, Object> initParamter = MapFactory.newInstance();
-
-	/**
-	 * Servlet名称
-	 */
-	private String servletName;
+	private Map<String, String> initParamter = MapFactory.newInstance();
 
 	/**
 	 * Servlet上下文
@@ -36,10 +31,19 @@ public class DefaultServletConfig extends AbstractServletConfig {
 	 * @param initParamter
 	 *            初始化参数
 	 */
-	public DefaultServletConfig(String servletName, Map<String, Object> initParamter) {
+	public DefaultServletConfig(Map<String, String> initParamter) {
 
-		this.servletName = servletName;
 		this.initParamter = initParamter;
+
+		try {
+
+			String contextClass = this.initParamter.get("context") == null
+					? "cn.xuyingqi.netty.server.servlet.DefaultServletContext" : this.initParamter.get("context");
+			this.context = (ServletContext) Class.forName(contextClass).newInstance();
+
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -49,7 +53,7 @@ public class DefaultServletConfig extends AbstractServletConfig {
 	}
 
 	@Override
-	public Object getInitParameter(String name) {
+	public String getInitParameter(String name) {
 
 		return initParamter.get(name);
 	}
@@ -57,12 +61,6 @@ public class DefaultServletConfig extends AbstractServletConfig {
 	@Override
 	public ServletContext getServletContext() {
 
-		return null;
-	}
-
-	@Override
-	public String getServletName() {
-
-		return this.servletName;
+		return this.context;
 	}
 }

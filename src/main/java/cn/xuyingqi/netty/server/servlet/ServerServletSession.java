@@ -16,6 +16,11 @@ import cn.xuyingqi.net.servlet.impl.AbstractServletSession;
 public class ServerServletSession extends AbstractServletSession {
 
 	/**
+	 * 最后一次请求的时间
+	 */
+	private long lastAccessedTime;
+
+	/**
 	 * 服务器地址
 	 */
 	private InetSocketAddress local;
@@ -39,8 +44,27 @@ public class ServerServletSession extends AbstractServletSession {
 
 		super(servletContext);
 
+		this.lastAccessedTime = this.getCreationTime();
 		this.local = (InetSocketAddress) local;
 		this.remote = (InetSocketAddress) remote;
+	}
+
+	@Override
+	public long getLastAccessedTime() {
+
+		return this.lastAccessedTime;
+	}
+
+	/**
+	 * 更新最后一次请求时间
+	 * 
+	 * @return
+	 */
+	public ServerServletSession updateLastAccessedTime() {
+
+		this.lastAccessedTime = System.currentTimeMillis();
+
+		return this;
 	}
 
 	@Override
@@ -61,10 +85,13 @@ public class ServerServletSession extends AbstractServletSession {
 		return this.local.getPort();
 	}
 
+	/**
+	 * 未实现,不影响使用
+	 */
 	@Override
 	public String getProtocol() {
 
-		return "";
+		return null;
 	}
 
 	@Override

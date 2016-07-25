@@ -2,7 +2,6 @@ package cn.xuyingqi.netty.server.servlet;
 
 import cn.xuyingqi.net.servlet.ServletRequest;
 import cn.xuyingqi.net.servlet.ServletResponse;
-import cn.xuyingqi.net.servlet.ServletSession;
 import cn.xuyingqi.net.servlet.impl.AbstractServletResponse;
 
 /**
@@ -11,37 +10,34 @@ import cn.xuyingqi.net.servlet.impl.AbstractServletResponse;
  * @author XuYQ
  *
  */
-public class ServerServletResponse extends AbstractServletResponse {
-
-	/**
-	 * Servlet请求
-	 */
-	private ServletRequest request;
+public abstract class ServerServletResponse extends AbstractServletResponse {
 
 	/**
 	 * Servlet响应
 	 * 
-	 * @param servletSession
-	 *            Servlet会话
 	 * @param servletRequest
 	 *            Servlet请求
 	 */
-	public ServerServletResponse(ServletSession servletSession, ServletRequest servletRequest) {
+	public ServerServletResponse(ServletRequest servletRequest) {
 
-		super(servletSession);
-
-		this.request = servletRequest;
+		super(servletRequest);
 	}
 
 	@Override
-	public ServletRequest getServletRequest() {
-
-		return this.request;
-	}
+	public abstract ServletResponse addHeader(String name, Object value);
 
 	@Override
-	public ServletResponse setContentLength(int len) {
+	public abstract boolean containsHeader(String name);
 
-		return this;
-	}
+	@Override
+	public abstract ServletResponse setHeader(String name, Object value);
+
+	@Override
+	public abstract ServletResponse setContentLength(int len);
+
+	@Override
+	public abstract ServletResponse setStatus(int status);
+
+	@Override
+	public abstract boolean isCommitted();
 }

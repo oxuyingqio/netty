@@ -35,7 +35,6 @@ public class EchoDatagram implements Datagram {
 		this.header = header;
 	}
 
-	@Override
 	public byte[] getPayload() {
 		return payload;
 	}

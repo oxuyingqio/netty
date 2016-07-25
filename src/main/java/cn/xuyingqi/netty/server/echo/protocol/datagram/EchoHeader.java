@@ -116,9 +116,4 @@ public class EchoHeader implements Header {
 	public void setDataLength(byte[] dataLength) {
 		this.dataLength = dataLength;
 	}
-
-	@Override
-	public int getContentLength() {
-		return ByteUtils.byteArray2Int(this.dataLength);
-	}
 }

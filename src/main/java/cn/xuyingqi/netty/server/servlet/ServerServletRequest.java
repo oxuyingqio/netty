@@ -3,8 +3,9 @@ package cn.xuyingqi.netty.server.servlet;
 import java.util.Map;
 import java.util.Set;
 
-import cn.xuyingqi.net.server.connector.protocol.datagram.Datagram;
 import cn.xuyingqi.net.servlet.impl.AbstractServletRequest;
+import cn.xuyingqi.netty.server.connector.protocol.datagram.ServerDatagram;
+import cn.xuyingqi.netty.server.connector.protocol.datagram.ServerHeader;
 
 /**
  * Servlet请求
@@ -12,7 +13,12 @@ import cn.xuyingqi.net.servlet.impl.AbstractServletRequest;
  * @author XuYQ
  *
  */
-public abstract class ServerServletRequest extends AbstractServletRequest {
+public class ServerServletRequest extends AbstractServletRequest {
+
+	/**
+	 * 数据报文
+	 */
+	private ServerDatagram datagram;
 
 	/**
 	 * 报头Map集合
@@ -20,17 +26,24 @@ public abstract class ServerServletRequest extends AbstractServletRequest {
 	private Map<String, Object> headerMap;
 
 	/**
+	 * 报体Map集合
+	 */
+	private Map<String, Object> payloadMap;
+
+	/**
 	 * Servlet请求
 	 * 
 	 * @param servletSession
 	 */
-	public ServerServletRequest(ServerServletSession servletSession, Datagram datagram) {
+	public ServerServletRequest(ServerServletSession servletSession, ServerDatagram datagram) {
 
 		super(servletSession);
 		// 更新最后一次请求时间
 		servletSession.updateLastAccessedTime();
 
-		this.headerMap = datagram.getHeader().convertMap();
+		this.datagram = datagram;
+		this.headerMap = this.datagram.getHeader().convertMap();
+		this.payloadMap = this.datagram.getPayload().convertMap();
 	}
 
 	@Override
@@ -46,17 +59,32 @@ public abstract class ServerServletRequest extends AbstractServletRequest {
 	}
 
 	@Override
-	public abstract String getCharacterEncoding();
+	public String getCharacterEncoding() {
+
+		return ((ServerHeader) this.datagram.getHeader()).getCharacterEncoding();
+	}
 
 	@Override
-	public abstract String getContentType();
+	public String getContentType() {
+
+		return ((ServerHeader) this.datagram.getHeader()).getContentType();
+	}
 
 	@Override
-	public abstract int getContentLength();
+	public int getContentLength() {
+
+		return ((ServerHeader) this.datagram.getHeader()).getContentLength();
+	}
 
 	@Override
-	public abstract Set<String> getParameterNames();
+	public Set<String> getParameterNames() {
+
+		return this.payloadMap.keySet();
+	}
 
 	@Override
-	public abstract Object getParameter(String name);
+	public Object getParameter(String name) {
+
+		return this.payloadMap.get(name);
+	}
 }

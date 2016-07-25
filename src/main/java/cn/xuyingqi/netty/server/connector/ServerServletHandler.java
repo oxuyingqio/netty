@@ -8,7 +8,7 @@ import cn.xuyingqi.net.server.container.ServletContainer;
 import cn.xuyingqi.net.servlet.ServletContext;
 import cn.xuyingqi.net.servlet.ServletRequest;
 import cn.xuyingqi.net.servlet.ServletResponse;
-import cn.xuyingqi.net.servlet.ServletSession;
+import cn.xuyingqi.netty.server.connector.protocol.datagram.ServerDatagram;
 import cn.xuyingqi.netty.server.servlet.ServerServletRequest;
 import cn.xuyingqi.netty.server.servlet.ServerServletResponse;
 import cn.xuyingqi.netty.server.servlet.ServerServletSession;
@@ -33,7 +33,7 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 	/**
 	 * 属性值:session
 	 */
-	private AttributeKey<ServletSession> sessionKey = AttributeKey.valueOf("session");
+	private AttributeKey<ServerServletSession> sessionKey = AttributeKey.valueOf("session");
 
 	@Override
 	public void init(ServletContainer servletContainer) {
@@ -64,11 +64,11 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 		}
 
 		// 创建session对象
-		ServletSession session = new ServerServletSession(context, ctx.channel().localAddress(),
+		ServerServletSession session = new ServerServletSession(context, ctx.channel().localAddress(),
 				ctx.channel().remoteAddress());
 
 		// 设置该链接的session属性
-		Attribute<ServletSession> attr = ctx.attr(sessionKey);
+		Attribute<ServerServletSession> attr = ctx.attr(sessionKey);
 		attr.set(session);
 
 		// 后续处理
@@ -86,7 +86,7 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
 		// 创建请求
-		ServletRequest request = new ServerServletRequest(ctx.attr(sessionKey).get(), (Datagram) msg);
+		ServletRequest request = new ServerServletRequest(ctx.attr(sessionKey).get(), (ServerDatagram) msg);
 		// 创建响应
 		ServletResponse response = new ServerServletResponse(ctx.attr(sessionKey).get(), request);
 

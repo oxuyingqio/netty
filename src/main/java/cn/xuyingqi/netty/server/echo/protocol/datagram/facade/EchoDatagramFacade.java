@@ -34,7 +34,6 @@ public class EchoDatagramFacade implements Datagram {
 		return new EchoHeaderFacade((EchoHeader) this.datagram.getHeader());
 	}
 
-	@Override
 	public byte[] getPayload() {
 		return this.datagram.getPayload();
 	}

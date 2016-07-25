@@ -28,7 +28,7 @@ public class SelfServiceServlet extends AbstractServlet {
 	 */
 	private void service(ServerServletRequest request, ServerServletResponse response) {
 
-		System.out.println("111111111111111111111111");
+		System.out.println(request.getContentLength());
 	}
 
 	@Override

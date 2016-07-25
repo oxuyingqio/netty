@@ -1,4 +1,4 @@
-package cn.xuyingqi.netty.server.connector.protocol.echo;
+package cn.xuyingqi.netty.server.echo.protocol;
 
 import cn.xuyingqi.netty.server.connector.protocol.Decoder;
 import cn.xuyingqi.netty.server.connector.protocol.Encoder;

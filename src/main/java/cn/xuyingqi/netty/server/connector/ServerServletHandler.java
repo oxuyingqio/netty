@@ -87,7 +87,7 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 		// 创建请求
 		ServletRequest request = new ServerServletRequest(ctx.attr(sessionKey).get(), (ServerDatagram) msg);
 		// 创建响应
-		ServletResponse response = new ServerServletResponse(request, ((ServerDatagram) msg).newInstance());
+		ServletResponse response = new ServerServletResponse(request, ((ServerDatagram) msg).response());
 
 		// 获取Servlet名称集合
 		Iterator<String> it = this.servletContainer.getServletNames().iterator();

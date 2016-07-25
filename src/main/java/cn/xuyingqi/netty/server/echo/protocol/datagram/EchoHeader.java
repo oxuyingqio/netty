@@ -2,7 +2,6 @@ package cn.xuyingqi.netty.server.echo.protocol.datagram;
 
 import java.util.Map;
 
-import cn.xuyingqi.net.servlet.ServletResponse;
 import cn.xuyingqi.netty.server.connector.protocol.datagram.ServerHeader;
 
 /**
@@ -125,7 +124,7 @@ public class EchoHeader implements ServerHeader {
 	}
 
 	@Override
-	public ServletResponse addHeader(String name, Object value) {
+	public ServerHeader addHeader(String name, Object value) {
 		return null;
 	}
 
@@ -135,7 +134,7 @@ public class EchoHeader implements ServerHeader {
 	}
 
 	@Override
-	public ServletResponse setHeader(String name, Object value) {
+	public ServerHeader setHeader(String name, Object value) {
 		return null;
 	}
 
@@ -145,7 +144,7 @@ public class EchoHeader implements ServerHeader {
 	}
 
 	@Override
-	public ServletResponse setCharacterEncoding(String charset) {
+	public ServerHeader setCharacterEncoding(String charset) {
 		return null;
 	}
 
@@ -155,7 +154,7 @@ public class EchoHeader implements ServerHeader {
 	}
 
 	@Override
-	public ServletResponse setContentType(String type) {
+	public ServerHeader setContentType(String type) {
 		return null;
 	}
 
@@ -165,12 +164,12 @@ public class EchoHeader implements ServerHeader {
 	}
 
 	@Override
-	public ServletResponse setContentLength(int len) {
+	public ServerHeader setContentLength(int len) {
 		return null;
 	}
 
 	@Override
-	public ServletResponse setStatus(int status) {
+	public ServerHeader setStatus(int status) {
 		return null;
 	}
 }

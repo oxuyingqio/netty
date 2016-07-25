@@ -49,7 +49,7 @@ public class EchoDatagram implements ServerDatagram {
 	}
 
 	@Override
-	public ServerDatagram newInstance() {
+	public ServerDatagram response() {
 
 		return new EchoDatagram(new EchoHeader(), new EchoPayload());
 	}

@@ -1,5 +1,6 @@
 package cn.xuyingqi.netty.server.container;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -50,7 +51,8 @@ public final class ServerServletContainer implements ServletContainer {
 				Servlet servlet = (Servlet) this.getClass().getClassLoader().loadClass(config.getClassName())
 						.newInstance();
 				// 使用默认Servlet配置加载初始化参数
-				servlet.init(new DefaultServletConfig(config.getInitParam()));
+				servlet.init(new DefaultServletConfig(
+						config.getInitParam() == null ? new HashMap<String, String>() : config.getInitParam()));
 
 				// 添加Servlet
 				this.addServlet(config.getName(), servlet);

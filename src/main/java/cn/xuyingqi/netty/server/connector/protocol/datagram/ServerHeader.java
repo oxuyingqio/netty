@@ -1,7 +1,6 @@
 package cn.xuyingqi.netty.server.connector.protocol.datagram;
 
 import cn.xuyingqi.net.server.connector.protocol.datagram.Header;
-import cn.xuyingqi.net.servlet.ServletResponse;
 
 /**
  * 报头
@@ -18,7 +17,7 @@ public interface ServerHeader extends Header {
 	 * @param value
 	 * @return
 	 */
-	public ServletResponse addHeader(String name, Object value);
+	public ServerHeader addHeader(String name, Object value);
 
 	/**
 	 * 报头项目是否存在
@@ -35,7 +34,7 @@ public interface ServerHeader extends Header {
 	 * @param value
 	 * @return
 	 */
-	public ServletResponse setHeader(String name, Object value);
+	public ServerHeader setHeader(String name, Object value);
 
 	/**
 	 * 获取编码格式
@@ -51,7 +50,7 @@ public interface ServerHeader extends Header {
 	 *            编码格式
 	 * @return
 	 */
-	public ServletResponse setCharacterEncoding(String charset);
+	public ServerHeader setCharacterEncoding(String charset);
 
 	/**
 	 * 获取内容类型
@@ -66,7 +65,7 @@ public interface ServerHeader extends Header {
 	 * @param type
 	 * @return
 	 */
-	public ServletResponse setContentType(String type);
+	public ServerHeader setContentType(String type);
 
 	/**
 	 * 获取报体长度
@@ -81,7 +80,7 @@ public interface ServerHeader extends Header {
 	 * @param len
 	 * @return
 	 */
-	public ServletResponse setContentLength(int len);
+	public ServerHeader setContentLength(int len);
 
 	/**
 	 * 设置响应状态
@@ -89,5 +88,5 @@ public interface ServerHeader extends Header {
 	 * @param status
 	 * @return
 	 */
-	public ServletResponse setStatus(int status);
+	public ServerHeader setStatus(int status);
 }

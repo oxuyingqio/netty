@@ -34,6 +34,13 @@
 		</dependency>
 
 		<dependency>
+			<groupId>cn.xuyingqi</groupId>
+			<artifactId>security</artifactId>
+			<version>${xuyingqi.version}</version>
+			<classifier>java</classifier>
+		</dependency>
+
+		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty-all</artifactId>
 			<version>${io.netty.version}</version>

@@ -69,6 +69,13 @@ public interface ServerHeader extends Header {
 	public ServletResponse setContentType(String type);
 
 	/**
+	 * 获取报体长度
+	 * 
+	 * @return
+	 */
+	public int getContentLength();
+
+	/**
 	 * 设置报体长度
 	 * 
 	 * @param len

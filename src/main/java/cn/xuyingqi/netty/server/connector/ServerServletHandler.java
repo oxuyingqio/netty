@@ -3,7 +3,6 @@ package cn.xuyingqi.netty.server.connector;
 import java.util.Iterator;
 
 import cn.xuyingqi.net.server.connector.ServletHandler;
-import cn.xuyingqi.net.server.connector.protocol.datagram.Datagram;
 import cn.xuyingqi.net.server.container.ServletContainer;
 import cn.xuyingqi.net.servlet.ServletContext;
 import cn.xuyingqi.net.servlet.ServletRequest;
@@ -88,7 +87,7 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 		// 创建请求
 		ServletRequest request = new ServerServletRequest(ctx.attr(sessionKey).get(), (ServerDatagram) msg);
 		// 创建响应
-		ServletResponse response = new ServerServletResponse(ctx.attr(sessionKey).get(), request);
+		ServletResponse response = new ServerServletResponse(request, ((ServerDatagram) msg).newInstance());
 
 		// 获取Servlet名称集合
 		Iterator<String> it = this.servletContainer.getServletNames().iterator();

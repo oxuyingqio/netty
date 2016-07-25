@@ -16,4 +16,11 @@ public interface ServerDatagram extends Datagram {
 	 * @return
 	 */
 	public ServerPayload getPayload();
+
+	/**
+	 * 获取一个新的数据报文实例
+	 * 
+	 * @return
+	 */
+	public ServerDatagram newInstance();
 }

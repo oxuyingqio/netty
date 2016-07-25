@@ -1,5 +1,6 @@
 package cn.xuyingqi.netty.server.echo.servlet;
 
+import java.util.Date;
 import java.util.Random;
 
 import cn.xuyingqi.net.servlet.ServletRequest;
@@ -42,6 +43,9 @@ public class EchoServlet extends AbstractServlet {
 			System.out.println("客户端" + request.getRemoteAddr() + ":" + request.getRemotePort() + "说到此一游");
 		}
 
+		System.out.println("当前session id为" + request.getServletSessionId());
+		System.out.println("当前session 创建时间为：" + new Date(request.getServletSession().getCreationTime()));
+		System.out.println("当前session 最后修改时间为：" + new Date(request.getServletSession().getLastAccessedTime()));
 	}
 
 	@Override

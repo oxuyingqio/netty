@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <server-app>
 
-	<servlet name="echoServlet" className="cn.xuyingqi.netty.server.servlet.echo.EchoServlet">
+	<servlet name="echoServlet" className="cn.xuyingqi.netty.server.echo.servlet.EchoServlet">
 		<init-param>
-			<entry>
-				<key>demo</key>
-				<value>123</value>
-			</entry>
+<!-- 			<entry> -->
+<!-- 				<key>demo</key> -->
+<!-- 				<value>123</value> -->
+<!-- 			</entry> -->
 		</init-param>
 	</servlet>
 </server-app>

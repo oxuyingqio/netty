@@ -3,7 +3,7 @@ package cn.xuyingqi.netty.server.echo.protocol;
 import cn.xuyingqi.netty.server.connector.protocol.Decoder;
 import cn.xuyingqi.netty.server.echo.protocol.datagram.EchoDatagram;
 import cn.xuyingqi.netty.server.echo.protocol.datagram.EchoHeader;
-import cn.xuyingqi.netty.server.echo.protocol.datagram.facade.EchoDatagramFacade;
+import cn.xuyingqi.netty.server.echo.protocol.datagram.EchoPayload;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
@@ -41,8 +41,6 @@ public class EchoDecoder extends LengthFieldBasedFrameDecoder implements Decoder
 			return null;
 		}
 
-		// 数据报文
-		EchoDatagram datagram = new EchoDatagram();
 		// 报头
 		EchoHeader header = new EchoHeader();
 
@@ -57,11 +55,7 @@ public class EchoDecoder extends LengthFieldBasedFrameDecoder implements Decoder
 		byte[] payload = new byte[size];
 		frame.readBytes(payload);
 
-		// 设置报头,报体
-		datagram.setHeader(header);
-		datagram.setPayload(payload);
-
 		// 返回外观类
-		return new EchoDatagramFacade(datagram);
+		return new EchoDatagram(header, new EchoPayload());
 	}
 }

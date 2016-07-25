@@ -1,7 +1,9 @@
 package cn.xuyingqi.netty.server.echo.protocol.datagram;
 
-import cn.xuyingqi.net.server.connector.protocol.datagram.Header;
-import cn.xuyingqi.util.util.ByteUtils;
+import java.util.Map;
+
+import cn.xuyingqi.net.servlet.ServletResponse;
+import cn.xuyingqi.netty.server.connector.protocol.datagram.ServerHeader;
 
 /**
  * 应答报头
@@ -9,7 +11,7 @@ import cn.xuyingqi.util.util.ByteUtils;
  * @author XuYQ
  *
  */
-public class EchoHeader implements Header {
+public class EchoHeader implements ServerHeader {
 
 	/**
 	 * 通讯流水号默认长度
@@ -115,5 +117,60 @@ public class EchoHeader implements Header {
 	 */
 	public void setDataLength(byte[] dataLength) {
 		this.dataLength = dataLength;
+	}
+
+	@Override
+	public Map<String, Object> convertMap() {
+		return null;
+	}
+
+	@Override
+	public ServletResponse addHeader(String name, Object value) {
+		return null;
+	}
+
+	@Override
+	public boolean containsHeader(String name) {
+		return false;
+	}
+
+	@Override
+	public ServletResponse setHeader(String name, Object value) {
+		return null;
+	}
+
+	@Override
+	public String getCharacterEncoding() {
+		return null;
+	}
+
+	@Override
+	public ServletResponse setCharacterEncoding(String charset) {
+		return null;
+	}
+
+	@Override
+	public String getContentType() {
+		return null;
+	}
+
+	@Override
+	public ServletResponse setContentType(String type) {
+		return null;
+	}
+
+	@Override
+	public int getContentLength() {
+		return 0;
+	}
+
+	@Override
+	public ServletResponse setContentLength(int len) {
+		return null;
+	}
+
+	@Override
+	public ServletResponse setStatus(int status) {
+		return null;
 	}
 }

@@ -1,7 +1,8 @@
 package cn.xuyingqi.netty.server.echo.protocol.datagram;
 
-import cn.xuyingqi.net.server.connector.protocol.datagram.Datagram;
 import cn.xuyingqi.net.server.connector.protocol.datagram.Header;
+import cn.xuyingqi.netty.server.connector.protocol.datagram.ServerDatagram;
+import cn.xuyingqi.netty.server.connector.protocol.datagram.ServerPayload;
 
 /**
  * 应答数据报文
@@ -9,7 +10,7 @@ import cn.xuyingqi.net.server.connector.protocol.datagram.Header;
  * @author XuYQ
  *
  */
-public class EchoDatagram implements Datagram {
+public class EchoDatagram implements ServerDatagram {
 
 	/**
 	 * 报头
@@ -19,32 +20,37 @@ public class EchoDatagram implements Datagram {
 	/**
 	 * 报体
 	 */
-	private byte[] payload;
+	private EchoPayload payload;
+
+	/**
+	 * 应答数据报文
+	 * 
+	 * @param header
+	 *            报头
+	 * @param payload
+	 *            报体
+	 */
+	public EchoDatagram(EchoHeader header, EchoPayload payload) {
+
+		this.header = header;
+		this.payload = payload;
+	}
 
 	@Override
 	public Header getHeader() {
+
 		return header;
 	}
 
-	/**
-	 * 设置报头
-	 * 
-	 * @param header
-	 */
-	public void setHeader(EchoHeader header) {
-		this.header = header;
-	}
+	@Override
+	public ServerPayload getPayload() {
 
-	public byte[] getPayload() {
 		return payload;
 	}
 
-	/**
-	 * 设置报体
-	 * 
-	 * @param payload
-	 */
-	public void setPayload(byte[] payload) {
-		this.payload = payload;
+	@Override
+	public ServerDatagram newInstance() {
+
+		return new EchoDatagram(new EchoHeader(), new EchoPayload());
 	}
 }

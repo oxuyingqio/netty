@@ -3,7 +3,7 @@ package cn.xuyingqi.netty.server.echo.protocol;
 import java.util.List;
 
 import cn.xuyingqi.netty.server.connector.protocol.Encoder;
-import cn.xuyingqi.netty.server.echo.protocol.datagram.facade.EchoDatagramFacade;
+import cn.xuyingqi.netty.server.echo.protocol.datagram.EchoDatagram;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageEncoder;
 
@@ -13,10 +13,10 @@ import io.netty.handler.codec.MessageToMessageEncoder;
  * @author XuYQ
  *
  */
-public class EchoEncoder extends MessageToMessageEncoder<EchoDatagramFacade> implements Encoder {
+public class EchoEncoder extends MessageToMessageEncoder<EchoDatagram> implements Encoder {
 
 	@Override
-	protected void encode(ChannelHandlerContext ctx, EchoDatagramFacade msg, List<Object> out) throws Exception {
+	protected void encode(ChannelHandlerContext ctx, EchoDatagram msg, List<Object> out) throws Exception {
 
 		// ByteBuf sendBuf = Unpooled.buffer();
 

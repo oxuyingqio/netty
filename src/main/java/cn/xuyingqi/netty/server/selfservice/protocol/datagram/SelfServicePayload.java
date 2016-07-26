@@ -50,6 +50,13 @@ public class SelfServicePayload implements ServerPayload {
 
 	/**
 	 * 自助缴费报体
+	 */
+	public SelfServicePayload() {
+
+	}
+
+	/**
+	 * 自助缴费报体
 	 * 
 	 * @param payload
 	 */

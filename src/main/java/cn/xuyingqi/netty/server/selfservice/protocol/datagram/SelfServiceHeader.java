@@ -33,6 +33,13 @@ public class SelfServiceHeader implements ServerHeader {
 
 	/**
 	 * 自助缴费报头
+	 */
+	public SelfServiceHeader() {
+
+	}
+
+	/**
+	 * 自助缴费报头
 	 * 
 	 * @param header
 	 */

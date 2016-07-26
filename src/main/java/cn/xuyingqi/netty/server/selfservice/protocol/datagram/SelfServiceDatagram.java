@@ -34,6 +34,12 @@ public class SelfServiceDatagram implements ServerDatagram {
 		this.payload = new SelfServicePayload(datagram.getPayload());
 	}
 
+	public SelfServiceDatagram() {
+
+		this.header = new SelfServiceHeader();
+		this.payload = new SelfServicePayload();
+	}
+
 	@Override
 	public Header getHeader() {
 
@@ -49,6 +55,6 @@ public class SelfServiceDatagram implements ServerDatagram {
 	@Override
 	public ServerDatagram newResponse() {
 
-		return null;
+		return new SelfServiceDatagram();
 	}
 }

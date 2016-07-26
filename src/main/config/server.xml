@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <server>
 
-	<protocol name="echo" className="cn.xuyingqi.netty.server.echo.protocol.EchoProtocol" />
 	<protocol name="selfservice" className="cn.xuyingqi.netty.server.selfservice.protocol.SelfServiceProtocol" />
 
 	<service>

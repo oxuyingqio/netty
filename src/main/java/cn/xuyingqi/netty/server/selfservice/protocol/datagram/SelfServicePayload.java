@@ -333,8 +333,30 @@ public class SelfServicePayload implements ServerPayload {
 	}
 
 	@Override
-	public Map<String, Object> convertMap() {
+	public Map<String, Object> toMap() {
 
 		return map;
+	}
+
+	@Override
+	public ServerPayload addParamter(String name, Object value) {
+
+		map.put(name, value);
+
+		return this;
+	}
+
+	@Override
+	public boolean containsParamter(String name) {
+
+		return map.get(name) != null;
+	}
+
+	@Override
+	public ServerPayload setParamter(String name, Object value) {
+
+		map.put(name, value);
+
+		return this;
 	}
 }

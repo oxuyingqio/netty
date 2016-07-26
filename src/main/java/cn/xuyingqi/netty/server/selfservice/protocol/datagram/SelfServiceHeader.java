@@ -22,11 +22,6 @@ import cn.xuyingqi.util.util.MapFactory;
 public class SelfServiceHeader implements ServerHeader {
 
 	/**
-	 * 默认编码集
-	 */
-	private static final String CHARSET = "GBK";
-
-	/**
 	 * 时间格式化
 	 */
 	private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -107,7 +102,7 @@ public class SelfServiceHeader implements ServerHeader {
 	}
 
 	@Override
-	public Map<String, Object> convertMap() {
+	public Map<String, Object> toMap() {
 
 		return map;
 	}
@@ -130,56 +125,6 @@ public class SelfServiceHeader implements ServerHeader {
 	public ServerHeader setHeader(String name, Object value) {
 
 		map.put(name, value);
-
-		return this;
-	}
-
-	@Override
-	public String getCharacterEncoding() {
-
-		return CHARSET;
-	}
-
-	@Override
-	public ServerHeader setCharacterEncoding(String charset) {
-
-		// 什么都不做
-
-		return this;
-	}
-
-	@Override
-	public String getContentType() {
-
-		return map.get(HeaderConstant.COMMAND_ID).toString();
-	}
-
-	@Override
-	public ServerHeader setContentType(String type) {
-
-		map.put(HeaderConstant.COMMAND_ID, type);
-
-		return this;
-	}
-
-	@Override
-	public int getContentLength() {
-
-		return Integer.valueOf(map.get(HeaderConstant.DATA_LENGTH).toString());
-	}
-
-	@Override
-	public ServerHeader setContentLength(int len) {
-
-		map.put(HeaderConstant.DATA_LENGTH, len);
-
-		return this;
-	}
-
-	@Override
-	public ServerHeader setStatus(int status) {
-
-		map.put(HeaderConstant.RESPOND_STATE, status);
 
 		return this;
 	}

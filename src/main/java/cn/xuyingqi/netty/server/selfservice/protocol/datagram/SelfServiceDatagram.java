@@ -47,7 +47,7 @@ public class SelfServiceDatagram implements ServerDatagram {
 	}
 
 	@Override
-	public ServerDatagram response() {
+	public ServerDatagram newResponse() {
 
 		return null;
 	}

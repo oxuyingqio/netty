@@ -5,10 +5,16 @@ import java.util.Iterator;
 import cn.xuyingqi.net.server.container.ServletContainer;
 import cn.xuyingqi.net.server.servlet.ServletHandler;
 import cn.xuyingqi.net.servlet.ServletContext;
-import cn.xuyingqi.netty.server.connector.protocol.datagram.ServerDatagram;
+import cn.xuyingqi.net.servlet.ServletRequest;
+import cn.xuyingqi.net.servlet.ServletResponse;
+import cn.xuyingqi.net.servlet.ServletSession;
+import cn.xuyingqi.netty.server.protocol.datagram.ServerDatagram;
 import cn.xuyingqi.netty.server.servlet.ServerServletRequest;
 import cn.xuyingqi.netty.server.servlet.ServerServletResponse;
 import cn.xuyingqi.netty.server.servlet.ServerServletSession;
+import cn.xuyingqi.netty.server.servlet.facade.ServerServletRequestFacade;
+import cn.xuyingqi.netty.server.servlet.facade.ServerServletResponseFacade;
+import cn.xuyingqi.netty.server.servlet.facade.ServerServletSessionFacade;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.Attribute;
@@ -30,7 +36,7 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 	/**
 	 * 属性值:session
 	 */
-	private AttributeKey<ServerServletSession> sessionKey = AttributeKey.valueOf("session");
+	private AttributeKey<ServerServletSession> serverSessionKey = AttributeKey.valueOf("session");
 
 	@Override
 	public void init(ServletContainer servletContainer) {
@@ -61,12 +67,12 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 		}
 
 		// 创建session对象
-		ServerServletSession session = new ServerServletSession(context, ctx.channel().localAddress(),
+		ServerServletSession serverSession = new ServerServletSession(context, ctx.channel().localAddress(),
 				ctx.channel().remoteAddress());
 
 		// 设置该链接的session属性
-		Attribute<ServerServletSession> attr = ctx.attr(sessionKey);
-		attr.set(session);
+		Attribute<ServerServletSession> attr = ctx.attr(serverSessionKey);
+		attr.set(serverSession);
 
 		// 后续处理
 		ctx.fireChannelActive();
@@ -82,10 +88,22 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
-		// 创建请求
-		ServerServletRequest request = new ServerServletRequest(ctx.attr(sessionKey).get(), (ServerDatagram) msg);
-		// 创建响应
-		ServerServletResponse response = new ServerServletResponse(request, ((ServerDatagram) msg).response());
+		// 服务会话
+		ServerServletSession serverSession = ctx.attr(serverSessionKey).get();
+		// 修改最后一次请求时间
+		serverSession.updateLastAccessedTime();
+		// 会话外观类
+		ServletSession session = new ServerServletSessionFacade(serverSession);
+
+		// 服务请求
+		ServerServletRequest serverRequest = new ServerServletRequest(session, (ServerDatagram) msg);
+		// 请求外观类
+		ServletRequest request = new ServerServletRequestFacade(serverRequest);
+
+		// 服务响应
+		ServerServletResponse serverResponse = new ServerServletResponse(request, ((ServerDatagram) msg).newResponse());
+		// 响应外观类
+		ServletResponse response = new ServerServletResponseFacade(serverResponse);
 
 		// 获取Servlet名称集合
 		Iterator<String> it = this.servletContainer.getServletNames().iterator();
@@ -94,8 +112,8 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 			// 调用Servlet
 			this.servletContainer.getServlet(it.next()).service(request, response);
 		}
-		
-		ctx.write(response);
+		// 获取响应数据报文
+		ctx.write(serverResponse.getServerDatagram());
 
 		// 后续处理
 		ctx.fireChannelRead(msg);

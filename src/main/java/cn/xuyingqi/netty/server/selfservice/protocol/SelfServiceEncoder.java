@@ -2,7 +2,7 @@ package cn.xuyingqi.netty.server.selfservice.protocol;
 
 import java.util.List;
 
-import cn.xuyingqi.netty.server.connector.protocol.Encoder;
+import cn.xuyingqi.netty.server.protocol.Encoder;
 import cn.xuyingqi.netty.server.selfservice.protocol.datagram.SelfServiceDatagram;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageEncoder;

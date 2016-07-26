@@ -1,8 +1,8 @@
 package cn.xuyingqi.netty.server.selfservice.protocol;
 
-import cn.xuyingqi.netty.server.connector.protocol.Decoder;
-import cn.xuyingqi.netty.server.connector.protocol.Encoder;
-import cn.xuyingqi.netty.server.connector.protocol.ServerProtocol;
+import cn.xuyingqi.netty.server.protocol.Decoder;
+import cn.xuyingqi.netty.server.protocol.Encoder;
+import cn.xuyingqi.netty.server.protocol.ServerProtocol;
 
 /**
  * 自助缴费协议

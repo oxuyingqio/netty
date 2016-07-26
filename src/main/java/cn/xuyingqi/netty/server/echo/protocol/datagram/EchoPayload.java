@@ -2,7 +2,7 @@ package cn.xuyingqi.netty.server.echo.protocol.datagram;
 
 import java.util.Map;
 
-import cn.xuyingqi.netty.server.connector.protocol.datagram.ServerPayload;
+import cn.xuyingqi.netty.server.protocol.datagram.ServerPayload;
 
 /**
  * 应答报体

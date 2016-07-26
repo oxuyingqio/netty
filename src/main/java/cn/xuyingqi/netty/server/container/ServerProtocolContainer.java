@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.Set;
 
 import cn.xuyingqi.net.server.container.ProtocolContainer;
-import cn.xuyingqi.netty.server.connector.protocol.ServerProtocol;
 import cn.xuyingqi.netty.server.core.ServerXml;
 import cn.xuyingqi.netty.server.core.ServerXml.ProtocolConfig;
+import cn.xuyingqi.netty.server.protocol.ServerProtocol;
 import cn.xuyingqi.util.util.MapFactory;
 
 /**

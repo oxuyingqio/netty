@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 
-import cn.xuyingqi.netty.server.connector.protocol.datagram.ServerHeader;
+import cn.xuyingqi.netty.server.protocol.datagram.ServerHeader;
 import cn.xuyingqi.netty.server.selfservice.protocol.datagram.constant.HeaderConstant;
 import cn.xuyingqi.netty.server.selfservice.protocol.datagram.prototype.Header;
 import cn.xuyingqi.netty.server.selfservice.temp.Command;

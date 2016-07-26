@@ -5,7 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 
-import cn.xuyingqi.netty.server.connector.protocol.datagram.ServerPayload;
+import cn.xuyingqi.netty.server.protocol.datagram.ServerPayload;
 import cn.xuyingqi.netty.server.selfservice.protocol.datagram.constant.ICCardRechargeRequestConstant;
 import cn.xuyingqi.netty.server.selfservice.protocol.datagram.constant.PaymentRequestConstant;
 import cn.xuyingqi.netty.server.selfservice.protocol.datagram.constant.QueryICCardInfoRequestConstant;

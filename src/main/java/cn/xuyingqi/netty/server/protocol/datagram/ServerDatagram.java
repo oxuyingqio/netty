@@ -1,4 +1,4 @@
-package cn.xuyingqi.netty.server.connector.protocol.datagram;
+package cn.xuyingqi.netty.server.protocol.datagram;
 
 import cn.xuyingqi.net.server.protocol.datagram.Datagram;
 
@@ -11,16 +11,9 @@ import cn.xuyingqi.net.server.protocol.datagram.Datagram;
 public interface ServerDatagram extends Datagram {
 
 	/**
-	 * 获取报体
-	 * 
-	 * @return
-	 */
-	public ServerPayload getPayload();
-
-	/**
 	 * 创建对应响应的数据报文
 	 * 
 	 * @return
 	 */
-	public ServerDatagram response();
+	public ServerDatagram newResponse();
 }

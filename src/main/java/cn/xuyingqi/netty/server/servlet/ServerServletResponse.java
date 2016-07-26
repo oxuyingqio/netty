@@ -3,8 +3,9 @@ package cn.xuyingqi.netty.server.servlet;
 import cn.xuyingqi.net.servlet.ServletRequest;
 import cn.xuyingqi.net.servlet.ServletResponse;
 import cn.xuyingqi.net.servlet.impl.AbstractServletResponse;
-import cn.xuyingqi.netty.server.connector.protocol.datagram.ServerDatagram;
-import cn.xuyingqi.netty.server.connector.protocol.datagram.ServerHeader;
+import cn.xuyingqi.netty.server.protocol.datagram.ServerDatagram;
+import cn.xuyingqi.netty.server.protocol.datagram.ServerHeader;
+import cn.xuyingqi.netty.server.protocol.datagram.ServerPayload;
 
 /**
  * Servlet响应
@@ -18,11 +19,6 @@ public class ServerServletResponse extends AbstractServletResponse {
 	 * 数据报文
 	 */
 	private ServerDatagram datagram;
-
-	/**
-	 * 是否已提交
-	 */
-	private boolean commit = false;
 
 	/**
 	 * Servlet响应
@@ -60,52 +56,34 @@ public class ServerServletResponse extends AbstractServletResponse {
 	}
 
 	@Override
-	public String getCharacterEncoding() {
+	public ServletResponse addParamter(String name, Object value) {
 
-		return ((ServerHeader) this.datagram.getHeader()).getCharacterEncoding();
-	}
-
-	@Override
-	public ServletResponse setCharacterEncoding(String charset) {
-
-		((ServerHeader) this.datagram.getHeader()).setCharacterEncoding(charset);
+		((ServerPayload) this.datagram.getPayload()).addParamter(name, value);
 
 		return this;
 	}
 
 	@Override
-	public String getContentType() {
+	public boolean containsParamter(String name) {
 
-		return ((ServerHeader) this.datagram.getHeader()).getContentType();
+		return ((ServerPayload) this.datagram.getPayload()).containsParamter(name);
 	}
 
 	@Override
-	public ServletResponse setContentType(String type) {
+	public ServletResponse setParamter(String name, Object value) {
 
-		((ServerHeader) this.datagram.getHeader()).setContentType(type);
+		((ServerPayload) this.datagram.getPayload()).setParamter(name, value);
 
 		return this;
 	}
 
-	@Override
-	public ServletResponse setContentLength(int len) {
+	/**
+	 * 返回数据报文对象
+	 * 
+	 * @return
+	 */
+	public ServerDatagram getServerDatagram() {
 
-		((ServerHeader) this.datagram.getHeader()).setContentLength(len);
-
-		return this;
-	}
-
-	@Override
-	public ServletResponse setStatus(int status) {
-
-		((ServerHeader) this.datagram.getHeader()).setStatus(status);
-
-		return this;
-	}
-
-	@Override
-	public boolean isCommitted() {
-
-		return this.commit;
+		return this.datagram;
 	}
 }

@@ -3,9 +3,9 @@ package cn.xuyingqi.netty.server.servlet;
 import java.util.Map;
 import java.util.Set;
 
+import cn.xuyingqi.net.servlet.ServletSession;
 import cn.xuyingqi.net.servlet.impl.AbstractServletRequest;
-import cn.xuyingqi.netty.server.connector.protocol.datagram.ServerDatagram;
-import cn.xuyingqi.netty.server.connector.protocol.datagram.ServerHeader;
+import cn.xuyingqi.netty.server.protocol.datagram.ServerDatagram;
 
 /**
  * Servlet请求
@@ -14,11 +14,6 @@ import cn.xuyingqi.netty.server.connector.protocol.datagram.ServerHeader;
  *
  */
 public class ServerServletRequest extends AbstractServletRequest {
-
-	/**
-	 * 数据报文
-	 */
-	private ServerDatagram datagram;
 
 	/**
 	 * 报头Map集合
@@ -35,15 +30,12 @@ public class ServerServletRequest extends AbstractServletRequest {
 	 * 
 	 * @param servletSession
 	 */
-	public ServerServletRequest(ServerServletSession servletSession, ServerDatagram datagram) {
+	public ServerServletRequest(ServletSession servletSession, ServerDatagram datagram) {
 
 		super(servletSession);
-		// 更新最后一次请求时间
-		servletSession.updateLastAccessedTime();
 
-		this.datagram = datagram;
-		this.headerMap = this.datagram.getHeader().convertMap();
-		this.payloadMap = this.datagram.getPayload().convertMap();
+		this.headerMap = datagram.getHeader().toMap();
+		this.payloadMap = datagram.getPayload().toMap();
 	}
 
 	@Override
@@ -56,24 +48,6 @@ public class ServerServletRequest extends AbstractServletRequest {
 	public Object getHeader(String name) {
 
 		return this.headerMap.get(name);
-	}
-
-	@Override
-	public String getCharacterEncoding() {
-
-		return ((ServerHeader) this.datagram.getHeader()).getCharacterEncoding();
-	}
-
-	@Override
-	public String getContentType() {
-
-		return ((ServerHeader) this.datagram.getHeader()).getContentType();
-	}
-
-	@Override
-	public int getContentLength() {
-
-		return ((ServerHeader) this.datagram.getHeader()).getContentLength();
 	}
 
 	@Override

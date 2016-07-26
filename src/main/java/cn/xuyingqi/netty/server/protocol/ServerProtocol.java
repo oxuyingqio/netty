@@ -1,4 +1,4 @@
-package cn.xuyingqi.netty.server.connector.protocol;
+package cn.xuyingqi.netty.server.protocol;
 
 import cn.xuyingqi.net.server.protocol.Protocol;
 

@@ -2,8 +2,8 @@ package cn.xuyingqi.netty.server.echo.protocol;
 
 import java.util.List;
 
-import cn.xuyingqi.netty.server.connector.protocol.Encoder;
 import cn.xuyingqi.netty.server.echo.protocol.datagram.EchoDatagram;
+import cn.xuyingqi.netty.server.protocol.Encoder;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageEncoder;
 

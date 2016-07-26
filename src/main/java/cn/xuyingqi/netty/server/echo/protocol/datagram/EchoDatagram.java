@@ -1,8 +1,8 @@
 package cn.xuyingqi.netty.server.echo.protocol.datagram;
 
 import cn.xuyingqi.net.server.protocol.datagram.Header;
-import cn.xuyingqi.netty.server.connector.protocol.datagram.ServerDatagram;
-import cn.xuyingqi.netty.server.connector.protocol.datagram.ServerPayload;
+import cn.xuyingqi.netty.server.protocol.datagram.ServerDatagram;
+import cn.xuyingqi.netty.server.protocol.datagram.ServerPayload;
 
 /**
  * 应答数据报文

@@ -1,6 +1,6 @@
 package cn.xuyingqi.netty.server.selfservice.protocol;
 
-import cn.xuyingqi.netty.server.connector.protocol.Decoder;
+import cn.xuyingqi.netty.server.protocol.Decoder;
 import cn.xuyingqi.netty.server.selfservice.protocol.datagram.SelfServiceDatagram;
 import cn.xuyingqi.netty.server.selfservice.protocol.datagram.prototype.Datagram;
 import cn.xuyingqi.netty.server.selfservice.protocol.datagram.prototype.Header;

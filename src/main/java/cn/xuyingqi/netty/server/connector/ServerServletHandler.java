@@ -48,7 +48,9 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 
-		// 异常则关闭连接
+		// 打印错误信息
+		cause.printStackTrace();
+		// 关闭连接
 		ctx.close();
 	}
 

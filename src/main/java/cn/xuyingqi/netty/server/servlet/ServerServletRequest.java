@@ -1,11 +1,12 @@
 package cn.xuyingqi.netty.server.servlet;
 
-import java.util.Map;
 import java.util.Set;
 
 import cn.xuyingqi.net.servlet.ServletSession;
 import cn.xuyingqi.net.servlet.impl.AbstractServletRequest;
 import cn.xuyingqi.netty.server.protocol.datagram.ServerDatagram;
+import cn.xuyingqi.netty.server.protocol.datagram.ServerHeader;
+import cn.xuyingqi.netty.server.protocol.datagram.ServerPayload;
 
 /**
  * Servlet请求
@@ -16,14 +17,14 @@ import cn.xuyingqi.netty.server.protocol.datagram.ServerDatagram;
 public class ServerServletRequest extends AbstractServletRequest {
 
 	/**
-	 * 报头Map集合
+	 * 报头
 	 */
-	private Map<String, Object> headerMap;
+	private ServerHeader header;
 
 	/**
-	 * 报体Map集合
+	 * 报体
 	 */
-	private Map<String, Object> payloadMap;
+	private ServerPayload payload;
 
 	/**
 	 * Servlet请求
@@ -34,31 +35,31 @@ public class ServerServletRequest extends AbstractServletRequest {
 
 		super(servletSession);
 
-		this.headerMap = datagram.getHeader().toMap();
-		this.payloadMap = datagram.getPayload().toMap();
+		this.header = (ServerHeader) datagram.getHeader();
+		this.payload = (ServerPayload) datagram.getPayload();
 	}
 
 	@Override
 	public Set<String> getHeaderNames() {
 
-		return this.headerMap.keySet();
+		return this.header.toMap().keySet();
 	}
 
 	@Override
 	public Object getHeader(String name) {
 
-		return this.headerMap.get(name);
+		return this.header.getHeader(name);
 	}
 
 	@Override
 	public Set<String> getParameterNames() {
 
-		return this.payloadMap.keySet();
+		return this.payload.toMap().keySet();
 	}
 
 	@Override
 	public Object getParameter(String name) {
 
-		return this.payloadMap.get(name);
+		return this.payload.getParameter(name);
 	}
 }

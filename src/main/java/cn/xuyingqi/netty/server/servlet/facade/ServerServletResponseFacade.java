@@ -49,20 +49,20 @@ public class ServerServletResponseFacade implements ServletResponse {
 	}
 
 	@Override
-	public ServletResponse addParamter(String name, Object value) {
+	public ServletResponse addParameter(String name, Object value) {
 
-		return this.response.addParamter(name, value);
+		return this.response.addParameter(name, value);
 	}
 
 	@Override
-	public boolean containsParamter(String name) {
+	public boolean containsParameter(String name) {
 
-		return this.response.containsParamter(name);
+		return this.response.containsParameter(name);
 	}
 
 	@Override
-	public ServletResponse setParamter(String name, Object value) {
+	public ServletResponse setParameter(String name, Object value) {
 
-		return this.response.setParamter(name, value);
+		return this.response.setParameter(name, value);
 	}
 }

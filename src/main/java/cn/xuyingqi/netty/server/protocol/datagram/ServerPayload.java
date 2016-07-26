@@ -17,15 +17,15 @@ public interface ServerPayload extends Payload {
 	 * @param value
 	 * @return
 	 */
-	public ServerPayload addParamter(String name, Object value);
+	public ServerPayload addParameter(String name, Object value);
 
 	/**
-	 * 检查参数是否存在
+	 * 参数是否存在
 	 * 
 	 * @param name
 	 * @return
 	 */
-	public boolean containsParamter(String name);
+	public boolean containsParameter(String name);
 
 	/**
 	 * 设置参数的值
@@ -34,5 +34,13 @@ public interface ServerPayload extends Payload {
 	 * @param value
 	 * @return
 	 */
-	public ServerPayload setParamter(String name, Object value);
+	public ServerPayload setParameter(String name, Object value);
+
+	/**
+	 * 获取参数的值
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public Object getParameter(String name);
 }

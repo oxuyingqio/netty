@@ -35,4 +35,12 @@ public interface ServerHeader extends Header {
 	 * @return
 	 */
 	public ServerHeader setHeader(String name, Object value);
+
+	/**
+	 * 获取报头某项值
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public Object getHeader(String name);
 }

@@ -56,23 +56,23 @@ public class ServerServletResponse extends AbstractServletResponse {
 	}
 
 	@Override
-	public ServletResponse addParamter(String name, Object value) {
+	public ServletResponse addParameter(String name, Object value) {
 
-		((ServerPayload) this.datagram.getPayload()).addParamter(name, value);
+		((ServerPayload) this.datagram.getPayload()).addParameter(name, value);
 
 		return this;
 	}
 
 	@Override
-	public boolean containsParamter(String name) {
+	public boolean containsParameter(String name) {
 
-		return ((ServerPayload) this.datagram.getPayload()).containsParamter(name);
+		return ((ServerPayload) this.datagram.getPayload()).containsParameter(name);
 	}
 
 	@Override
-	public ServletResponse setParamter(String name, Object value) {
+	public ServletResponse setParameter(String name, Object value) {
 
-		((ServerPayload) this.datagram.getPayload()).setParamter(name, value);
+		((ServerPayload) this.datagram.getPayload()).setParameter(name, value);
 
 		return this;
 	}

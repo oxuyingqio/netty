@@ -46,15 +46,6 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 	}
 
 	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-
-		// 打印错误信息
-		cause.printStackTrace();
-		// 关闭连接
-		ctx.close();
-	}
-
-	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 
 		// Servlet上下文
@@ -125,5 +116,14 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
 
 		ctx.flush();
+	}
+
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+
+		// 打印错误信息
+		cause.printStackTrace();
+		// 关闭连接
+		ctx.close();
 	}
 }

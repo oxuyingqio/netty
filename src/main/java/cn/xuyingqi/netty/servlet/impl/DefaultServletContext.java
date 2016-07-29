@@ -3,6 +3,7 @@ package cn.xuyingqi.netty.servlet.impl;
 import java.util.Set;
 
 import cn.xuyingqi.net.servlet.impl.AbstractServletContext;
+import cn.xuyingqi.util.util.SetFactory;
 
 /**
  * 默认的Servlet上下文
@@ -12,19 +13,19 @@ import cn.xuyingqi.net.servlet.impl.AbstractServletContext;
  */
 public class DefaultServletContext extends AbstractServletContext {
 
-	/**
-	 * 未实现,不影响使用
-	 */
 	@Override
 	public Set<String> getInitParamterNames() {
-		return null;
+
+		// 未实现,不影响使用
+
+		return SetFactory.newInstance();
 	}
 
-	/**
-	 * 未实现,不影响使用
-	 */
 	@Override
 	public Object getInitParameter(String name) {
+
+		// 未实现,不影响使用
+
 		return null;
 	}
 }

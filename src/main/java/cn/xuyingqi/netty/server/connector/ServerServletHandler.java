@@ -14,7 +14,7 @@ import cn.xuyingqi.netty.server.servlet.ServerServletResponse;
 import cn.xuyingqi.netty.server.servlet.facade.ServerServletRequestFacade;
 import cn.xuyingqi.netty.server.servlet.facade.ServerServletResponseFacade;
 import cn.xuyingqi.netty.servlet.impl.DefaultServletSession;
-import cn.xuyingqi.netty.servlet.impl.DefaultServletSessionFacade;
+import cn.xuyingqi.netty.servlet.impl.ServletSessionFacade;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.Attribute;
@@ -86,7 +86,7 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 		// 修改最后一次请求时间
 		serverSession.updateLastAccessedTime();
 		// 会话外观类
-		ServletSession session = new DefaultServletSessionFacade(serverSession);
+		ServletSession session = new ServletSessionFacade(serverSession);
 
 		// 服务请求
 		ServerServletRequest serverRequest = new ServerServletRequest(session, (NettyDatagram) msg);

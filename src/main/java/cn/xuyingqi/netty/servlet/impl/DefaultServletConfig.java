@@ -16,6 +16,11 @@ import cn.xuyingqi.util.util.MapFactory;
 public class DefaultServletConfig extends AbstractServletConfig {
 
 	/**
+	 * 默认的Servlet上下文类路径
+	 */
+	private static final String DEFAULT_SERVLET_CONTEXT_CLASS = "cn.xuyingqi.netty.servlet.impl.DefaultServletContext";
+
+	/**
 	 * 初始化参数
 	 */
 	private Map<String, String> initParamter = MapFactory.newInstance();
@@ -37,8 +42,8 @@ public class DefaultServletConfig extends AbstractServletConfig {
 
 		try {
 
-			String contextClass = this.initParamter.get("context") == null
-					? "cn.xuyingqi.netty.server.servlet.DefaultServletContext" : this.initParamter.get("context");
+			String contextClass = this.initParamter.get("context") == null ? DEFAULT_SERVLET_CONTEXT_CLASS
+					: this.initParamter.get("context");
 			this.context = (ServletContext) Class.forName(contextClass).newInstance();
 
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {

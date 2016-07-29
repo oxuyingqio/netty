@@ -7,24 +7,25 @@ import cn.xuyingqi.net.servlet.ServletContext;
 import cn.xuyingqi.net.servlet.ServletSession;
 
 /**
- * 默认Servlet会话外观类
+ * Servlet会话外观类
  * 
  * @author XuYQ
  *
  */
-public class DefaultServletSessionFacade implements ServletSession {
+public class ServletSessionFacade implements ServletSession {
 
 	/**
-	 * 包装的默认Servlet会话
+	 * 包装的Servlet会话
 	 */
-	private DefaultServletSession session;
+	private ServletSession session;
 
 	/**
-	 * 默认Servlet会话外观类
+	 * Servlet会话外观类
 	 * 
 	 * @param session
+	 *            Servlet会话子类实现
 	 */
-	public DefaultServletSessionFacade(DefaultServletSession session) {
+	public ServletSessionFacade(ServletSession session) {
 
 		this.session = session;
 	}

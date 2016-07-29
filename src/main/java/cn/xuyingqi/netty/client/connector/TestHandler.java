@@ -1,6 +1,6 @@
 package cn.xuyingqi.netty.client.connector;
 
-import cn.xuyingqi.netty.servlet.DefaultServletSession;
+import cn.xuyingqi.netty.servlet.impl.DefaultServletSession;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;

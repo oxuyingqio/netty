@@ -9,7 +9,7 @@ import cn.xuyingqi.net.server.container.ServletContainer;
 import cn.xuyingqi.net.servlet.Servlet;
 import cn.xuyingqi.netty.server.core.ServerAppXml;
 import cn.xuyingqi.netty.server.core.ServerAppXml.ServletConfig;
-import cn.xuyingqi.netty.server.servlet.DefaultServletConfig;
+import cn.xuyingqi.netty.servlet.impl.DefaultServletConfig;
 import cn.xuyingqi.util.util.MapFactory;
 
 /**

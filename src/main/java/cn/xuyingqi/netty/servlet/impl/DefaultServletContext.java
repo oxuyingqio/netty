@@ -1,4 +1,4 @@
-package cn.xuyingqi.netty.server.servlet;
+package cn.xuyingqi.netty.servlet.impl;
 
 import java.util.Set;
 

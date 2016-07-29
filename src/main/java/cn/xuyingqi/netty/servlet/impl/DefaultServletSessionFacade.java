@@ -1,11 +1,10 @@
-package cn.xuyingqi.netty.servlet.facade;
+package cn.xuyingqi.netty.servlet.impl;
 
 import java.net.InetAddress;
 import java.util.Set;
 
 import cn.xuyingqi.net.servlet.ServletContext;
 import cn.xuyingqi.net.servlet.ServletSession;
-import cn.xuyingqi.netty.servlet.DefaultServletSession;
 
 /**
  * 默认Servlet会话外观类

@@ -1,4 +1,4 @@
-package cn.xuyingqi.netty.servlet;
+package cn.xuyingqi.netty.servlet.impl;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;

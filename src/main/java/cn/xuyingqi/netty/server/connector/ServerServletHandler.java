@@ -105,7 +105,7 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 			// 调用Servlet
 			this.servletContainer.getServlet(it.next()).service(request, response);
 		}
-		// 获取响应数据报文
+		// 写入响应数据报文
 		ctx.write(serverResponse.getServerDatagram());
 
 		// 后续处理

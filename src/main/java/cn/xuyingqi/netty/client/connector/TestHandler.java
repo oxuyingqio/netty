@@ -1,8 +1,10 @@
 package cn.xuyingqi.netty.client.connector;
 
+import cn.xuyingqi.netty.servlet.NettyServletSession;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.util.AttributeKey;
 
 /**
  * 测试处理器
@@ -12,12 +14,17 @@ import io.netty.channel.ChannelHandlerContext;
  */
 public class TestHandler extends ChannelHandlerAdapter {
 
+	/**
+	 * 属性值:session
+	 */
+	private AttributeKey<NettyServletSession> serverSessionKey = AttributeKey.valueOf("session");
+
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-		
+
 		System.out.println(ctx.channel().localAddress());
 		System.out.println(ctx.channel().remoteAddress());
-		
+
 		System.out.println("连上了");
 
 		// 后续处理
@@ -35,7 +42,7 @@ public class TestHandler extends ChannelHandlerAdapter {
 
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-		
+
 		byte[] demo = "this is first message".getBytes();
 		ctx.writeAndFlush(Unpooled.buffer(demo.length).writeBytes(demo));
 
@@ -45,7 +52,7 @@ public class TestHandler extends ChannelHandlerAdapter {
 
 	@Override
 	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-		
+
 		ctx.flush();
 	}
 

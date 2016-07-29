@@ -21,12 +21,12 @@ public class NettyServletSession extends AbstractServletSession {
 	private long lastAccessedTime;
 
 	/**
-	 * 服务器地址
+	 * 本机地址
 	 */
 	private InetSocketAddress local;
 
 	/**
-	 * 客户端地址
+	 * 远程地址
 	 */
 	private InetSocketAddress remote;
 
@@ -36,9 +36,9 @@ public class NettyServletSession extends AbstractServletSession {
 	 * @param servletContext
 	 *            Servlet上下文
 	 * @param local
-	 *            服务器地址
+	 *            本机地址
 	 * @param remote
-	 *            客户端地址
+	 *            远程地址
 	 */
 	public NettyServletSession(ServletContext servletContext, SocketAddress local, SocketAddress remote) {
 

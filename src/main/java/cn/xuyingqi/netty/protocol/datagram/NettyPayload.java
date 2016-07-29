@@ -1,6 +1,6 @@
 package cn.xuyingqi.netty.protocol.datagram;
 
-import cn.xuyingqi.net.server.protocol.datagram.Payload;
+import cn.xuyingqi.net.protocol.datagram.Payload;
 
 /**
  * 报体

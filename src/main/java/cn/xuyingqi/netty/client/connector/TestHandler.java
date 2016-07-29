@@ -14,7 +14,10 @@ public class TestHandler extends ChannelHandlerAdapter {
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-
+		
+		System.out.println(ctx.channel().localAddress());
+		System.out.println(ctx.channel().remoteAddress());
+		
 		System.out.println("连上了");
 
 		// 后续处理

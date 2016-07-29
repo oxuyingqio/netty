@@ -1,11 +1,11 @@
-package cn.xuyingqi.netty.server.servlet.facade;
+package cn.xuyingqi.netty.servlet.facade;
 
 import java.net.InetAddress;
 import java.util.Set;
 
 import cn.xuyingqi.net.servlet.ServletContext;
 import cn.xuyingqi.net.servlet.ServletSession;
-import cn.xuyingqi.netty.server.servlet.ServerServletSession;
+import cn.xuyingqi.netty.servlet.NettyServletSession;
 
 /**
  * ServerServlet会话外观类
@@ -13,19 +13,19 @@ import cn.xuyingqi.netty.server.servlet.ServerServletSession;
  * @author XuYQ
  *
  */
-public class ServerServletSessionFacade implements ServletSession {
+public class NettyServletSessionFacade implements ServletSession {
 
 	/**
 	 * 包装的ServerServlet会话
 	 */
-	private ServerServletSession session;
+	private NettyServletSession session;
 
 	/**
 	 * ServerServlet会话外观类
 	 * 
 	 * @param session
 	 */
-	public ServerServletSessionFacade(ServerServletSession session) {
+	public NettyServletSessionFacade(NettyServletSession session) {
 
 		this.session = session;
 	}

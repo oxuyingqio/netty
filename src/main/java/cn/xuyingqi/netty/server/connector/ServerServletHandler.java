@@ -11,10 +11,10 @@ import cn.xuyingqi.net.servlet.ServletSession;
 import cn.xuyingqi.netty.protocol.datagram.NettyDatagram;
 import cn.xuyingqi.netty.server.servlet.ServerServletRequest;
 import cn.xuyingqi.netty.server.servlet.ServerServletResponse;
-import cn.xuyingqi.netty.server.servlet.ServerServletSession;
 import cn.xuyingqi.netty.server.servlet.facade.ServerServletRequestFacade;
 import cn.xuyingqi.netty.server.servlet.facade.ServerServletResponseFacade;
-import cn.xuyingqi.netty.server.servlet.facade.ServerServletSessionFacade;
+import cn.xuyingqi.netty.servlet.NettyServletSession;
+import cn.xuyingqi.netty.servlet.facade.NettyServletSessionFacade;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.Attribute;
@@ -36,7 +36,7 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 	/**
 	 * 属性值:session
 	 */
-	private AttributeKey<ServerServletSession> serverSessionKey = AttributeKey.valueOf("session");
+	private AttributeKey<NettyServletSession> serverSessionKey = AttributeKey.valueOf("session");
 
 	@Override
 	public void init(ServletContainer servletContainer) {
@@ -60,11 +60,11 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 		}
 
 		// 创建session对象
-		ServerServletSession serverSession = new ServerServletSession(context, ctx.channel().localAddress(),
+		NettyServletSession serverSession = new NettyServletSession(context, ctx.channel().localAddress(),
 				ctx.channel().remoteAddress());
 
 		// 设置该链接的session属性
-		Attribute<ServerServletSession> attr = ctx.attr(serverSessionKey);
+		Attribute<NettyServletSession> attr = ctx.attr(serverSessionKey);
 		attr.set(serverSession);
 
 		// 后续处理
@@ -82,11 +82,11 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
 		// 服务会话
-		ServerServletSession serverSession = ctx.attr(serverSessionKey).get();
+		NettyServletSession serverSession = ctx.attr(serverSessionKey).get();
 		// 修改最后一次请求时间
 		serverSession.updateLastAccessedTime();
 		// 会话外观类
-		ServletSession session = new ServerServletSessionFacade(serverSession);
+		ServletSession session = new NettyServletSessionFacade(serverSession);
 
 		// 服务请求
 		ServerServletRequest serverRequest = new ServerServletRequest(session, (NettyDatagram) msg);

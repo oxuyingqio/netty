@@ -1,4 +1,4 @@
-package cn.xuyingqi.netty.server.servlet;
+package cn.xuyingqi.netty.servlet;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -13,7 +13,7 @@ import cn.xuyingqi.net.servlet.impl.AbstractServletSession;
  * @author XuYQ
  *
  */
-public class ServerServletSession extends AbstractServletSession {
+public class NettyServletSession extends AbstractServletSession {
 
 	/**
 	 * 最后一次请求的时间
@@ -40,7 +40,7 @@ public class ServerServletSession extends AbstractServletSession {
 	 * @param remote
 	 *            客户端地址
 	 */
-	public ServerServletSession(ServletContext servletContext, SocketAddress local, SocketAddress remote) {
+	public NettyServletSession(ServletContext servletContext, SocketAddress local, SocketAddress remote) {
 
 		super(servletContext);
 
@@ -60,7 +60,7 @@ public class ServerServletSession extends AbstractServletSession {
 	 * 
 	 * @return
 	 */
-	public ServerServletSession updateLastAccessedTime() {
+	public NettyServletSession updateLastAccessedTime() {
 
 		this.lastAccessedTime = System.currentTimeMillis();
 

@@ -2,8 +2,8 @@ package cn.xuyingqi.netty.server.connector;
 
 import cn.xuyingqi.net.server.connector.Connector;
 import cn.xuyingqi.net.server.connector.ConnectorConfig;
-import cn.xuyingqi.net.server.container.ProtocolContainer;
 import cn.xuyingqi.net.server.servlet.ServletHandler;
+import cn.xuyingqi.netty.server.container.ServerProtocolContainer;
 import cn.xuyingqi.netty.server.container.ServerServletContainer;
 import cn.xuyingqi.netty.server.protocol.ServerProtocol;
 import io.netty.bootstrap.ServerBootstrap;
@@ -30,23 +30,11 @@ public final class ServerConnector implements Connector {
 	 */
 	private ConnectorConfig config;
 
-	/**
-	 * 协议容器
-	 */
-	private ProtocolContainer protocolContainer;
-
 	@Override
 	public final void init(ConnectorConfig config) {
 
 		// 获取连接器容器
 		this.config = config;
-	}
-
-	@Override
-	public final void setProtocolContainer(ProtocolContainer protocolContainer) {
-
-		// 获取协议容器
-		this.protocolContainer = protocolContainer;
 	}
 
 	@Override
@@ -63,14 +51,15 @@ public final class ServerConnector implements Connector {
 				.option(ChannelOption.SO_BACKLOG, 100).childHandler(new ChannelInitializer<SocketChannel>() {
 					@Override
 					protected void initChannel(SocketChannel ch) throws Exception {
+
 						// 超时
 						ch.pipeline().addLast(new ReadTimeoutHandler(config.getTimeout()));
 						// 编码
-						ch.pipeline().addLast(
-								((ServerProtocol) protocolContainer.getProtocol(config.getProtocol())).getEncoder());
+						ch.pipeline().addLast(((ServerProtocol) ServerProtocolContainer.getInstance()
+								.getProtocol(config.getProtocol())).getEncoder());
 						// 解码
-						ch.pipeline().addLast(
-								((ServerProtocol) protocolContainer.getProtocol(config.getProtocol())).getDecoder());
+						ch.pipeline().addLast(((ServerProtocol) ServerProtocolContainer.getInstance()
+								.getProtocol(config.getProtocol())).getDecoder());
 
 						// Servlet处理类
 						ServletHandler servletHandler = new ServerServletHandler();
@@ -82,14 +71,17 @@ public final class ServerConnector implements Connector {
 				});
 
 		try {
+
 			// 同步绑定端口号
 			ChannelFuture future = bootstrap.bind(config.getHost(), config.getPort()).sync();
 			// 同步等待端口关闭
 			future.channel().closeFuture().sync();
 		} catch (InterruptedException e) {
+
 			e.printStackTrace();
 		} finally {
-			// 释放线程池资源
+
+			// 释放线程组资源
 			bossGroup.shutdownGracefully();
 			workerGroup.shutdownGracefully();
 		}

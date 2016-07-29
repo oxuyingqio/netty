@@ -3,7 +3,6 @@ package cn.xuyingqi.netty.server.startup;
 import cn.xuyingqi.net.server.connector.Connector;
 import cn.xuyingqi.net.server.startup.Bootstrap;
 import cn.xuyingqi.netty.server.connector.ServerConnector;
-import cn.xuyingqi.netty.server.container.ServerProtocolContainer;
 import cn.xuyingqi.netty.server.core.ServerXml;
 
 /**
@@ -21,8 +20,6 @@ public final class ServerBootstrap implements Bootstrap {
 		Connector connector = new ServerConnector();
 		// 配置连接器配置
 		connector.init(ServerXml.getInstance().getServiceConfig().getConnectorConfig());
-		// 设置协议容器
-		connector.setProtocolContainer(ServerProtocolContainer.getInstance());
 		// 连接
 		connector.connect();
 	}

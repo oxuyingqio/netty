@@ -1,4 +1,4 @@
-package cn.xuyingqi.netty.server.protocol;
+package cn.xuyingqi.netty.protocol;
 
 import io.netty.channel.ChannelHandler;
 

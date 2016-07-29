@@ -4,9 +4,9 @@ import java.util.Set;
 
 import cn.xuyingqi.net.servlet.ServletSession;
 import cn.xuyingqi.net.servlet.impl.AbstractServletRequest;
-import cn.xuyingqi.netty.server.protocol.datagram.ServerDatagram;
-import cn.xuyingqi.netty.server.protocol.datagram.ServerHeader;
-import cn.xuyingqi.netty.server.protocol.datagram.ServerPayload;
+import cn.xuyingqi.netty.protocol.datagram.ServerDatagram;
+import cn.xuyingqi.netty.protocol.datagram.ServerHeader;
+import cn.xuyingqi.netty.protocol.datagram.ServerPayload;
 
 /**
  * Servlet请求

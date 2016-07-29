@@ -3,9 +3,9 @@ package cn.xuyingqi.netty.server.connector;
 import cn.xuyingqi.net.server.connector.Connector;
 import cn.xuyingqi.net.server.connector.ConnectorConfig;
 import cn.xuyingqi.net.server.servlet.ServletHandler;
+import cn.xuyingqi.netty.protocol.NettyProtocol;
 import cn.xuyingqi.netty.server.container.ServerProtocolContainer;
 import cn.xuyingqi.netty.server.container.ServerServletContainer;
-import cn.xuyingqi.netty.server.protocol.ServerProtocol;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandler;
@@ -55,10 +55,10 @@ public final class ServerConnector implements Connector {
 						// 超时
 						ch.pipeline().addLast(new ReadTimeoutHandler(config.getTimeout()));
 						// 编码
-						ch.pipeline().addLast(((ServerProtocol) ServerProtocolContainer.getInstance()
+						ch.pipeline().addLast(((NettyProtocol) ServerProtocolContainer.getInstance()
 								.getProtocol(config.getProtocol())).getEncoder());
 						// 解码
-						ch.pipeline().addLast(((ServerProtocol) ServerProtocolContainer.getInstance()
+						ch.pipeline().addLast(((NettyProtocol) ServerProtocolContainer.getInstance()
 								.getProtocol(config.getProtocol())).getDecoder());
 
 						// Servlet处理类

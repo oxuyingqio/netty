@@ -1,4 +1,4 @@
-package cn.xuyingqi.netty.server.protocol.datagram;
+package cn.xuyingqi.netty.protocol.datagram;
 
 import cn.xuyingqi.net.server.protocol.datagram.Payload;
 

@@ -1,4 +1,4 @@
-package cn.xuyingqi.netty.server.protocol;
+package cn.xuyingqi.netty.protocol;
 
 import cn.xuyingqi.net.server.protocol.Protocol;
 
@@ -8,7 +8,7 @@ import cn.xuyingqi.net.server.protocol.Protocol;
  * @author XuYQ
  *
  */
-public interface ServerProtocol extends Protocol {
+public interface NettyProtocol extends Protocol {
 
 	/**
 	 * 获取编码器

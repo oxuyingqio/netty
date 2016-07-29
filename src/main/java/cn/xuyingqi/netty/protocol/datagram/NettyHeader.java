@@ -8,7 +8,7 @@ import cn.xuyingqi.net.server.protocol.datagram.Header;
  * @author XuYQ
  *
  */
-public interface ServerHeader extends Header {
+public interface NettyHeader extends Header {
 
 	/**
 	 * 添加报头项目
@@ -17,7 +17,7 @@ public interface ServerHeader extends Header {
 	 * @param value
 	 * @return
 	 */
-	public ServerHeader addHeader(String name, Object value);
+	public NettyHeader addHeader(String name, Object value);
 
 	/**
 	 * 报头项目是否存在
@@ -34,7 +34,7 @@ public interface ServerHeader extends Header {
 	 * @param value
 	 * @return
 	 */
-	public ServerHeader setHeader(String name, Object value);
+	public NettyHeader setHeader(String name, Object value);
 
 	/**
 	 * 获取报头某项值

@@ -8,7 +8,7 @@ import cn.xuyingqi.net.servlet.ServletContext;
 import cn.xuyingqi.net.servlet.ServletRequest;
 import cn.xuyingqi.net.servlet.ServletResponse;
 import cn.xuyingqi.net.servlet.ServletSession;
-import cn.xuyingqi.netty.protocol.datagram.ServerDatagram;
+import cn.xuyingqi.netty.protocol.datagram.NettyDatagram;
 import cn.xuyingqi.netty.server.servlet.ServerServletRequest;
 import cn.xuyingqi.netty.server.servlet.ServerServletResponse;
 import cn.xuyingqi.netty.server.servlet.ServerServletSession;
@@ -89,12 +89,12 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 		ServletSession session = new ServerServletSessionFacade(serverSession);
 
 		// 服务请求
-		ServerServletRequest serverRequest = new ServerServletRequest(session, (ServerDatagram) msg);
+		ServerServletRequest serverRequest = new ServerServletRequest(session, (NettyDatagram) msg);
 		// 请求外观类
 		ServletRequest request = new ServerServletRequestFacade(serverRequest);
 
 		// 服务响应
-		ServerServletResponse serverResponse = new ServerServletResponse(request, ((ServerDatagram) msg).newResponse());
+		ServerServletResponse serverResponse = new ServerServletResponse(request, ((NettyDatagram) msg).newResponse());
 		// 响应外观类
 		ServletResponse response = new ServerServletResponseFacade(serverResponse);
 

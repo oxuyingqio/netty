@@ -8,7 +8,7 @@ import cn.xuyingqi.net.server.protocol.datagram.Payload;
  * @author XuYQ
  *
  */
-public interface ServerPayload extends Payload {
+public interface NettyPayload extends Payload {
 
 	/**
 	 * 添加参数
@@ -17,7 +17,7 @@ public interface ServerPayload extends Payload {
 	 * @param value
 	 * @return
 	 */
-	public ServerPayload addParameter(String name, Object value);
+	public NettyPayload addParameter(String name, Object value);
 
 	/**
 	 * 参数是否存在
@@ -34,7 +34,7 @@ public interface ServerPayload extends Payload {
 	 * @param value
 	 * @return
 	 */
-	public ServerPayload setParameter(String name, Object value);
+	public NettyPayload setParameter(String name, Object value);
 
 	/**
 	 * 获取参数的值

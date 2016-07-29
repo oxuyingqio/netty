@@ -8,12 +8,12 @@ import cn.xuyingqi.net.server.protocol.datagram.Datagram;
  * @author XuYQ
  *
  */
-public interface ServerDatagram extends Datagram {
+public interface NettyDatagram extends Datagram {
 
 	/**
 	 * 创建对应响应的数据报文
 	 * 
 	 * @return
 	 */
-	public ServerDatagram newResponse();
+	public NettyDatagram newResponse();
 }

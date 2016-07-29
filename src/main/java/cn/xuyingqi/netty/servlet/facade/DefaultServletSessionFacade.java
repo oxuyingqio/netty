@@ -5,27 +5,27 @@ import java.util.Set;
 
 import cn.xuyingqi.net.servlet.ServletContext;
 import cn.xuyingqi.net.servlet.ServletSession;
-import cn.xuyingqi.netty.servlet.NettyServletSession;
+import cn.xuyingqi.netty.servlet.DefaultServletSession;
 
 /**
- * ServerServlet会话外观类
+ * 默认Servlet会话外观类
  * 
  * @author XuYQ
  *
  */
-public class NettyServletSessionFacade implements ServletSession {
+public class DefaultServletSessionFacade implements ServletSession {
 
 	/**
-	 * 包装的ServerServlet会话
+	 * 包装的默认Servlet会话
 	 */
-	private NettyServletSession session;
+	private DefaultServletSession session;
 
 	/**
-	 * ServerServlet会话外观类
+	 * 默认Servlet会话外观类
 	 * 
 	 * @param session
 	 */
-	public NettyServletSessionFacade(NettyServletSession session) {
+	public DefaultServletSessionFacade(DefaultServletSession session) {
 
 		this.session = session;
 	}

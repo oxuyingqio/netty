@@ -8,12 +8,12 @@ import cn.xuyingqi.net.servlet.ServletContext;
 import cn.xuyingqi.net.servlet.impl.AbstractServletSession;
 
 /**
- * Servlet会话
+ * 默认的Servlet会话
  * 
  * @author XuYQ
  *
  */
-public class NettyServletSession extends AbstractServletSession {
+public class DefaultServletSession extends AbstractServletSession {
 
 	/**
 	 * 最后一次请求的时间
@@ -31,7 +31,7 @@ public class NettyServletSession extends AbstractServletSession {
 	private InetSocketAddress remote;
 
 	/**
-	 * Servlet会话
+	 * 默认的Servlet会话
 	 * 
 	 * @param servletContext
 	 *            Servlet上下文
@@ -40,7 +40,7 @@ public class NettyServletSession extends AbstractServletSession {
 	 * @param remote
 	 *            远程地址
 	 */
-	public NettyServletSession(ServletContext servletContext, SocketAddress local, SocketAddress remote) {
+	public DefaultServletSession(ServletContext servletContext, SocketAddress local, SocketAddress remote) {
 
 		super(servletContext);
 
@@ -60,7 +60,7 @@ public class NettyServletSession extends AbstractServletSession {
 	 * 
 	 * @return
 	 */
-	public NettyServletSession updateLastAccessedTime() {
+	public DefaultServletSession updateLastAccessedTime() {
 
 		this.lastAccessedTime = System.currentTimeMillis();
 
@@ -85,13 +85,12 @@ public class NettyServletSession extends AbstractServletSession {
 		return this.local.getPort();
 	}
 
-	/**
-	 * 未实现,不影响使用
-	 */
 	@Override
 	public String getProtocol() {
 
-		return null;
+		// 未实现,不影响使用
+
+		return "";
 	}
 
 	@Override

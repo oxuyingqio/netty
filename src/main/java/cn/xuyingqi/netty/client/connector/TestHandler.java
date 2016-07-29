@@ -1,6 +1,6 @@
 package cn.xuyingqi.netty.client.connector;
 
-import cn.xuyingqi.netty.servlet.NettyServletSession;
+import cn.xuyingqi.netty.servlet.DefaultServletSession;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
@@ -17,7 +17,7 @@ public class TestHandler extends ChannelHandlerAdapter {
 	/**
 	 * 属性值:session
 	 */
-	private AttributeKey<NettyServletSession> serverSessionKey = AttributeKey.valueOf("session");
+	private AttributeKey<DefaultServletSession> serverSessionKey = AttributeKey.valueOf("session");
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {

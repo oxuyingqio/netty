@@ -4,9 +4,9 @@ import java.util.Iterator;
 
 import cn.xuyingqi.net.server.container.ServletContainer;
 import cn.xuyingqi.net.server.servlet.ServletHandler;
+import cn.xuyingqi.net.servlet.ServerServletRequest;
+import cn.xuyingqi.net.servlet.ServerServletResponse;
 import cn.xuyingqi.net.servlet.ServletContext;
-import cn.xuyingqi.net.servlet.ServletRequest;
-import cn.xuyingqi.net.servlet.ServletResponse;
 import cn.xuyingqi.net.servlet.ServletSession;
 import cn.xuyingqi.netty.protocol.datagram.NettyDatagram;
 import cn.xuyingqi.netty.servlet.facade.ServerServletRequestFacade;
@@ -36,7 +36,7 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 	/**
 	 * 属性值:session
 	 */
-	private AttributeKey<DefaultServletSession> serverSessionKey = AttributeKey.valueOf("session");
+	private AttributeKey<DefaultServletSession> sessionKey = AttributeKey.valueOf("session");
 
 	@Override
 	public void init(ServletContainer servletContainer) {
@@ -64,7 +64,7 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 				ctx.channel().remoteAddress());
 
 		// 设置该链接的session属性
-		Attribute<DefaultServletSession> attr = ctx.attr(serverSessionKey);
+		Attribute<DefaultServletSession> attr = ctx.attr(sessionKey);
 		attr.set(serverSession);
 
 		// 后续处理
@@ -82,31 +82,32 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
 		// 服务会话
-		DefaultServletSession serverSession = ctx.attr(serverSessionKey).get();
+		DefaultServletSession session = ctx.attr(sessionKey).get();
 		// 修改最后一次请求时间
-		serverSession.updateLastAccessedTime();
+		session.updateLastAccessedTime();
 		// 会话外观类
-		ServletSession session = new ServletSessionFacade(serverSession);
+		ServletSession sessionFacade = new ServletSessionFacade(session);
 
 		// 服务请求
-		DefaultServerServletRequest serverRequest = new DefaultServerServletRequest(session, (NettyDatagram) msg);
+		DefaultServerServletRequest request = new DefaultServerServletRequest(sessionFacade, (NettyDatagram) msg);
 		// 请求外观类
-		ServletRequest request = new ServerServletRequestFacade(serverRequest);
+		ServerServletRequest requestFacade = new ServerServletRequestFacade(request);
 
 		// 服务响应
-		DefaultServerServletResponse serverResponse = new DefaultServerServletResponse(request, ((NettyDatagram) msg).newResponse());
+		DefaultServerServletResponse response = new DefaultServerServletResponse(requestFacade,
+				((NettyDatagram) msg).newResponse());
 		// 响应外观类
-		ServletResponse response = new ServerServletResponseFacade(serverResponse);
+		ServerServletResponse responseFacade = new ServerServletResponseFacade(response);
 
 		// 获取Servlet名称集合
 		Iterator<String> it = this.servletContainer.getServletNames().iterator();
 		// 遍历Servlet名称集合
 		while (it.hasNext()) {
 			// 调用Servlet
-			this.servletContainer.getServlet(it.next()).service(request, response);
+			this.servletContainer.getServlet(it.next()).service(requestFacade, responseFacade);
 		}
 		// 写入响应数据报文
-		ctx.write(serverResponse.getServerDatagram());
+		ctx.write(response.getServerDatagram());
 
 		// 后续处理
 		ctx.fireChannelRead(msg);

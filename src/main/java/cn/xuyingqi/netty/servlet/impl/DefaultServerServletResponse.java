@@ -58,7 +58,7 @@ public class DefaultServerServletResponse extends AbstractServerServletResponse 
 	@Override
 	public ServletResponse addPayload(String name, Object value) {
 
-		((NettyPayload) this.datagram.getPayload()).addParameter(name, value);
+		((NettyPayload) this.datagram.getPayload()).addPayload(name, value);
 
 		return this;
 	}
@@ -66,13 +66,13 @@ public class DefaultServerServletResponse extends AbstractServerServletResponse 
 	@Override
 	public boolean containsPayload(String name) {
 
-		return ((NettyPayload) this.datagram.getPayload()).containsParameter(name);
+		return ((NettyPayload) this.datagram.getPayload()).containsPayload(name);
 	}
 
 	@Override
 	public ServletResponse setPayload(String name, Object value) {
 
-		((NettyPayload) this.datagram.getPayload()).setParameter(name, value);
+		((NettyPayload) this.datagram.getPayload()).setPayload(name, value);
 
 		return this;
 	}

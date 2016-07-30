@@ -38,8 +38,8 @@ public final class ClientConnector {
 					protected void initChannel(SocketChannel ch) throws Exception {
 
 						// 超时
-						ch.pipeline().addLast(new ReadTimeoutHandler(10));
-						ch.pipeline().addLast(new TestHandler());
+						ch.pipeline().addLast(new ReadTimeoutHandler(300));
+						ch.pipeline().addLast(new ClientServletHandler());
 					}
 				});
 

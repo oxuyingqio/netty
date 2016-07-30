@@ -61,6 +61,6 @@ public class DefaultServerServletRequest extends AbstractServerServletRequest {
 	@Override
 	public Object getPayload(String name) {
 
-		return this.payload.getParameter(name);
+		return this.payload.getPayload(name);
 	}
 }

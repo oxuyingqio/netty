@@ -4,37 +4,39 @@ import cn.xuyingqi.netty.servlet.impl.DefaultServletSession;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
 
 /**
- * 测试处理器
+ * Servlet处理器
  * 
  * @author XuYQ
  *
  */
-public class TestHandler extends ChannelHandlerAdapter {
+public class ClientServletHandler extends ChannelHandlerAdapter {
 
 	/**
 	 * 属性值:session
 	 */
-	private AttributeKey<DefaultServletSession> serverSessionKey = AttributeKey.valueOf("session");
+	private AttributeKey<DefaultServletSession> sessionKey = AttributeKey.valueOf("session");
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 
-		System.out.println(ctx.channel().localAddress());
-		System.out.println(ctx.channel().remoteAddress());
+		// 创建session对象
+		DefaultServletSession serverSession = new DefaultServletSession(null, ctx.channel().localAddress(),
+				ctx.channel().remoteAddress());
 
-		System.out.println("连上了");
-
+		// 设置该链接的session属性
+		Attribute<DefaultServletSession> attr = ctx.attr(sessionKey);
+		attr.set(serverSession);
+		
 		// 后续处理
 		ctx.fireChannelActive();
 	}
 
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-
-		System.out.println("断开了");
 
 		// 后续处理
 		ctx.fireChannelInactive();

@@ -17,7 +17,7 @@ public interface NettyPayload extends Payload {
 	 * @param value
 	 * @return
 	 */
-	public NettyPayload addParameter(String name, Object value);
+	public NettyPayload addPayload(String name, Object value);
 
 	/**
 	 * 参数是否存在
@@ -25,7 +25,7 @@ public interface NettyPayload extends Payload {
 	 * @param name
 	 * @return
 	 */
-	public boolean containsParameter(String name);
+	public boolean containsPayload(String name);
 
 	/**
 	 * 设置参数的值
@@ -34,7 +34,7 @@ public interface NettyPayload extends Payload {
 	 * @param value
 	 * @return
 	 */
-	public NettyPayload setParameter(String name, Object value);
+	public NettyPayload setPayload(String name, Object value);
 
 	/**
 	 * 获取参数的值
@@ -42,5 +42,5 @@ public interface NettyPayload extends Payload {
 	 * @param name
 	 * @return
 	 */
-	public Object getParameter(String name);
+	public Object getPayload(String name);
 }

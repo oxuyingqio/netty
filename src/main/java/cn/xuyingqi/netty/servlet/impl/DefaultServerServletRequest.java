@@ -1,20 +1,20 @@
-package cn.xuyingqi.netty.server.servlet;
+package cn.xuyingqi.netty.servlet.impl;
 
 import java.util.Set;
 
 import cn.xuyingqi.net.servlet.ServletSession;
-import cn.xuyingqi.net.servlet.impl.AbstractServletRequest;
+import cn.xuyingqi.net.servlet.impl.AbstractServerServletRequest;
 import cn.xuyingqi.netty.protocol.datagram.NettyDatagram;
 import cn.xuyingqi.netty.protocol.datagram.NettyHeader;
 import cn.xuyingqi.netty.protocol.datagram.NettyPayload;
 
 /**
- * Servlet请求
+ * 默认的服务器端Servlet请求
  * 
  * @author XuYQ
  *
  */
-public class ServerServletRequest extends AbstractServletRequest {
+public class DefaultServerServletRequest extends AbstractServerServletRequest {
 
 	/**
 	 * 报头
@@ -27,11 +27,12 @@ public class ServerServletRequest extends AbstractServletRequest {
 	private NettyPayload payload;
 
 	/**
-	 * Servlet请求
+	 * 默认的服务器端Servlet请求
 	 * 
 	 * @param servletSession
+	 *            Servlet会话
 	 */
-	public ServerServletRequest(ServletSession servletSession, NettyDatagram datagram) {
+	public DefaultServerServletRequest(ServletSession servletSession, NettyDatagram datagram) {
 
 		super(servletSession);
 
@@ -52,13 +53,13 @@ public class ServerServletRequest extends AbstractServletRequest {
 	}
 
 	@Override
-	public Set<String> getParameterNames() {
+	public Set<String> getPayloadNames() {
 
 		return this.payload.toMap().keySet();
 	}
 
 	@Override
-	public Object getParameter(String name) {
+	public Object getPayload(String name) {
 
 		return this.payload.getParameter(name);
 	}

@@ -1,29 +1,30 @@
-package cn.xuyingqi.netty.server.servlet.facade;
+package cn.xuyingqi.netty.servlet.facade;
 
 import java.net.InetAddress;
 import java.util.Set;
 
+import cn.xuyingqi.net.servlet.ServerServletRequest;
 import cn.xuyingqi.net.servlet.ServletRequest;
 import cn.xuyingqi.net.servlet.ServletSession;
-import cn.xuyingqi.netty.server.servlet.ServerServletRequest;
 
 /**
- * ServerServlet请求外观类
+ * 服务器端Servlet请求外观类
  * 
  * @author XuYQ
  *
  */
-public class ServerServletRequestFacade implements ServletRequest {
+public class ServerServletRequestFacade implements ServerServletRequest {
 
 	/**
-	 * ServerServlet请求
+	 * 服务器端Servlet请求
 	 */
 	private ServerServletRequest request;
 
 	/**
-	 * ServerServlet请求外观类
+	 * 服务器端Servlet请求外观类
 	 * 
 	 * @param request
+	 *            Servlet请求
 	 */
 	public ServerServletRequestFacade(ServerServletRequest request) {
 
@@ -97,15 +98,15 @@ public class ServerServletRequestFacade implements ServletRequest {
 	}
 
 	@Override
-	public Set<String> getParameterNames() {
+	public Set<String> getPayloadNames() {
 
-		return this.request.getParameterNames();
+		return this.request.getPayloadNames();
 	}
 
 	@Override
-	public Object getParameter(String name) {
+	public Object getPayload(String name) {
 
-		return this.request.getParameter(name);
+		return this.request.getPayload(name);
 	}
 
 	@Override

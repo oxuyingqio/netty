@@ -1,19 +1,19 @@
-package cn.xuyingqi.netty.server.servlet;
+package cn.xuyingqi.netty.servlet.impl;
 
 import cn.xuyingqi.net.servlet.ServletRequest;
 import cn.xuyingqi.net.servlet.ServletResponse;
-import cn.xuyingqi.net.servlet.impl.AbstractServletResponse;
+import cn.xuyingqi.net.servlet.impl.AbstractServerServletResponse;
 import cn.xuyingqi.netty.protocol.datagram.NettyDatagram;
 import cn.xuyingqi.netty.protocol.datagram.NettyHeader;
 import cn.xuyingqi.netty.protocol.datagram.NettyPayload;
 
 /**
- * Servlet响应
+ * 默认的服务器端Servlet响应
  * 
  * @author XuYQ
  *
  */
-public class ServerServletResponse extends AbstractServletResponse {
+public class DefaultServerServletResponse extends AbstractServerServletResponse {
 
 	/**
 	 * 数据报文
@@ -21,12 +21,12 @@ public class ServerServletResponse extends AbstractServletResponse {
 	private NettyDatagram datagram;
 
 	/**
-	 * Servlet响应
+	 * 默认的服务器端Servlet响应
 	 * 
 	 * @param servletRequest
 	 *            Servlet请求
 	 */
-	public ServerServletResponse(ServletRequest servletRequest, NettyDatagram datagram) {
+	public DefaultServerServletResponse(ServletRequest servletRequest, NettyDatagram datagram) {
 
 		super(servletRequest);
 
@@ -56,7 +56,7 @@ public class ServerServletResponse extends AbstractServletResponse {
 	}
 
 	@Override
-	public ServletResponse addParameter(String name, Object value) {
+	public ServletResponse addPayload(String name, Object value) {
 
 		((NettyPayload) this.datagram.getPayload()).addParameter(name, value);
 
@@ -64,13 +64,13 @@ public class ServerServletResponse extends AbstractServletResponse {
 	}
 
 	@Override
-	public boolean containsParameter(String name) {
+	public boolean containsPayload(String name) {
 
 		return ((NettyPayload) this.datagram.getPayload()).containsParameter(name);
 	}
 
 	@Override
-	public ServletResponse setParameter(String name, Object value) {
+	public ServletResponse setPayload(String name, Object value) {
 
 		((NettyPayload) this.datagram.getPayload()).setParameter(name, value);
 

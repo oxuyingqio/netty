@@ -1,4 +1,4 @@
-package cn.xuyingqi.netty.servlet.impl;
+package cn.xuyingqi.netty.servlet.facade;
 
 import java.net.InetAddress;
 import java.util.Set;

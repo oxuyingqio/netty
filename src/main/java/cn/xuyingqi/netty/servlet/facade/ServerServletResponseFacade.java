@@ -1,25 +1,30 @@
-package cn.xuyingqi.netty.server.servlet.facade;
+package cn.xuyingqi.netty.servlet.facade;
 
+import cn.xuyingqi.net.servlet.ServerServletResponse;
 import cn.xuyingqi.net.servlet.ServletRequest;
 import cn.xuyingqi.net.servlet.ServletResponse;
-import cn.xuyingqi.netty.server.servlet.ServerServletResponse;
+import cn.xuyingqi.netty.servlet.impl.DefaultServerServletResponse;
 
 /**
- * ServerServlet响应外观类
+ * 服务器端Servlet响应外观类
  * 
  * @author XuYQ
  *
  */
-public class ServerServletResponseFacade implements ServletResponse {
+public class ServerServletResponseFacade implements ServerServletResponse {
 
+	/**
+	 * 服务器端Servlet响应
+	 */
 	private ServerServletResponse response;
 
 	/**
-	 * ServerServlet响应外观类
+	 * 服务器端Servlet响应外观类
 	 * 
 	 * @param response
+	 *            Servlet响应
 	 */
-	public ServerServletResponseFacade(ServerServletResponse response) {
+	public ServerServletResponseFacade(DefaultServerServletResponse response) {
 
 		this.response = response;
 	}
@@ -49,20 +54,20 @@ public class ServerServletResponseFacade implements ServletResponse {
 	}
 
 	@Override
-	public ServletResponse addParameter(String name, Object value) {
+	public ServletResponse addPayload(String name, Object value) {
 
-		return this.response.addParameter(name, value);
+		return this.response.addPayload(name, value);
 	}
 
 	@Override
-	public boolean containsParameter(String name) {
+	public boolean containsPayload(String name) {
 
-		return this.response.containsParameter(name);
+		return this.response.containsPayload(name);
 	}
 
 	@Override
-	public ServletResponse setParameter(String name, Object value) {
+	public ServletResponse setPayload(String name, Object value) {
 
-		return this.response.setParameter(name, value);
+		return this.response.setPayload(name, value);
 	}
 }

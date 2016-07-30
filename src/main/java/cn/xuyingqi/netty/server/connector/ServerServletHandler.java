@@ -9,12 +9,12 @@ import cn.xuyingqi.net.servlet.ServletRequest;
 import cn.xuyingqi.net.servlet.ServletResponse;
 import cn.xuyingqi.net.servlet.ServletSession;
 import cn.xuyingqi.netty.protocol.datagram.NettyDatagram;
-import cn.xuyingqi.netty.server.servlet.ServerServletRequest;
-import cn.xuyingqi.netty.server.servlet.ServerServletResponse;
-import cn.xuyingqi.netty.server.servlet.facade.ServerServletRequestFacade;
-import cn.xuyingqi.netty.server.servlet.facade.ServerServletResponseFacade;
+import cn.xuyingqi.netty.servlet.facade.ServerServletRequestFacade;
+import cn.xuyingqi.netty.servlet.facade.ServerServletResponseFacade;
+import cn.xuyingqi.netty.servlet.facade.ServletSessionFacade;
+import cn.xuyingqi.netty.servlet.impl.DefaultServerServletRequest;
+import cn.xuyingqi.netty.servlet.impl.DefaultServerServletResponse;
 import cn.xuyingqi.netty.servlet.impl.DefaultServletSession;
-import cn.xuyingqi.netty.servlet.impl.ServletSessionFacade;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.Attribute;
@@ -89,12 +89,12 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 		ServletSession session = new ServletSessionFacade(serverSession);
 
 		// 服务请求
-		ServerServletRequest serverRequest = new ServerServletRequest(session, (NettyDatagram) msg);
+		DefaultServerServletRequest serverRequest = new DefaultServerServletRequest(session, (NettyDatagram) msg);
 		// 请求外观类
 		ServletRequest request = new ServerServletRequestFacade(serverRequest);
 
 		// 服务响应
-		ServerServletResponse serverResponse = new ServerServletResponse(request, ((NettyDatagram) msg).newResponse());
+		DefaultServerServletResponse serverResponse = new DefaultServerServletResponse(request, ((NettyDatagram) msg).newResponse());
 		// 响应外观类
 		ServletResponse response = new ServerServletResponseFacade(serverResponse);
 

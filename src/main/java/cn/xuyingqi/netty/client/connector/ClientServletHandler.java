@@ -1,7 +1,6 @@
 package cn.xuyingqi.netty.client.connector;
 
 import cn.xuyingqi.netty.servlet.impl.DefaultServletSession;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.Attribute;
@@ -30,7 +29,7 @@ public class ClientServletHandler extends ChannelHandlerAdapter {
 		// 设置该链接的session属性
 		Attribute<DefaultServletSession> attr = ctx.attr(sessionKey);
 		attr.set(serverSession);
-		
+
 		// 后续处理
 		ctx.fireChannelActive();
 	}
@@ -44,9 +43,6 @@ public class ClientServletHandler extends ChannelHandlerAdapter {
 
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-
-		byte[] demo = "this is first message".getBytes();
-		ctx.writeAndFlush(Unpooled.buffer(demo.length).writeBytes(demo));
 
 		// 后续处理
 		ctx.fireChannelRead(msg);

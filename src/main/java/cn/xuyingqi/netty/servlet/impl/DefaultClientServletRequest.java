@@ -1,19 +1,19 @@
 package cn.xuyingqi.netty.servlet.impl;
 
-import cn.xuyingqi.net.servlet.ServletRequest;
-import cn.xuyingqi.net.servlet.ServletResponse;
-import cn.xuyingqi.net.servlet.impl.AbstractServerServletResponse;
+import cn.xuyingqi.net.servlet.ClientServletRequest;
+import cn.xuyingqi.net.servlet.ServletSession;
+import cn.xuyingqi.net.servlet.impl.AbstractClientServletRequest;
 import cn.xuyingqi.netty.protocol.datagram.NettyDatagram;
 import cn.xuyingqi.netty.protocol.datagram.NettyHeader;
 import cn.xuyingqi.netty.protocol.datagram.NettyPayload;
 
 /**
- * 默认的服务器端Servlet响应
+ * 默认的客户端Servlet请求
  * 
  * @author XuYQ
  *
  */
-public class DefaultServerServletResponse extends AbstractServerServletResponse {
+public class DefaultClientServletRequest extends AbstractClientServletRequest {
 
 	/**
 	 * 数据报文
@@ -21,22 +21,22 @@ public class DefaultServerServletResponse extends AbstractServerServletResponse 
 	private NettyDatagram datagram;
 
 	/**
-	 * 默认的服务器端Servlet响应
+	 * 默认的客户端Servlet请求
 	 * 
-	 * @param servletRequest
-	 *            servlet请求
+	 * @param servletSession
+	 *            Servlet会话
 	 * @param datagram
 	 *            数据报文
 	 */
-	public DefaultServerServletResponse(ServletRequest servletRequest, NettyDatagram datagram) {
+	public DefaultClientServletRequest(ServletSession servletSession, NettyDatagram datagram) {
 
-		super(servletRequest);
+		super(servletSession);
 
 		this.datagram = datagram;
 	}
 
 	@Override
-	public ServletResponse addHeader(String name, Object value) {
+	public ClientServletRequest addHeader(String name, Object value) {
 
 		((NettyHeader) this.datagram.getHeader()).addHeader(name, value);
 
@@ -50,7 +50,7 @@ public class DefaultServerServletResponse extends AbstractServerServletResponse 
 	}
 
 	@Override
-	public ServletResponse setHeader(String name, Object value) {
+	public ClientServletRequest setHeader(String name, Object value) {
 
 		((NettyHeader) this.datagram.getHeader()).setHeader(name, value);
 
@@ -58,7 +58,7 @@ public class DefaultServerServletResponse extends AbstractServerServletResponse 
 	}
 
 	@Override
-	public ServletResponse addPayload(String name, Object value) {
+	public ClientServletRequest addPayload(String name, Object value) {
 
 		((NettyPayload) this.datagram.getPayload()).addPayload(name, value);
 
@@ -72,7 +72,7 @@ public class DefaultServerServletResponse extends AbstractServerServletResponse 
 	}
 
 	@Override
-	public ServletResponse setPayload(String name, Object value) {
+	public ClientServletRequest setPayload(String name, Object value) {
 
 		((NettyPayload) this.datagram.getPayload()).setPayload(name, value);
 

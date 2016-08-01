@@ -2,19 +2,19 @@ package cn.xuyingqi.netty.servlet.impl;
 
 import java.util.Set;
 
-import cn.xuyingqi.net.servlet.ServletSession;
-import cn.xuyingqi.net.servlet.impl.AbstractServerServletRequest;
+import cn.xuyingqi.net.servlet.ServletRequest;
+import cn.xuyingqi.net.servlet.impl.AbstractClientServletResponse;
 import cn.xuyingqi.netty.protocol.datagram.NettyDatagram;
 import cn.xuyingqi.netty.protocol.datagram.NettyHeader;
 import cn.xuyingqi.netty.protocol.datagram.NettyPayload;
 
 /**
- * 默认的服务器端Servlet请求
+ * 默认的客户端Servlet响应
  * 
  * @author XuYQ
  *
  */
-public class DefaultServerServletRequest extends AbstractServerServletRequest {
+public class DefaultClientServletResponse extends AbstractClientServletResponse {
 
 	/**
 	 * 报头
@@ -27,16 +27,16 @@ public class DefaultServerServletRequest extends AbstractServerServletRequest {
 	private NettyPayload payload;
 
 	/**
-	 * 默认的服务器端Servlet请求
+	 * 默认的客户端Servlet响应
 	 * 
-	 * @param servletSession
-	 *            Servlet会话
+	 * @param servletRequest
+	 *            Servlet请求
 	 * @param datagram
 	 *            数据报文
 	 */
-	public DefaultServerServletRequest(ServletSession servletSession, NettyDatagram datagram) {
+	public DefaultClientServletResponse(ServletRequest servletRequest, NettyDatagram datagram) {
 
-		super(servletSession);
+		super(servletRequest);
 
 		this.header = (NettyHeader) datagram.getHeader();
 		this.payload = (NettyPayload) datagram.getPayload();

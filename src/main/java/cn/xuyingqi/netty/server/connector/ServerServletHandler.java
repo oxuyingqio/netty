@@ -34,9 +34,14 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 	private ServletContainer servletContainer;
 
 	/**
+	 * 属性:会话ID
+	 */
+	private AttributeKey<String> sessionIdAttr = AttributeKey.valueOf("sessionId");
+
+	/**
 	 * 属性值:session
 	 */
-	private AttributeKey<DefaultServletSession> sessionKey = AttributeKey.valueOf("session");
+	private AttributeKey<DefaultServletSession> sessionAttr = AttributeKey.valueOf("session");
 
 	@Override
 	public void init(ServletContainer servletContainer) {
@@ -47,6 +52,14 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
+
+		// 获取会话ID属性
+		Attribute<String> sessionIdAttr = ctx.attr(this.sessionIdAttr);
+		// 获取会话ID
+		String sessionId = sessionIdAttr.get();
+
+		// 设置该链接的session属性
+		Attribute<DefaultServletSession> attr = ctx.attr(sessionAttr);
 
 		// Servlet上下文
 		ServletContext context = null;
@@ -63,8 +76,6 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 		DefaultServletSession serverSession = new DefaultServletSession(context, ctx.channel().localAddress(),
 				ctx.channel().remoteAddress());
 
-		// 设置该链接的session属性
-		Attribute<DefaultServletSession> attr = ctx.attr(sessionKey);
 		attr.set(serverSession);
 
 		// 后续处理
@@ -82,7 +93,7 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
 		// 服务会话
-		DefaultServletSession session = ctx.attr(sessionKey).get();
+		DefaultServletSession session = ctx.attr(sessionAttr).get();
 		// 修改最后一次请求时间
 		session.updateLastAccessedTime();
 		// 会话外观类
@@ -122,9 +133,8 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 
-		// 打印错误信息
-		cause.printStackTrace();
-		// 关闭连接
-		ctx.close();
+		System.out.println("ServerServletHandler=================================");
+
+		ctx.fireExceptionCaught(cause);
 	}
 }

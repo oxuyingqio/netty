@@ -35,14 +35,16 @@ public class DefaultServletSession extends AbstractServletSession {
 	 * 
 	 * @param servletContext
 	 *            Servlet上下文
+	 * @param id
+	 *            会话ID
 	 * @param local
 	 *            本机地址
 	 * @param remote
 	 *            远程地址
 	 */
-	public DefaultServletSession(ServletContext servletContext, SocketAddress local, SocketAddress remote) {
+	public DefaultServletSession(ServletContext servletContext, String id, SocketAddress local, SocketAddress remote) {
 
-		super(servletContext);
+		super(servletContext, id);
 
 		this.lastAccessedTime = this.getCreationTime();
 		this.local = (InetSocketAddress) local;

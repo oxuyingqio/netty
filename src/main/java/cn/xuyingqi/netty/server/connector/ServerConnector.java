@@ -71,6 +71,10 @@ public final class ServerConnector implements Connector {
 
 						// 连接日志
 						ch.pipeline().addLast(new ConnectLoggerHandler());
+						// 会话生成
+						ch.pipeline().addLast(new SessionCreateHandler());
+						// 客户端通道
+						ch.pipeline().addLast(new ChannelContainerHandler());
 
 						// Servlet处理
 						ServletHandler servletHandler = new ServerServletHandler();

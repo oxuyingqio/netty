@@ -16,6 +16,8 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.timeout.ReadTimeoutHandler;
+import io.netty.util.internal.logging.InternalLogger;
+import io.netty.util.internal.logging.InternalLoggerFactory;
 
 /**
  * 连接器
@@ -24,6 +26,11 @@ import io.netty.handler.timeout.ReadTimeoutHandler;
  *
  */
 public final class ServerConnector implements Connector {
+
+	/**
+	 * 日志
+	 */
+	private final InternalLogger logger = InternalLoggerFactory.getInstance(Connector.class);
 
 	/**
 	 * 连接器配置
@@ -74,6 +81,9 @@ public final class ServerConnector implements Connector {
 
 			// 同步绑定端口号
 			ChannelFuture future = bootstrap.bind(config.getHost(), config.getPort()).sync();
+			// 打印日志
+			this.logger.info(config.getHost() + ":" + config.getPort() + " 已启动");
+
 			// 同步等待端口关闭
 			future.channel().closeFuture().sync();
 		} catch (InterruptedException e) {

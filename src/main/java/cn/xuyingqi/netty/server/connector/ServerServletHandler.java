@@ -30,7 +30,10 @@ import io.netty.util.internal.logging.InternalLoggerFactory;
  */
 public class ServerServletHandler extends ChannelHandlerAdapter implements ServletHandler {
 
-	private InternalLogger logger = InternalLoggerFactory.getInstance(ServerServletHandler.class);
+	/**
+	 * 日志
+	 */
+	private final InternalLogger logger = InternalLoggerFactory.getInstance(ServletHandler.class);
 
 	/**
 	 * Servlet容器
@@ -51,9 +54,10 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-		
-		logger.info("1111111111111111111111111111111111");
-		
+
+		// 打印日志
+		this.logger.info(ctx.channel().remoteAddress() + " 已连接");
+
 		// Servlet上下文
 		ServletContext context = null;
 
@@ -79,6 +83,9 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+
+		// 打印日志
+		this.logger.info(ctx.channel().remoteAddress() + " 已断开");
 
 		// 后续处理
 		ctx.fireChannelInactive();

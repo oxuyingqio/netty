@@ -10,5 +10,5 @@
 	<!-- </init-param> -->
 	<!-- </servlet> -->
 
-	<servlet name="selfServiceServlet" className="cn.xuyingqi.netty.server.selfservice.servlet.SelfServiceServlet" />
+	<servlet name="echoServlet" className="cn.xuyingqi.netty.server.echo.servlet.EchoServlet" />
 </server-app>

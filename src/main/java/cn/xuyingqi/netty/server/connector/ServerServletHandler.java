@@ -19,6 +19,8 @@ import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
+import io.netty.util.internal.logging.InternalLogger;
+import io.netty.util.internal.logging.InternalLoggerFactory;
 
 /**
  * Servlet处理类
@@ -27,6 +29,8 @@ import io.netty.util.AttributeKey;
  *
  */
 public class ServerServletHandler extends ChannelHandlerAdapter implements ServletHandler {
+
+	private InternalLogger logger = InternalLoggerFactory.getInstance(ServerServletHandler.class);
 
 	/**
 	 * Servlet容器
@@ -47,7 +51,9 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-
+		
+		logger.info("1111111111111111111111111111111111");
+		
 		// Servlet上下文
 		ServletContext context = null;
 

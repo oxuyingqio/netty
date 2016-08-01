@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <server>
 
-	<protocol name="selfservice" className="cn.xuyingqi.netty.server.selfservice.protocol.SelfServiceProtocol" />
+	<protocol name="echoProtocol" className="cn.xuyingqi.netty.server.echo.protocol.EchoProtocol" />
 
 	<service>
-		<connector protocol="selfservice" host="127.0.0.1" port="60000" timeout="200" />
+		<connector protocol="echoProtocol" host="127.0.0.1" port="60000" timeout="200" />
 	</service>
 </server>

@@ -22,42 +22,42 @@ import io.netty.handler.timeout.ReadTimeoutHandler;
  */
 public final class ClientConnector {
 
-//	/**
-//	 * 服务器通道集合
-//	 */
-//	private static Map<String, Channel> servers = MapFactory.newInstance();
-//
-//	/**
-//	 * 添加服务器通道
-//	 * 
-//	 * @param id
-//	 * @param ch
-//	 */
-//	public static void addServer(String id, Channel ch) {
-//
-//		servers.put(id, ch);
-//	}
-//
-//	/**
-//	 * 获取服务器通道
-//	 * 
-//	 * @param id
-//	 * @return
-//	 */
-//	public static Channel getServer(String id) {
-//
-//		return servers.get(id);
-//	}
-//
-//	/**
-//	 * 移除服务器通道
-//	 * 
-//	 * @param id
-//	 */
-//	public static void removeServer(String id) {
-//
-//		servers.remove(id);
-//	}
+	// /**
+	// * 服务器通道集合
+	// */
+	// private static Map<String, Channel> servers = MapFactory.newInstance();
+	//
+	// /**
+	// * 添加服务器通道
+	// *
+	// * @param id
+	// * @param ch
+	// */
+	// public static void addServer(String id, Channel ch) {
+	//
+	// servers.put(id, ch);
+	// }
+	//
+	// /**
+	// * 获取服务器通道
+	// *
+	// * @param id
+	// * @return
+	// */
+	// public static Channel getServer(String id) {
+	//
+	// return servers.get(id);
+	// }
+	//
+	// /**
+	// * 移除服务器通道
+	// *
+	// * @param id
+	// */
+	// public static void removeServer(String id) {
+	//
+	// servers.remove(id);
+	// }
 
 	/**
 	 * 连接服务器

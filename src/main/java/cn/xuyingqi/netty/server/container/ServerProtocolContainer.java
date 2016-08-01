@@ -80,6 +80,7 @@ public final class ServerProtocolContainer implements ProtocolContainer {
 	 *            协议类对象
 	 */
 	private void addProtocolClass(String name, Class<NettyProtocol> protocol) {
+
 		protocolClasses.put(name, protocol);
 	}
 

@@ -19,7 +19,7 @@ public final class ChannelContainer {
 	private static ChannelContainer channelContainer;
 
 	/**
-	 * 客户端通道列表
+	 * 客户端通道集合
 	 */
 	private Map<String, Channel> channels = MapFactory.newInstance();
 

@@ -61,6 +61,7 @@ public final class ServerConnector implements Connector {
 
 						// 超时
 						ch.pipeline().addLast(new ReadTimeoutHandler(config.getTimeout()));
+
 						// 编码
 						ch.pipeline().addLast(((NettyProtocol) ServerProtocolContainer.getInstance()
 								.getProtocol(config.getProtocol())).getEncoder());
@@ -68,11 +69,14 @@ public final class ServerConnector implements Connector {
 						ch.pipeline().addLast(((NettyProtocol) ServerProtocolContainer.getInstance()
 								.getProtocol(config.getProtocol())).getDecoder());
 
-						// Servlet处理类
+						// 连接日志
+						ch.pipeline().addLast(new ConnectLoggerHandler());
+
+						// Servlet处理
 						ServletHandler servletHandler = new ServerServletHandler();
 						// 配置Servlet容器
 						servletHandler.init(ServerServletContainer.getInstance());
-						// Servlet
+						// Servlet处理
 						ch.pipeline().addLast((ChannelHandler) servletHandler);
 					}
 				});

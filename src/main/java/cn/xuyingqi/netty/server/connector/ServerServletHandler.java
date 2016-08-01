@@ -19,21 +19,14 @@ import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
-import io.netty.util.internal.logging.InternalLogger;
-import io.netty.util.internal.logging.InternalLoggerFactory;
 
 /**
- * Servlet处理类
+ * Servlet处理
  * 
  * @author XuYQ
  *
  */
 public class ServerServletHandler extends ChannelHandlerAdapter implements ServletHandler {
-
-	/**
-	 * 日志
-	 */
-	private final InternalLogger logger = InternalLoggerFactory.getInstance(ServletHandler.class);
 
 	/**
 	 * Servlet容器
@@ -54,9 +47,6 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-
-		// 打印日志
-		this.logger.info(ctx.channel().remoteAddress() + " 已连接");
 
 		// Servlet上下文
 		ServletContext context = null;
@@ -83,9 +73,6 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-
-		// 打印日志
-		this.logger.info(ctx.channel().remoteAddress() + " 已断开");
 
 		// 后续处理
 		ctx.fireChannelInactive();

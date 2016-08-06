@@ -1,14 +1,12 @@
 package cn.xuyingqi.netty.protocol;
 
-import cn.xuyingqi.net.protocol.Protocol;
-
 /**
  * 协议
  * 
  * @author XuYQ
  *
  */
-public interface NettyProtocol extends Protocol {
+public interface Protocol extends cn.xuyingqi.net.protocol.Protocol {
 
 	/**
 	 * 获取编码器

@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import cn.xuyingqi.net.server.container.ProtocolContainer;
-import cn.xuyingqi.netty.protocol.NettyProtocol;
+import cn.xuyingqi.netty.protocol.Protocol;
 import cn.xuyingqi.netty.server.core.ServerXml;
 import cn.xuyingqi.netty.server.core.ServerXml.ProtocolConfig;
 import cn.xuyingqi.util.util.MapFactory;
@@ -28,7 +28,7 @@ public final class ServerProtocolContainer implements ProtocolContainer {
 	/**
 	 * 协议类对象集合
 	 */
-	private static Map<String, Class<NettyProtocol>> protocolClasses = MapFactory.newInstance();
+	private static Map<String, Class<Protocol>> protocolClasses = MapFactory.newInstance();
 
 	/**
 	 * 私有构造方法
@@ -45,7 +45,7 @@ public final class ServerProtocolContainer implements ProtocolContainer {
 
 				// 获取协议类对象
 				@SuppressWarnings("unchecked")
-				Class<NettyProtocol> protocol = (Class<NettyProtocol>) this.getClass().getClassLoader()
+				Class<Protocol> protocol = (Class<Protocol>) this.getClass().getClassLoader()
 						.loadClass(configs.get(i).getClassName());
 
 				// 添加协议类对象
@@ -79,13 +79,13 @@ public final class ServerProtocolContainer implements ProtocolContainer {
 	 * @param protocol
 	 *            协议类对象
 	 */
-	private void addProtocolClass(String name, Class<NettyProtocol> protocol) {
+	private void addProtocolClass(String name, Class<Protocol> protocol) {
 
 		protocolClasses.put(name, protocol);
 	}
 
 	@Override
-	public NettyProtocol getProtocol(String name) {
+	public Protocol getProtocol(String name) {
 
 		try {
 			return protocolClasses.get(name).newInstance();

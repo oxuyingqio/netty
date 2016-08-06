@@ -3,7 +3,7 @@ package cn.xuyingqi.netty.server.connector;
 import cn.xuyingqi.net.server.connector.Connector;
 import cn.xuyingqi.net.server.connector.ConnectorConfig;
 import cn.xuyingqi.net.server.servlet.ServletHandler;
-import cn.xuyingqi.netty.protocol.NettyProtocol;
+import cn.xuyingqi.netty.protocol.Protocol;
 import cn.xuyingqi.netty.server.connector.handler.ChannelContainerHandler;
 import cn.xuyingqi.netty.server.connector.handler.ConnectLoggerHandler;
 import cn.xuyingqi.netty.server.connector.handler.ServerServletHandler;
@@ -67,18 +67,16 @@ public final class ServerConnector implements Connector {
 						ch.pipeline().addLast(new ReadTimeoutHandler(config.getTimeout()));
 
 						// 编码
-						ch.pipeline().addLast(((NettyProtocol) ServerProtocolContainer.getInstance()
+						ch.pipeline().addLast(((Protocol) ServerProtocolContainer.getInstance()
 								.getProtocol(config.getProtocol())).getEncoder());
 						// 解码
-						ch.pipeline().addLast(((NettyProtocol) ServerProtocolContainer.getInstance()
+						ch.pipeline().addLast(((Protocol) ServerProtocolContainer.getInstance()
 								.getProtocol(config.getProtocol())).getDecoder());
 
 						// 连接日志
 						ch.pipeline().addLast(new ConnectLoggerHandler());
 						// 会话生成
 						ch.pipeline().addLast(new SessionCreateHandler());
-						// 客户端通道
-						ch.pipeline().addLast(new ChannelContainerHandler());
 
 						// Servlet处理
 						ServletHandler servletHandler = new ServerServletHandler();
@@ -86,6 +84,9 @@ public final class ServerConnector implements Connector {
 						servletHandler.init(ServerServletContainer.getInstance());
 						// Servlet处理
 						ch.pipeline().addLast((ChannelHandler) servletHandler);
+						
+						// 客户端通道
+						ch.pipeline().addLast(new ChannelContainerHandler());
 					}
 				});
 

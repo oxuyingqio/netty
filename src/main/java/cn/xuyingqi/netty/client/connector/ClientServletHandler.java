@@ -22,13 +22,13 @@ public class ClientServletHandler extends ChannelHandlerAdapter {
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 
-		// 创建session对象
-		DefaultServletSession serverSession = new DefaultServletSession(null, ctx.channel().localAddress(),
-				ctx.channel().remoteAddress());
-
-		// 设置该链接的session属性
-		Attribute<DefaultServletSession> attr = ctx.attr(sessionKey);
-		attr.set(serverSession);
+//		// 创建session对象
+//		DefaultServletSession serverSession = new DefaultServletSession(null, ctx.channel().localAddress(),
+//				ctx.channel().remoteAddress());
+//
+//		// 设置该链接的session属性
+//		Attribute<DefaultServletSession> attr = ctx.attr(sessionKey);
+//		attr.set(serverSession);
 
 		// 后续处理
 		ctx.fireChannelActive();

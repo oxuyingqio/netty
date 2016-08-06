@@ -1,14 +1,12 @@
 package cn.xuyingqi.netty.protocol.datagram;
 
-import cn.xuyingqi.net.protocol.datagram.Payload;
-
 /**
  * 报体
  * 
  * @author XuYQ
  *
  */
-public interface NettyPayload extends Payload {
+public interface Payload extends cn.xuyingqi.net.protocol.datagram.Payload {
 
 	/**
 	 * 添加参数
@@ -17,7 +15,7 @@ public interface NettyPayload extends Payload {
 	 * @param value
 	 * @return
 	 */
-	public NettyPayload addPayload(String name, Object value);
+	public Payload addPayload(String name, Object value);
 
 	/**
 	 * 参数是否存在
@@ -34,7 +32,7 @@ public interface NettyPayload extends Payload {
 	 * @param value
 	 * @return
 	 */
-	public NettyPayload setPayload(String name, Object value);
+	public Payload setPayload(String name, Object value);
 
 	/**
 	 * 获取参数的值

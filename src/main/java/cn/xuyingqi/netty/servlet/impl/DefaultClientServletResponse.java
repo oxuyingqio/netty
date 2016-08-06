@@ -4,9 +4,9 @@ import java.util.Set;
 
 import cn.xuyingqi.net.servlet.ServletRequest;
 import cn.xuyingqi.net.servlet.impl.AbstractClientServletResponse;
-import cn.xuyingqi.netty.protocol.datagram.NettyDatagram;
-import cn.xuyingqi.netty.protocol.datagram.NettyHeader;
-import cn.xuyingqi.netty.protocol.datagram.NettyPayload;
+import cn.xuyingqi.netty.protocol.datagram.Datagram;
+import cn.xuyingqi.netty.protocol.datagram.Header;
+import cn.xuyingqi.netty.protocol.datagram.Payload;
 
 /**
  * 默认的客户端Servlet响应
@@ -19,12 +19,12 @@ public class DefaultClientServletResponse extends AbstractClientServletResponse 
 	/**
 	 * 报头
 	 */
-	private NettyHeader header;
+	private Header header;
 
 	/**
 	 * 报体
 	 */
-	private NettyPayload payload;
+	private Payload payload;
 
 	/**
 	 * 默认的客户端Servlet响应
@@ -34,12 +34,12 @@ public class DefaultClientServletResponse extends AbstractClientServletResponse 
 	 * @param datagram
 	 *            数据报文
 	 */
-	public DefaultClientServletResponse(ServletRequest servletRequest, NettyDatagram datagram) {
+	public DefaultClientServletResponse(ServletRequest servletRequest, Datagram datagram) {
 
 		super(servletRequest);
 
-		this.header = (NettyHeader) datagram.getHeader();
-		this.payload = (NettyPayload) datagram.getPayload();
+		this.header = (Header) datagram.getHeader();
+		this.payload = (Payload) datagram.getPayload();
 	}
 
 	@Override

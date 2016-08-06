@@ -3,9 +3,9 @@ package cn.xuyingqi.netty.servlet.impl;
 import cn.xuyingqi.net.servlet.ServletRequest;
 import cn.xuyingqi.net.servlet.ServletResponse;
 import cn.xuyingqi.net.servlet.impl.AbstractServerServletResponse;
-import cn.xuyingqi.netty.protocol.datagram.NettyDatagram;
-import cn.xuyingqi.netty.protocol.datagram.NettyHeader;
-import cn.xuyingqi.netty.protocol.datagram.NettyPayload;
+import cn.xuyingqi.netty.protocol.datagram.Datagram;
+import cn.xuyingqi.netty.protocol.datagram.Header;
+import cn.xuyingqi.netty.protocol.datagram.Payload;
 
 /**
  * 默认的服务器端Servlet响应
@@ -18,7 +18,7 @@ public class DefaultServerServletResponse extends AbstractServerServletResponse 
 	/**
 	 * 数据报文
 	 */
-	private NettyDatagram datagram;
+	private Datagram datagram;
 
 	/**
 	 * 默认的服务器端Servlet响应
@@ -28,7 +28,7 @@ public class DefaultServerServletResponse extends AbstractServerServletResponse 
 	 * @param datagram
 	 *            数据报文
 	 */
-	public DefaultServerServletResponse(ServletRequest servletRequest, NettyDatagram datagram) {
+	public DefaultServerServletResponse(ServletRequest servletRequest, Datagram datagram) {
 
 		super(servletRequest);
 
@@ -38,7 +38,7 @@ public class DefaultServerServletResponse extends AbstractServerServletResponse 
 	@Override
 	public ServletResponse addHeader(String name, Object value) {
 
-		((NettyHeader) this.datagram.getHeader()).addHeader(name, value);
+		((Header) this.datagram.getHeader()).addHeader(name, value);
 
 		return this;
 	}
@@ -46,13 +46,13 @@ public class DefaultServerServletResponse extends AbstractServerServletResponse 
 	@Override
 	public boolean containsHeader(String name) {
 
-		return ((NettyHeader) this.datagram.getHeader()).containsHeader(name);
+		return ((Header) this.datagram.getHeader()).containsHeader(name);
 	}
 
 	@Override
 	public ServletResponse setHeader(String name, Object value) {
 
-		((NettyHeader) this.datagram.getHeader()).setHeader(name, value);
+		((Header) this.datagram.getHeader()).setHeader(name, value);
 
 		return this;
 	}
@@ -60,7 +60,7 @@ public class DefaultServerServletResponse extends AbstractServerServletResponse 
 	@Override
 	public ServletResponse addPayload(String name, Object value) {
 
-		((NettyPayload) this.datagram.getPayload()).addPayload(name, value);
+		((Payload) this.datagram.getPayload()).addPayload(name, value);
 
 		return this;
 	}
@@ -68,13 +68,13 @@ public class DefaultServerServletResponse extends AbstractServerServletResponse 
 	@Override
 	public boolean containsPayload(String name) {
 
-		return ((NettyPayload) this.datagram.getPayload()).containsPayload(name);
+		return ((Payload) this.datagram.getPayload()).containsPayload(name);
 	}
 
 	@Override
 	public ServletResponse setPayload(String name, Object value) {
 
-		((NettyPayload) this.datagram.getPayload()).setPayload(name, value);
+		((Payload) this.datagram.getPayload()).setPayload(name, value);
 
 		return this;
 	}
@@ -84,7 +84,7 @@ public class DefaultServerServletResponse extends AbstractServerServletResponse 
 	 * 
 	 * @return
 	 */
-	public NettyDatagram getDatagram() {
+	public Datagram getDatagram() {
 
 		return this.datagram;
 	}

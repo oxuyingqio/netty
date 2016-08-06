@@ -2,7 +2,7 @@ package cn.xuyingqi.netty.client.echo.protocol;
 
 import cn.xuyingqi.netty.protocol.Decoder;
 import cn.xuyingqi.netty.protocol.Encoder;
-import cn.xuyingqi.netty.protocol.NettyProtocol;
+import cn.xuyingqi.netty.protocol.Protocol;
 
 /**
  * 应答客户端协议
@@ -10,7 +10,7 @@ import cn.xuyingqi.netty.protocol.NettyProtocol;
  * @author XuYQ
  *
  */
-public class EchoProtocol implements NettyProtocol {
+public class EchoProtocol implements Protocol {
 
 	@Override
 	public Encoder getEncoder() {

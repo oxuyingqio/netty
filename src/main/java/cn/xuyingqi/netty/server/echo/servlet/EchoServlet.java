@@ -9,6 +9,7 @@ public class EchoServlet extends AbstractServlet {
 	@Override
 	public void service(ServletRequest arg0, ServletResponse arg1) {
 
+		throw new RuntimeException("测试异常");
 	}
 
 	@Override

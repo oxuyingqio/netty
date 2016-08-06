@@ -3,12 +3,12 @@ package cn.xuyingqi.netty.server.connector.handler;
 import java.util.Iterator;
 
 import cn.xuyingqi.net.server.container.ServletContainer;
-import cn.xuyingqi.net.server.servlet.ServletHandler;
 import cn.xuyingqi.net.servlet.ServerServletRequest;
 import cn.xuyingqi.net.servlet.ServerServletResponse;
 import cn.xuyingqi.net.servlet.ServletContext;
 import cn.xuyingqi.net.servlet.ServletSession;
 import cn.xuyingqi.netty.protocol.datagram.Datagram;
+import cn.xuyingqi.netty.server.connector.Session;
 import cn.xuyingqi.netty.servlet.facade.ServerServletRequestFacade;
 import cn.xuyingqi.netty.servlet.facade.ServerServletResponseFacade;
 import cn.xuyingqi.netty.servlet.facade.ServletSessionFacade;
@@ -26,7 +26,8 @@ import io.netty.util.AttributeKey;
  * @author XuYQ
  *
  */
-public class ServerServletHandler extends ChannelHandlerAdapter implements ServletHandler {
+public final class ServletHandler extends ChannelHandlerAdapter
+		implements cn.xuyingqi.net.server.servlet.ServletHandler {
 
 	/**
 	 * Servlet容器
@@ -34,14 +35,14 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 	private ServletContainer servletContainer;
 
 	/**
-	 * 属性:会话ID
+	 * 属性:会话
 	 */
-	private AttributeKey<String> sessionIdAttr = AttributeKey.valueOf("sessionId");
+	private static AttributeKey<Session> sessionAttr = AttributeKey.valueOf("session");
 
 	/**
-	 * 属性值:session
+	 * 属性:Servlet会话
 	 */
-	private AttributeKey<DefaultServletSession> sessionAttr = AttributeKey.valueOf("session");
+	private static AttributeKey<DefaultServletSession> servletSessionAttr = AttributeKey.valueOf("servletSession");
 
 	@Override
 	public void init(ServletContainer servletContainer) {
@@ -53,13 +54,10 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 
-		// 获取会话ID属性
-		Attribute<String> sessionIdAttr = ctx.attr(this.sessionIdAttr);
-		// 获取会话ID
-		String sessionId = sessionIdAttr.get();
-
-		// 设置该链接的session属性
-		Attribute<DefaultServletSession> attr = ctx.attr(sessionAttr);
+		// 获取会话属性
+		Attribute<Session> sessionAttr = ctx.attr(ServletHandler.sessionAttr);
+		// 获取会话
+		Session session = sessionAttr.get();
 
 		// Servlet上下文
 		ServletContext context = null;
@@ -72,42 +70,38 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 			context = this.servletContainer.getServlet(it.next()).getServletConfig().getServletContext();
 		}
 
-		// 创建session对象
-		DefaultServletSession serverSession = new DefaultServletSession(context, sessionId,
+		// 创建Servlet会话对象
+		DefaultServletSession serverSession = new DefaultServletSession(context, session.getId(),
 				ctx.channel().localAddress(), ctx.channel().remoteAddress());
 
-		attr.set(serverSession);
+		// 获取Servlet会话属性
+		Attribute<DefaultServletSession> servletSessionAttr = ctx.attr(ServletHandler.servletSessionAttr);
+		// 设置Servlet会话
+		servletSessionAttr.set(serverSession);
 
 		// 后续处理
 		ctx.fireChannelActive();
 	}
 
 	@Override
-	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-
-		// 后续处理
-		ctx.fireChannelInactive();
-	}
-
-	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
-		// 服务会话
-		DefaultServletSession session = ctx.attr(sessionAttr).get();
+		// Servlet会话
+		DefaultServletSession servletSession = ctx.attr(servletSessionAttr).get();
 		// 修改最后一次请求时间
-		session.updateLastAccessedTime();
-		// 会话外观类
-		ServletSession sessionFacade = new ServletSessionFacade(session);
+		servletSession.updateLastAccessedTime();
+		// Servlet会话外观类
+		ServletSession servletSessionFacade = new ServletSessionFacade(servletSession);
 
-		// 服务请求
-		DefaultServerServletRequest request = new DefaultServerServletRequest(sessionFacade, (Datagram) msg);
-		// 请求外观类
+		// Servlet请求
+		DefaultServerServletRequest request = new DefaultServerServletRequest(servletSessionFacade, (Datagram) msg);
+		// Servlet请求外观类
 		ServerServletRequest requestFacade = new ServerServletRequestFacade(request);
 
-		// 服务响应
+		// Servlet响应
 		DefaultServerServletResponse response = new DefaultServerServletResponse(requestFacade,
 				((Datagram) msg).newResponse());
-		// 响应外观类
+		// Servlet外观类
 		ServerServletResponse responseFacade = new ServerServletResponseFacade(response);
 
 		// 获取Servlet名称集合

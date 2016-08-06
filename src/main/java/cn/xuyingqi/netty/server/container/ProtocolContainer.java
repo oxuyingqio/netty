@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import cn.xuyingqi.net.server.container.ProtocolContainer;
 import cn.xuyingqi.netty.protocol.Protocol;
 import cn.xuyingqi.netty.server.core.ServerXml;
 import cn.xuyingqi.netty.server.core.ServerXml.ProtocolConfig;
@@ -18,7 +17,7 @@ import cn.xuyingqi.util.util.MapFactory;
  * @author XuYQ
  *
  */
-public final class ServerProtocolContainer implements ProtocolContainer {
+public final class ProtocolContainer implements cn.xuyingqi.net.server.container.ProtocolContainer {
 
 	/**
 	 * 协议容器
@@ -33,7 +32,7 @@ public final class ServerProtocolContainer implements ProtocolContainer {
 	/**
 	 * 私有构造方法
 	 */
-	private ServerProtocolContainer() {
+	private ProtocolContainer() {
 
 		// 获取协议配置集合
 		List<ProtocolConfig> configs = ServerXml.getInstance().getProtocolConfigs();
@@ -65,7 +64,7 @@ public final class ServerProtocolContainer implements ProtocolContainer {
 	public static final ProtocolContainer getInstance() {
 
 		if (container == null) {
-			container = new ServerProtocolContainer();
+			container = new ProtocolContainer();
 		}
 
 		return container;

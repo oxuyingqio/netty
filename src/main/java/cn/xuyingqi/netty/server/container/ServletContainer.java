@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import cn.xuyingqi.net.server.container.ServletContainer;
 import cn.xuyingqi.net.servlet.Servlet;
 import cn.xuyingqi.netty.server.core.ServerAppXml;
 import cn.xuyingqi.netty.server.core.ServerAppXml.ServletConfig;
@@ -19,7 +18,7 @@ import cn.xuyingqi.util.util.MapFactory;
  * @author XuYQ
  *
  */
-public final class ServerServletContainer implements ServletContainer {
+public final class ServletContainer implements cn.xuyingqi.net.server.container.ServletContainer {
 
 	/**
 	 * Servlet容器
@@ -34,7 +33,7 @@ public final class ServerServletContainer implements ServletContainer {
 	/**
 	 * 私有构造方法
 	 */
-	private ServerServletContainer() {
+	private ServletContainer() {
 
 		// 获取Servlet配置集合
 		List<ServletConfig> configs = ServerAppXml.getInstance().getServletConfigs();
@@ -70,7 +69,7 @@ public final class ServerServletContainer implements ServletContainer {
 	public static final ServletContainer getInstance() {
 
 		if (container == null) {
-			container = new ServerServletContainer();
+			container = new ServletContainer();
 		}
 
 		return container;

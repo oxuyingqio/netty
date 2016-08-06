@@ -1,15 +1,13 @@
 package cn.xuyingqi.netty.server.connector;
 
-import cn.xuyingqi.net.server.connector.Connector;
 import cn.xuyingqi.net.server.connector.ConnectorConfig;
-import cn.xuyingqi.net.server.servlet.ServletHandler;
 import cn.xuyingqi.netty.protocol.Protocol;
 import cn.xuyingqi.netty.server.connector.handler.ChannelContainerHandler;
 import cn.xuyingqi.netty.server.connector.handler.ConnectLoggerHandler;
-import cn.xuyingqi.netty.server.connector.handler.ServerServletHandler;
-import cn.xuyingqi.netty.server.connector.handler.SessionCreateHandler;
-import cn.xuyingqi.netty.server.container.ServerProtocolContainer;
-import cn.xuyingqi.netty.server.container.ServerServletContainer;
+import cn.xuyingqi.netty.server.connector.handler.ServletHandler;
+import cn.xuyingqi.netty.server.connector.handler.SessionHandler;
+import cn.xuyingqi.netty.server.container.ProtocolContainer;
+import cn.xuyingqi.netty.server.container.ServletContainer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandler;
@@ -29,7 +27,7 @@ import io.netty.util.internal.logging.InternalLoggerFactory;
  * @author XuYQ
  *
  */
-public final class ServerConnector implements Connector {
+public final class Connector implements cn.xuyingqi.net.server.connector.Connector {
 
 	/**
 	 * 日志
@@ -57,7 +55,9 @@ public final class ServerConnector implements Connector {
 		// 用于客户端连接读写
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
 
+		// 服务器启动器
 		ServerBootstrap bootstrap = new ServerBootstrap();
+		// 服务器配置
 		bootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
 				.option(ChannelOption.SO_BACKLOG, 1024).childHandler(new ChannelInitializer<SocketChannel>() {
 					@Override
@@ -66,25 +66,28 @@ public final class ServerConnector implements Connector {
 						// 超时
 						ch.pipeline().addLast(new ReadTimeoutHandler(config.getTimeout()));
 
-						// 编码
-						ch.pipeline().addLast(((Protocol) ServerProtocolContainer.getInstance()
-								.getProtocol(config.getProtocol())).getEncoder());
-						// 解码
-						ch.pipeline().addLast(((Protocol) ServerProtocolContainer.getInstance()
-								.getProtocol(config.getProtocol())).getDecoder());
-
 						// 连接日志
 						ch.pipeline().addLast(new ConnectLoggerHandler());
-						// 会话生成
-						ch.pipeline().addLast(new SessionCreateHandler());
+
+						// 编码
+						ch.pipeline()
+								.addLast(((Protocol) ProtocolContainer.getInstance().getProtocol(config.getProtocol()))
+										.getEncoder());
+						// 解码
+						ch.pipeline()
+								.addLast(((Protocol) ProtocolContainer.getInstance().getProtocol(config.getProtocol()))
+										.getDecoder());
+
+						// 会话
+						ch.pipeline().addLast(new SessionHandler());
 
 						// Servlet处理
-						ServletHandler servletHandler = new ServerServletHandler();
+						ServletHandler servletHandler = new ServletHandler();
 						// 配置Servlet容器
-						servletHandler.init(ServerServletContainer.getInstance());
+						servletHandler.init(ServletContainer.getInstance());
 						// Servlet处理
 						ch.pipeline().addLast((ChannelHandler) servletHandler);
-						
+
 						// 客户端通道
 						ch.pipeline().addLast(new ChannelContainerHandler());
 					}

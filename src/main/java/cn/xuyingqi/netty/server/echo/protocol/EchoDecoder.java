@@ -1,6 +1,7 @@
 package cn.xuyingqi.netty.server.echo.protocol;
 
 import cn.xuyingqi.netty.protocol.Decoder;
+import cn.xuyingqi.netty.server.echo.protocol.datagram.EchoDatagram;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
@@ -36,7 +37,16 @@ public class EchoDecoder extends LengthFieldBasedFrameDecoder implements Decoder
 			return null;
 		}
 
-		return null;
+		short length = frame.readShort();
+		int size = frame.readableBytes();
+		byte[] b = new byte[size];
+		frame.readBytes(b);
+
+		EchoDatagram datagram = new EchoDatagram();
+		datagram.getHeader().addHeader("length", length);
+		datagram.getPayload().addPayload("data", new String(b));
+
+		return datagram;
 	}
 
 	@Override

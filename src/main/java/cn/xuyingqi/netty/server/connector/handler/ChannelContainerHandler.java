@@ -53,7 +53,13 @@ public class ChannelContainerHandler extends ChannelHandlerAdapter {
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 
-		System.out.println("ChannelContainerHandler===================================");
+		// 获取会话属性
+		Attribute<Session> attr = ctx.attr(sessionAttr);
+		// 获取会话
+		Session session = attr.get();
+
+		// 移除客户端通道
+		ChannelContainer.getInstance().removeChannel(session.getId());
 
 		// 后续处理
 		ctx.fireExceptionCaught(cause);

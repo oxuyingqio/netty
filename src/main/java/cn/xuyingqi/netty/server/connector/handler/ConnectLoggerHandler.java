@@ -1,4 +1,4 @@
-package cn.xuyingqi.netty.server.connector;
+package cn.xuyingqi.netty.server.connector.handler;
 
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;

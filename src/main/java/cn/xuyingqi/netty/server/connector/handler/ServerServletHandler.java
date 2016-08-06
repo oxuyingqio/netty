@@ -1,4 +1,4 @@
-package cn.xuyingqi.netty.server.connector;
+package cn.xuyingqi.netty.server.connector.handler;
 
 import java.util.Iterator;
 
@@ -73,8 +73,8 @@ public class ServerServletHandler extends ChannelHandlerAdapter implements Servl
 		}
 
 		// 创建session对象
-		DefaultServletSession serverSession = new DefaultServletSession(context, ctx.channel().localAddress(),
-				ctx.channel().remoteAddress());
+		DefaultServletSession serverSession = new DefaultServletSession(context, sessionId,
+				ctx.channel().localAddress(), ctx.channel().remoteAddress());
 
 		attr.set(serverSession);
 

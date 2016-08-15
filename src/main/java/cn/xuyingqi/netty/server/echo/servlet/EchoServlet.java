@@ -19,15 +19,18 @@ public class EchoServlet extends AbstractServlet {
 	}
 
 	private void service(ServerServletRequest request, ServerServletResponse response) {
-
-		System.out.println("数据报文长度：" + request.getHeader("length"));
-		System.out.println("数据报文内容：" + request.getPayload("data"));
-
+		
+		System.out.println("来了========");
+		
 		try {
+			Thread.sleep(3000);
+
 			byte[] data = "这是中间说的话".getBytes("GBK");
 			ChannelContainer.getInstance().getChannel(request.getServletSessionId())
 					.writeAndFlush(Unpooled.buffer(data.length).writeBytes(data));
 		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}

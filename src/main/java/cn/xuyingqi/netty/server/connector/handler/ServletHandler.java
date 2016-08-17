@@ -125,6 +125,18 @@ public final class ServletHandler extends ChannelHandlerAdapter
 	}
 
 	@Override
+	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+
+		// 获取Servlet名称集合
+		Iterator<String> it = this.servletContainer.getServletNames().iterator();
+		// 遍历Servlet名称集合
+		while (it.hasNext()) {
+			// 调用Servlet销毁方法
+			this.servletContainer.getServlet(it.next()).destroy();
+		}
+	}
+
+	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 
 		ctx.fireExceptionCaught(cause);

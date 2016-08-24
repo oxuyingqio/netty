@@ -11,8 +11,6 @@ import cn.xuyingqi.netty.server.container.ChannelContainer;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
-import io.netty.util.concurrent.Future;
-import io.netty.util.concurrent.GenericFutureListener;
 
 public class EchoServlet extends AbstractServlet {
 
@@ -22,6 +20,7 @@ public class EchoServlet extends AbstractServlet {
 		this.service((ServerServletRequest) request, (ServerServletResponse) response);
 	}
 
+	@SuppressWarnings("unchecked")
 	private void service(ServerServletRequest request, ServerServletResponse response) {
 
 		System.out.println("来了========");

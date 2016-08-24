@@ -9,6 +9,10 @@ import cn.xuyingqi.net.servlet.ServletResponse;
 import cn.xuyingqi.net.servlet.impl.AbstractServlet;
 import cn.xuyingqi.netty.server.container.ChannelContainer;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.util.concurrent.Future;
+import io.netty.util.concurrent.GenericFutureListener;
 
 public class EchoServlet extends AbstractServlet {
 
@@ -19,15 +23,22 @@ public class EchoServlet extends AbstractServlet {
 	}
 
 	private void service(ServerServletRequest request, ServerServletResponse response) {
-		
-		System.out.println("来了========");
-		
-		try {
-			Thread.sleep(3000);
 
-			byte[] data = "这是中间说的话".getBytes("GBK");
+		System.out.println("来了========");
+
+		try {
+			Thread.sleep(1000);
+
+			byte[] data = "hahaha".getBytes("GBK");
 			ChannelContainer.getInstance().getChannel(request.getServletSessionId())
-					.writeAndFlush(Unpooled.buffer(data.length).writeBytes(data));
+					.writeAndFlush(Unpooled.buffer(data.length).writeBytes(data)).addListeners(new ChannelFutureListener(){
+						@Override
+						public void operationComplete(ChannelFuture future) throws Exception {
+							if (future.channel().isOpen() && !future.isSuccess()) {
+								System.out.println("Send packet failure");
+							}
+						}
+					});
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {

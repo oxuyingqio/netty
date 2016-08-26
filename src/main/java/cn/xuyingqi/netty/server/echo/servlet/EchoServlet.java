@@ -33,6 +33,7 @@ public class EchoServlet extends AbstractServlet {
 					.writeAndFlush(Unpooled.buffer(data.length).writeBytes(data)).addListeners(new ChannelFutureListener(){
 						@Override
 						public void operationComplete(ChannelFuture future) throws Exception {
+							System.out.println("1111111111111111111111111111");
 							if (future.channel().isOpen() && !future.isSuccess()) {
 								System.out.println("Send packet failure");
 							}

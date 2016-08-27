@@ -4,7 +4,6 @@ import cn.xuyingqi.net.protocol.Datagram;
 
 public class Message {
 	
-	private String uuid;
 	private MessageType messageType;
 	private Datagram datagram;
 

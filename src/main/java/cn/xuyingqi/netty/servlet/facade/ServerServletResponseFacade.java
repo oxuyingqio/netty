@@ -1,5 +1,6 @@
 package cn.xuyingqi.netty.servlet.facade;
 
+import cn.xuyingqi.net.protocol.Datagram;
 import cn.xuyingqi.net.servlet.ServerServletResponse;
 import cn.xuyingqi.net.servlet.ServletRequest;
 import cn.xuyingqi.net.servlet.ServletResponse;
@@ -36,38 +37,8 @@ public class ServerServletResponseFacade implements ServerServletResponse {
 	}
 
 	@Override
-	public ServletResponse addHeader(String name, Object value) {
+	public ServletResponse setDatagram(Datagram datagram) {
 
-		return this.response.addHeader(name, value);
-	}
-
-	@Override
-	public boolean containsHeader(String name) {
-
-		return this.response.containsHeader(name);
-	}
-
-	@Override
-	public ServletResponse setHeader(String name, Object value) {
-
-		return this.response.setHeader(name, value);
-	}
-
-	@Override
-	public ServletResponse addPayload(String name, Object value) {
-
-		return this.response.addPayload(name, value);
-	}
-
-	@Override
-	public boolean containsPayload(String name) {
-
-		return this.response.containsPayload(name);
-	}
-
-	@Override
-	public ServletResponse setPayload(String name, Object value) {
-
-		return this.response.setPayload(name, value);
+		return this.response.setDatagram(datagram);
 	}
 }

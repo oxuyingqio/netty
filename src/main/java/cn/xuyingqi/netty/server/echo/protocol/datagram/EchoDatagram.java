@@ -1,8 +1,6 @@
 package cn.xuyingqi.netty.server.echo.protocol.datagram;
 
-import cn.xuyingqi.netty.protocol.datagram.Datagram;
-import cn.xuyingqi.netty.protocol.datagram.Header;
-import cn.xuyingqi.netty.protocol.datagram.Payload;
+import cn.xuyingqi.net.protocol.Datagram;
 
 /**
  * 应答数据报文
@@ -12,8 +10,8 @@ import cn.xuyingqi.netty.protocol.datagram.Payload;
  */
 public class EchoDatagram implements Datagram {
 
-	private Header header;
-	private Payload payload;
+	private EchoHeader header;
+	private EchoPayload payload;
 
 	/**
 	 * 应答数据报文
@@ -24,21 +22,13 @@ public class EchoDatagram implements Datagram {
 		this.payload = new EchoPayload();
 	}
 
-	@Override
-	public Header getHeader() {
+	public EchoHeader getHeader() {
 
 		return this.header;
 	}
 
-	@Override
-	public Payload getPayload() {
+	public EchoPayload getPayload() {
 
 		return this.payload;
-	}
-
-	@Override
-	public Datagram newResponse() {
-
-		return new EchoDatagram();
 	}
 }

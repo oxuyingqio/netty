@@ -2,12 +2,12 @@ package cn.xuyingqi.netty.server.connector.handler;
 
 import java.util.Iterator;
 
+import cn.xuyingqi.net.protocol.Datagram;
 import cn.xuyingqi.net.server.container.ServletContainer;
 import cn.xuyingqi.net.servlet.ServerServletRequest;
 import cn.xuyingqi.net.servlet.ServerServletResponse;
 import cn.xuyingqi.net.servlet.ServletContext;
 import cn.xuyingqi.net.servlet.ServletSession;
-import cn.xuyingqi.netty.protocol.datagram.Datagram;
 import cn.xuyingqi.netty.server.connector.Session;
 import cn.xuyingqi.netty.servlet.facade.ServerServletRequestFacade;
 import cn.xuyingqi.netty.servlet.facade.ServerServletResponseFacade;
@@ -99,8 +99,7 @@ public final class ServletHandler extends ChannelHandlerAdapter
 		ServerServletRequest requestFacade = new ServerServletRequestFacade(request);
 
 		// Servlet响应
-		DefaultServerServletResponse response = new DefaultServerServletResponse(requestFacade,
-				((Datagram) msg).newResponse());
+		DefaultServerServletResponse response = new DefaultServerServletResponse(requestFacade);
 		// Servlet外观类
 		ServerServletResponse responseFacade = new ServerServletResponseFacade(response);
 

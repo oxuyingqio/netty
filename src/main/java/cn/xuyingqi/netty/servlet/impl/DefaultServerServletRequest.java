@@ -1,12 +1,8 @@
 package cn.xuyingqi.netty.servlet.impl;
 
-import java.util.Set;
-
+import cn.xuyingqi.net.protocol.Datagram;
 import cn.xuyingqi.net.servlet.ServletSession;
 import cn.xuyingqi.net.servlet.impl.AbstractServerServletRequest;
-import cn.xuyingqi.netty.protocol.datagram.Datagram;
-import cn.xuyingqi.netty.protocol.datagram.Header;
-import cn.xuyingqi.netty.protocol.datagram.Payload;
 
 /**
  * 默认的服务器端Servlet请求
@@ -17,14 +13,9 @@ import cn.xuyingqi.netty.protocol.datagram.Payload;
 public class DefaultServerServletRequest extends AbstractServerServletRequest {
 
 	/**
-	 * 报头
+	 * 数据报文
 	 */
-	private Header header;
-
-	/**
-	 * 报体
-	 */
-	private Payload payload;
+	private Datagram datagram;
 
 	/**
 	 * 默认的服务器端Servlet请求
@@ -38,31 +29,12 @@ public class DefaultServerServletRequest extends AbstractServerServletRequest {
 
 		super(servletSession);
 
-		this.header = (Header) datagram.getHeader();
-		this.payload = (Payload) datagram.getPayload();
+		this.datagram = datagram;
 	}
 
 	@Override
-	public Set<String> getHeaderNames() {
+	public Datagram getDatagram() {
 
-		return this.header.toMap().keySet();
-	}
-
-	@Override
-	public Object getHeader(String name) {
-
-		return this.header.getHeader(name);
-	}
-
-	@Override
-	public Set<String> getPayloadNames() {
-
-		return this.payload.toMap().keySet();
-	}
-
-	@Override
-	public Object getPayload(String name) {
-
-		return this.payload.getPayload(name);
+		return this.datagram;
 	}
 }

@@ -3,6 +3,7 @@ package cn.xuyingqi.netty.servlet.facade;
 import java.net.InetAddress;
 import java.util.Set;
 
+import cn.xuyingqi.net.protocol.Datagram;
 import cn.xuyingqi.net.servlet.ServerServletRequest;
 import cn.xuyingqi.net.servlet.ServletRequest;
 import cn.xuyingqi.net.servlet.ServletSession;
@@ -86,27 +87,9 @@ public class ServerServletRequestFacade implements ServerServletRequest {
 	}
 
 	@Override
-	public Set<String> getHeaderNames() {
+	public Datagram getDatagram() {
 
-		return this.request.getHeaderNames();
-	}
-
-	@Override
-	public Object getHeader(String name) {
-
-		return this.request.getHeader(name);
-	}
-
-	@Override
-	public Set<String> getPayloadNames() {
-
-		return this.request.getPayloadNames();
-	}
-
-	@Override
-	public Object getPayload(String name) {
-
-		return this.request.getPayload(name);
+		return this.request.getDatagram();
 	}
 
 	@Override

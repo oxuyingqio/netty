@@ -1,7 +1,6 @@
 package cn.xuyingqi.netty.servlet.facade;
 
-import java.util.Set;
-
+import cn.xuyingqi.net.protocol.Datagram;
 import cn.xuyingqi.net.servlet.ClientServletResponse;
 import cn.xuyingqi.net.servlet.ServletRequest;
 
@@ -36,26 +35,8 @@ public class ClientServletResponseFacade implements ClientServletResponse {
 	}
 
 	@Override
-	public Set<String> getHeaderNames() {
+	public Datagram getDatagram() {
 
-		return this.response.getHeaderNames();
-	}
-
-	@Override
-	public Object getHeader(String name) {
-
-		return this.response.getHeader(name);
-	}
-
-	@Override
-	public Set<String> getPayloadNames() {
-
-		return this.response.getPayloadNames();
-	}
-
-	@Override
-	public Object getPayload(String name) {
-
-		return this.response.getPayload(name);
+		return this.response.getDatagram();
 	}
 }

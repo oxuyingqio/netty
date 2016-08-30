@@ -16,6 +16,11 @@ import cn.xuyingqi.net.servlet.impl.AbstractServletSession;
 public class DefaultServletSession extends AbstractServletSession {
 
 	/**
+	 * Servlet上下文
+	 */
+	private ServletContext context;
+
+	/**
 	 * 最后一次请求的时间
 	 */
 	private long lastAccessedTime;
@@ -42,13 +47,29 @@ public class DefaultServletSession extends AbstractServletSession {
 	 * @param remote
 	 *            远程地址
 	 */
-	public DefaultServletSession(ServletContext servletContext, String id, SocketAddress local, SocketAddress remote) {
+	public DefaultServletSession(String id, SocketAddress local, SocketAddress remote) {
 
-		super(servletContext, id);
+		super(id);
 
 		this.lastAccessedTime = this.getCreationTime();
 		this.local = (InetSocketAddress) local;
 		this.remote = (InetSocketAddress) remote;
+	}
+
+	@Override
+	public ServletContext getServletContext() {
+
+		return this.context;
+	}
+
+	/**
+	 * 设置Servlet上下文
+	 * 
+	 * @param context
+	 */
+	public void setServletContext(ServletContext context) {
+
+		this.context = context;
 	}
 
 	@Override

@@ -6,7 +6,7 @@ import cn.xuyingqi.net.protocol.Datagram;
 import cn.xuyingqi.net.server.container.ServletContainer;
 import cn.xuyingqi.net.servlet.ServerServletRequest;
 import cn.xuyingqi.net.servlet.ServerServletResponse;
-import cn.xuyingqi.net.servlet.ServletContext;
+import cn.xuyingqi.net.servlet.Servlet;
 import cn.xuyingqi.net.servlet.ServletSession;
 import cn.xuyingqi.netty.server.connector.Session;
 import cn.xuyingqi.netty.servlet.facade.ServerServletRequestFacade;
@@ -59,20 +59,9 @@ public final class ServletHandler extends ChannelHandlerAdapter
 		// 获取会话
 		Session session = sessionAttr.get();
 
-		// Servlet上下文
-		ServletContext context = null;
-
-		// 获取Servlet名称集合
-		Iterator<String> it = this.servletContainer.getServletNames().iterator();
-		// 遍历Servlet名称集合
-		while (it.hasNext()) {
-			// 获取Servlet上下文
-			context = this.servletContainer.getServlet(it.next()).getServletConfig().getServletContext();
-		}
-
 		// 创建Servlet会话对象
-		DefaultServletSession serverSession = new DefaultServletSession(context, session.getId(),
-				ctx.channel().localAddress(), ctx.channel().remoteAddress());
+		DefaultServletSession serverSession = new DefaultServletSession(session.getId(), ctx.channel().localAddress(),
+				ctx.channel().remoteAddress());
 
 		// 获取Servlet会话属性
 		Attribute<DefaultServletSession> servletSessionAttr = ctx.attr(ServletHandler.servletSessionAttr);
@@ -107,11 +96,18 @@ public final class ServletHandler extends ChannelHandlerAdapter
 		Iterator<String> it = this.servletContainer.getServletNames().iterator();
 		// 遍历Servlet名称集合
 		while (it.hasNext()) {
-			// 调用Servlet
-			this.servletContainer.getServlet(it.next()).service(requestFacade, responseFacade);
+			// 获取当前Servlet
+			Servlet servlet = this.servletContainer.getServlet(it.next());
+			// Servet会话中设置当前Servlet上下文
+			servletSession.setServletContext(servlet.getServletConfig().getServletContext());
+			// 调用Servlet服务方法
+			servlet.service(requestFacade, responseFacade);
 		}
-		// 写入响应数据报文
-		ctx.write(response.getDatagram());
+		// 判断响应报文不为空
+		if (response.getDatagram() != null) {
+			// 写入响应数据报文
+			ctx.write(response.getDatagram());
+		}
 
 		// 后续处理
 		ctx.fireChannelRead(msg);

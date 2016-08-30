@@ -89,7 +89,7 @@ public final class ServletHandler extends ChannelHandlerAdapter
 
 		// Servlet响应
 		DefaultServerServletResponse response = new DefaultServerServletResponse(requestFacade);
-		// Servlet外观类
+		// Servlet响应外观类
 		ServerServletResponse responseFacade = new ServerServletResponseFacade(response);
 
 		// 获取Servlet名称集合

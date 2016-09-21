@@ -183,6 +183,12 @@ public final class ServerXml {
 			@XmlAttribute(name = "timeout")
 			private int timeout;
 
+			/**
+			 * 最大连接数
+			 */
+			@XmlAttribute(name = "maxConnections")
+			private int maxConnections;
+
 			@Override
 			public String getProtocol() {
 				return protocol;
@@ -201,6 +207,11 @@ public final class ServerXml {
 			@Override
 			public int getTimeout() {
 				return timeout;
+			}
+
+			@Override
+			public int getMaxConnections() {
+				return maxConnections;
 			}
 		}
 	}

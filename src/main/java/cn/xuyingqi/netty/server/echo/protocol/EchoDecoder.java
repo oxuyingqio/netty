@@ -4,7 +4,6 @@ import cn.xuyingqi.netty.protocol.Decoder;
 import cn.xuyingqi.netty.server.echo.message.Message;
 import cn.xuyingqi.netty.server.echo.message.MessageContainer;
 import cn.xuyingqi.netty.server.echo.message.MessageType;
-import cn.xuyingqi.netty.server.echo.protocol.datagram.EchoDatagram;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
@@ -25,11 +24,11 @@ public class EchoDecoder extends LengthFieldBasedFrameDecoder implements Decoder
 		/**
 		 * @maxFrameLength 最大长度1M
 		 * @lengthFieldOffset 报体长度偏移0字节
-		 * @lengthFieldLength 报体长度2字节
+		 * @lengthFieldLength 报体长度4字节
 		 * @lengthAdjustment 报体长度修正值0
 		 * @initialBytesToStrip 报体长度忽略0字节
 		 */
-		super(1024 * 1024, 0, 2, 0, 0);
+		super(1024 * 1024, 0, 4, 0, 0);
 	}
 
 	@Override
@@ -40,14 +39,15 @@ public class EchoDecoder extends LengthFieldBasedFrameDecoder implements Decoder
 			return null;
 		}
 
-		short length = frame.readShort();
+		// 读取长度
+		int length = frame.readInt();
+		// 读取剩余字节数
 		int size = frame.readableBytes();
-		byte[] b = new byte[size];
-		frame.readBytes(b);
+		byte[] byteArray = new byte[size];
+		frame.readBytes(byteArray);
 
-		EchoDatagram datagram = new EchoDatagram();
-		datagram.getHeader().addHeader("length", length);
-		datagram.getPayload().addPayload("data", new String(b));
+		// 创建数据报文
+		EchoDatagram datagram = new EchoDatagram(length, new String(byteArray));
 
 		MessageContainer.getInstance().add(ctx.channel(), new Message(MessageType.REQUEST, datagram));
 

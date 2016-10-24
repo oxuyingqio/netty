@@ -22,4 +22,9 @@ public final class ServerBootstrap implements Bootstrap {
 		// 连接
 		connector.connect();
 	}
+
+	public static void main(String[] args) {
+
+		new ServerBootstrap().startup();
+	}
 }

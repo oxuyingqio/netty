@@ -6,7 +6,6 @@ import cn.xuyingqi.netty.protocol.Encoder;
 import cn.xuyingqi.netty.server.echo.message.Message;
 import cn.xuyingqi.netty.server.echo.message.MessageContainer;
 import cn.xuyingqi.netty.server.echo.message.MessageType;
-import cn.xuyingqi.netty.server.echo.protocol.datagram.EchoDatagram;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageEncoder;
@@ -24,7 +23,7 @@ public class EchoEncoder extends MessageToMessageEncoder<EchoDatagram> implement
 		
 		MessageContainer.getInstance().add(ctx.channel(), new Message(MessageType.RESPONSE, msg));
 		
-		byte[] data = "这只是一个测试而已".getBytes("GBK");
+		byte[] data = msg.toByteArray();
 		ctx.writeAndFlush(Unpooled.buffer(data.length).writeBytes(data));
 	}
 

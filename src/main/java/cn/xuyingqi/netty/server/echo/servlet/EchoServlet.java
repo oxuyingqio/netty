@@ -21,8 +21,8 @@ public class EchoServlet extends AbstractServlet {
 
 		System.out.println("客户端发送消息:" + ((EchoDatagram) request.getDatagram()).getMsg());
 
-		String msg = "123456";
 		try {
+			String msg = "123456";
 			int length = msg.getBytes("GBK").length;
 			response.setDatagram(new EchoDatagram(length, msg));
 		} catch (UnsupportedEncodingException e) {

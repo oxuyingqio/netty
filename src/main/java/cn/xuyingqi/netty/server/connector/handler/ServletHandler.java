@@ -122,6 +122,8 @@ public final class ServletHandler extends ChannelHandlerAdapter
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
 
+		// 后续处理
+		ctx.fireChannelInactive();
 	}
 
 	@Override

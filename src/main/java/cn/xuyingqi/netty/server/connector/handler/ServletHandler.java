@@ -129,8 +129,7 @@ public final class ServletHandler extends ChannelHandlerAdapter
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 
+		// 后续处理
 		ctx.fireExceptionCaught(cause);
-
-		ctx.close();
 	}
 }

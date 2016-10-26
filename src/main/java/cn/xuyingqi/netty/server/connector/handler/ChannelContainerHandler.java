@@ -76,5 +76,8 @@ public class ChannelContainerHandler extends ChannelHandlerAdapter {
 
 		// 后续处理
 		ctx.fireExceptionCaught(cause);
+
+		// 关闭连接
+		ctx.close();
 	}
 }

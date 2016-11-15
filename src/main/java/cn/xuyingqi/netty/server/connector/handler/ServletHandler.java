@@ -114,24 +114,4 @@ public final class ServletHandler extends ChannelHandlerAdapter
 		// 后续处理
 		ctx.fireChannelRead(msg);
 	}
-
-	@Override
-	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-
-		ctx.flush();
-	}
-
-	@Override
-	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-
-		// 后续处理
-		ctx.fireChannelInactive();
-	}
-
-	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-
-		// 后续处理
-		ctx.fireExceptionCaught(cause);
-	}
 }

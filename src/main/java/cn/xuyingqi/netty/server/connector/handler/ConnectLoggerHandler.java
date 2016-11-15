@@ -16,7 +16,7 @@ public class ConnectLoggerHandler extends ChannelHandlerAdapter {
 	/**
 	 * 日志
 	 */
-	private final InternalLogger logger = InternalLoggerFactory.getInstance(ConnectLoggerHandler.class);
+	private final InternalLogger logger = InternalLoggerFactory.getInstance(ChannelHandlerAdapter.class);
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {

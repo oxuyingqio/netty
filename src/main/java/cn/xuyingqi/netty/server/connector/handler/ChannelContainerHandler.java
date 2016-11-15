@@ -75,7 +75,7 @@ public class ChannelContainerHandler extends ChannelHandlerAdapter {
 		// 打印日志
 		this.logger.info("移除通道.\n会话: " + session + ";\n通道: " + ctx.channel());
 
-		// 关闭连接
-		ctx.close();
+		// 后续处理
+		ctx.fireExceptionCaught(cause);
 	}
 }

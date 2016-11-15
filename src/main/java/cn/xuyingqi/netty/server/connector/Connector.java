@@ -4,6 +4,7 @@ import cn.xuyingqi.net.server.connector.ConnectorConfig;
 import cn.xuyingqi.netty.protocol.Protocol;
 import cn.xuyingqi.netty.server.connector.handler.ChannelContainerHandler;
 import cn.xuyingqi.netty.server.connector.handler.ConnectLoggerHandler;
+import cn.xuyingqi.netty.server.connector.handler.ExceptionHandler;
 import cn.xuyingqi.netty.server.connector.handler.ServletHandler;
 import cn.xuyingqi.netty.server.connector.handler.SessionHandler;
 import cn.xuyingqi.netty.server.container.ProtocolContainer;
@@ -90,6 +91,9 @@ public final class Connector implements cn.xuyingqi.net.server.connector.Connect
 
 						// 客户端通道
 						ch.pipeline().addLast(new ChannelContainerHandler());
+
+						// 异常处理
+						ch.pipeline().addLast(new ExceptionHandler());
 					}
 				});
 

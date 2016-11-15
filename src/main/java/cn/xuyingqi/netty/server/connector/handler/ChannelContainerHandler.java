@@ -1,5 +1,6 @@
 package cn.xuyingqi.netty.server.connector.handler;
 
+import cn.xuyingqi.netty.server.connector.Constant;
 import cn.xuyingqi.netty.server.connector.Session;
 import cn.xuyingqi.netty.server.container.ChannelContainer;
 import io.netty.channel.ChannelHandlerAdapter;
@@ -25,20 +26,20 @@ public class ChannelContainerHandler extends ChannelHandlerAdapter {
 	/**
 	 * 属性:会话
 	 */
-	private static AttributeKey<Session> sessionAttr = AttributeKey.valueOf("session");
+	private static AttributeKey<Session> sessionAttr = AttributeKey.valueOf(Constant.SESSION);
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 
 		// 获取会话属性
-		Attribute<Session> attr = ctx.attr(sessionAttr);
+		Attribute<Session> sessionAttr = ctx.attr(ChannelContainerHandler.sessionAttr);
 		// 获取会话
-		Session session = attr.get();
+		Session session = sessionAttr.get();
 
 		// 添加客户端通道
 		ChannelContainer.getInstance().addChannel(session.getId(), ctx.channel());
 		// 打印日志
-		this.logger.info("添加通道.会话:" + session.getId() + ";通道:" + ctx.channel());
+		this.logger.info("添加通道.\n会话: " + session + ";\n通道: " + ctx.channel());
 
 		// 后续处理
 		ctx.fireChannelActive();
@@ -48,14 +49,14 @@ public class ChannelContainerHandler extends ChannelHandlerAdapter {
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
 
 		// 获取会话属性
-		Attribute<Session> attr = ctx.attr(sessionAttr);
+		Attribute<Session> sessionAttr = ctx.attr(ChannelContainerHandler.sessionAttr);
 		// 获取会话
-		Session session = attr.get();
+		Session session = sessionAttr.get();
 
 		// 移除客户端通道
 		ChannelContainer.getInstance().removeChannel(session.getId());
 		// 打印日志
-		this.logger.info("移除通道.会话:" + session.getId() + ";通道:" + ctx.channel());
+		this.logger.info("移除通道.\n会话: " + session + ";\n通道: " + ctx.channel());
 
 		// 后续处理
 		ctx.fireChannelInactive();
@@ -65,17 +66,14 @@ public class ChannelContainerHandler extends ChannelHandlerAdapter {
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 
 		// 获取会话属性
-		Attribute<Session> attr = ctx.attr(sessionAttr);
+		Attribute<Session> sessionAttr = ctx.attr(ChannelContainerHandler.sessionAttr);
 		// 获取会话
-		Session session = attr.get();
+		Session session = sessionAttr.get();
 
 		// 移除客户端通道
 		ChannelContainer.getInstance().removeChannel(session.getId());
 		// 打印日志
-		this.logger.info("移除通道.会话:" + session.getId() + ";通道:" + ctx.channel());
-
-		// 后续处理
-		ctx.fireExceptionCaught(cause);
+		this.logger.info("移除通道.\n会话: " + session + ";\n通道: " + ctx.channel());
 
 		// 关闭连接
 		ctx.close();

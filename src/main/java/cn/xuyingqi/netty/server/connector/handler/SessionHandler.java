@@ -1,5 +1,6 @@
 package cn.xuyingqi.netty.server.connector.handler;
 
+import cn.xuyingqi.netty.server.connector.Constant;
 import cn.xuyingqi.netty.server.connector.Session;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
@@ -24,17 +25,17 @@ public class SessionHandler extends ChannelHandlerAdapter {
 	/**
 	 * 属性:会话
 	 */
-	private static AttributeKey<Session> sessionAttr = AttributeKey.valueOf("session");
+	private static AttributeKey<Session> sessionAttr = AttributeKey.valueOf(Constant.SESSION);
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 
 		// 获取会话属性
-		Attribute<Session> attr = ctx.attr(sessionAttr);
+		Attribute<Session> sessionAttr = ctx.attr(SessionHandler.sessionAttr);
 		// 设置一个新的会话
-		attr.set(new Session());
+		sessionAttr.set(new Session());
 		// 打印日志
-		this.logger.info(ctx.channel().remoteAddress() + " 创建会话(ID:" + attr.get().getId() + ")");
+		this.logger.info("远程地址: " + ctx.channel().remoteAddress() + " 创建会话(" + sessionAttr.get() + ")");
 
 		// 后续处理
 		ctx.fireChannelActive();

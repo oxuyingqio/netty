@@ -98,7 +98,7 @@ public final class Connector implements cn.xuyingqi.net.server.connector.Connect
 			// 同步绑定端口号
 			ChannelFuture future = bootstrap.bind(this.config.getHost(), this.config.getPort()).sync();
 			// 打印日志
-			this.logger.info(this.config.getHost() + ":" + this.config.getPort() + " 已启动");
+			this.logger.info(this.config.getHost() + ":" + this.config.getPort() + " 已启动.");
 
 			// 同步等待端口关闭
 			future.channel().closeFuture().sync();

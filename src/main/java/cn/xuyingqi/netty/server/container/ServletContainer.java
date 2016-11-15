@@ -66,7 +66,7 @@ public final class ServletContainer implements cn.xuyingqi.net.server.container.
 	 * 
 	 * @return
 	 */
-	public static final ServletContainer getInstance() {
+	public static final synchronized ServletContainer getInstance() {
 
 		if (container == null) {
 			container = new ServletContainer();

@@ -8,6 +8,7 @@ import cn.xuyingqi.net.servlet.ServerServletRequest;
 import cn.xuyingqi.net.servlet.ServerServletResponse;
 import cn.xuyingqi.net.servlet.Servlet;
 import cn.xuyingqi.net.servlet.ServletSession;
+import cn.xuyingqi.netty.server.connector.Constant;
 import cn.xuyingqi.netty.server.connector.Session;
 import cn.xuyingqi.netty.servlet.facade.ServerServletRequestFacade;
 import cn.xuyingqi.netty.servlet.facade.ServerServletResponseFacade;
@@ -37,12 +38,13 @@ public final class ServletHandler extends ChannelHandlerAdapter
 	/**
 	 * 属性:会话
 	 */
-	private static AttributeKey<Session> sessionAttr = AttributeKey.valueOf("session");
+	private static AttributeKey<Session> sessionAttr = AttributeKey.valueOf(Constant.SESSION);
 
 	/**
 	 * 属性:Servlet会话
 	 */
-	private static AttributeKey<DefaultServletSession> servletSessionAttr = AttributeKey.valueOf("servletSession");
+	private static AttributeKey<DefaultServletSession> servletSessionAttr = AttributeKey
+			.valueOf(Constant.SERVLET_SESSION);
 
 	@Override
 	public void init(ServletContainer servletContainer) {

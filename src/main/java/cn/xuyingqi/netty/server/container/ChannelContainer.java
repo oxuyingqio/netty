@@ -35,7 +35,7 @@ public final class ChannelContainer {
 	 * 
 	 * @return
 	 */
-	public static ChannelContainer getInstance() {
+	public static final synchronized ChannelContainer getInstance() {
 
 		if (channelContainer == null) {
 			channelContainer = new ChannelContainer();

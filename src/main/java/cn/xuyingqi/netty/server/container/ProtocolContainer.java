@@ -61,7 +61,7 @@ public final class ProtocolContainer implements cn.xuyingqi.net.server.container
 	 * 
 	 * @return
 	 */
-	public static final ProtocolContainer getInstance() {
+	public static final synchronized ProtocolContainer getInstance() {
 
 		if (container == null) {
 			container = new ProtocolContainer();

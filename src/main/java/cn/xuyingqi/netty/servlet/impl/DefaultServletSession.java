@@ -5,6 +5,7 @@ import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 
 import cn.xuyingqi.net.servlet.ServletContext;
+import cn.xuyingqi.net.servlet.ServletSession;
 import cn.xuyingqi.net.servlet.impl.AbstractServletSession;
 
 /**
@@ -13,7 +14,7 @@ import cn.xuyingqi.net.servlet.impl.AbstractServletSession;
  * @author XuYQ
  *
  */
-public class DefaultServletSession extends AbstractServletSession {
+public class DefaultServletSession extends AbstractServletSession implements ServletSession {
 
 	/**
 	 * Servlet上下文

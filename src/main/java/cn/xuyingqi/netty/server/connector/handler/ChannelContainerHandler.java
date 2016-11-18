@@ -39,7 +39,7 @@ public class ChannelContainerHandler extends ChannelHandlerAdapter {
 		// 添加客户端通道
 		ChannelContainer.getInstance().addChannel(session.getId(), ctx.channel());
 		// 打印日志
-		this.logger.info("添加通道.\n会话: " + session + ";\n通道: " + ctx.channel());
+		this.logger.info("\n添加通道.\n会话: " + session + ";\n通道: " + ctx.channel());
 
 		// 后续处理
 		ctx.fireChannelActive();
@@ -56,7 +56,7 @@ public class ChannelContainerHandler extends ChannelHandlerAdapter {
 		// 移除客户端通道
 		ChannelContainer.getInstance().removeChannel(session.getId());
 		// 打印日志
-		this.logger.info("移除通道.\n会话: " + session + ";\n通道: " + ctx.channel());
+		this.logger.info("\n移除通道.\n会话: " + session + ";\n通道: " + ctx.channel());
 
 		// 后续处理
 		ctx.fireChannelInactive();
@@ -73,7 +73,7 @@ public class ChannelContainerHandler extends ChannelHandlerAdapter {
 		// 移除客户端通道
 		ChannelContainer.getInstance().removeChannel(session.getId());
 		// 打印日志
-		this.logger.info("移除通道.\n会话: " + session + ";\n通道: " + ctx.channel());
+		this.logger.info("\n移除通道.\n会话: " + session + ";\n通道: " + ctx.channel());
 
 		// 后续处理
 		ctx.fireExceptionCaught(cause);

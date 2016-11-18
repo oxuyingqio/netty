@@ -35,7 +35,7 @@ public class SessionHandler extends ChannelHandlerAdapter {
 		// 设置一个新的会话
 		sessionAttr.set(new Session());
 		// 打印日志
-		this.logger.info("远程地址: " + ctx.channel().remoteAddress() + " 创建会话(" + sessionAttr.get() + ")");
+		this.logger.info("\n远程地址: " + ctx.channel().remoteAddress() + " 创建会话(" + sessionAttr.get() + ")");
 
 		// 后续处理
 		ctx.fireChannelActive();

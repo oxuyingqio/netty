@@ -10,9 +10,32 @@ public class Test {
 
 		Connector c = new Connector("127.0.0.1", 60000, new EchoProtocol());
 		c.connect();
-		c.demo(new EchoDatagram(5, "12345"));
-		c.demo(new EchoDatagram(5, "12345"));
-		c.demo(new EchoDatagram(5, "12345"));
+		c.request(new EchoDatagram(5, "12345"));
+		c.request(new EchoDatagram(5, "12345"));
+		c.request(new EchoDatagram(5, "12345"));
+		c.request(new EchoDatagram(5, "12345"));
+		c.request(new EchoDatagram(5, "12345"));
+		c.request(new EchoDatagram(5, "12345"));
+		c.request(new EchoDatagram(5, "12345"));
+		c.request(new EchoDatagram(5, "12345"));
+		c.request(new EchoDatagram(5, "12345"));
+		c.request(new EchoDatagram(5, "12345"));
+		c.request(new EchoDatagram(5, "12345"));
+		c.request(new EchoDatagram(5, "12345"));
+		c.request(new EchoDatagram(5, "12345"));
+		c.request(new EchoDatagram(5, "12345"));
+		c.request(new EchoDatagram(5, "12345"));
+		c.request(new EchoDatagram(5, "12345"));
+		c.request(new EchoDatagram(5, "12345"));
+		c.request(new EchoDatagram(5, "12345"));
+		c.request(new EchoDatagram(5, "12345"));
+		c.request(new EchoDatagram(5, "12345"));
+		c.request(new EchoDatagram(5, "12345"));
+		c.request(new EchoDatagram(5, "12345"));
+		c.request(new EchoDatagram(5, "12345"));
+		c.request(new EchoDatagram(5, "12345"));
+		c.request(new EchoDatagram(5, "12345"));
+		
 		c.close();
 	}
 }

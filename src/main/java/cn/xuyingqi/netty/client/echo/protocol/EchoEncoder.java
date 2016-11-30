@@ -15,9 +15,13 @@ import io.netty.handler.codec.MessageToMessageEncoder;
  */
 public class EchoEncoder extends MessageToMessageEncoder<EchoDatagram> implements Encoder {
 
+	private int i = 0;
+
 	@Override
 	protected void encode(ChannelHandlerContext ctx, EchoDatagram msg, List<Object> out) throws Exception {
-		
+
+		System.out.println("第" + i++ + "发了");
+
 		byte[] data = msg.toByteArray();
 		ctx.writeAndFlush(Unpooled.buffer(data.length).writeBytes(data));
 	}

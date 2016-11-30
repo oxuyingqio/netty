@@ -2,10 +2,10 @@ package cn.xuyingqi.netty.client.connector;
 
 import cn.xuyingqi.net.protocol.Datagram;
 import cn.xuyingqi.netty.client.connector.handler.ConnectLoggerHandler;
+import cn.xuyingqi.netty.client.connector.handler.DatagramSubjectHandler;
 import cn.xuyingqi.netty.client.connector.handler.ExceptionHandler;
-import cn.xuyingqi.netty.client.connector.handler.ServletHandler;
 import cn.xuyingqi.netty.client.connector.handler.SessionHandler;
-import cn.xuyingqi.netty.client.echo.protocol.EchoDatagram;
+import cn.xuyingqi.netty.client.observer.DatagramObserver;
 import cn.xuyingqi.netty.protocol.Protocol;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -92,8 +92,8 @@ public final class Connector {
 						// 会话
 						ch.pipeline().addLast(new SessionHandler());
 
-						// Servlet处理
-						ch.pipeline().addLast(new ServletHandler());
+						// 数据报文主题处理
+						ch.pipeline().addLast(new DatagramSubjectHandler());
 
 						// 异常处理
 						ch.pipeline().addLast(new ExceptionHandler());
@@ -109,6 +109,9 @@ public final class Connector {
 		}
 	}
 
+	/**
+	 * 关闭连接
+	 */
 	public final void close() {
 
 		// 同步等待链路关闭
@@ -123,9 +126,26 @@ public final class Connector {
 		}
 	}
 
-	public final void demo(Datagram datagram) {
+	private int i = 0;
 
-		System.out.println("11111111111111111111111111111111111");
+	/**
+	 * 请求
+	 * 
+	 * @param datagram
+	 */
+	public final void request(Datagram datagram) {
+
+		DatagramSubjectHandler.addObserver(new DatagramObserver() {
+
+			@Override
+			public void receiveDatagram(Datagram datagram) {
+
+				System.out.println("第" + i++ + "接到了");
+
+				DatagramSubjectHandler.removeObserver(this);
+			}
+		});
+
 		this.channel.write(datagram);
 	}
 }

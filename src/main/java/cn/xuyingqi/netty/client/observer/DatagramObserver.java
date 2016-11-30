@@ -11,7 +11,7 @@ import cn.xuyingqi.net.protocol.Datagram;
 public interface DatagramObserver {
 
 	/**
-	 * 接收数据报文
+	 * 接收数据报文,处理成功返回true
 	 * 
 	 * @param datagram
 	 */

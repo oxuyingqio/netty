@@ -2,7 +2,7 @@ package cn.xuyingqi.netty.client.connector;
 
 import cn.xuyingqi.net.protocol.Datagram;
 import cn.xuyingqi.netty.client.connector.handler.ConnectLoggerHandler;
-import cn.xuyingqi.netty.client.connector.handler.DatagramSubjectHandler;
+import cn.xuyingqi.netty.client.connector.handler.DatagramHandler;
 import cn.xuyingqi.netty.client.connector.handler.ExceptionHandler;
 import cn.xuyingqi.netty.client.connector.handler.SessionHandler;
 import cn.xuyingqi.netty.client.observer.DatagramObserver;
@@ -92,8 +92,8 @@ public final class Connector {
 						// 会话
 						ch.pipeline().addLast(new SessionHandler());
 
-						// 数据报文主题处理
-						ch.pipeline().addLast(new DatagramSubjectHandler());
+						// 数据报文处理
+						ch.pipeline().addLast(new DatagramHandler());
 
 						// 异常处理
 						ch.pipeline().addLast(new ExceptionHandler());
@@ -126,26 +126,61 @@ public final class Connector {
 		}
 	}
 
-	private int i = 0;
-
 	/**
 	 * 请求
 	 * 
-	 * @param datagram
+	 * @param request
 	 */
-	public final void request(Datagram datagram) {
+	public final void request(Datagram request, DatagramObserver observer) {
 
-		DatagramSubjectHandler.addObserver(new DatagramObserver() {
+		// 添加观察者
+		DatagramHandler.addObserver(observer);
+		// 发送数据报文
+		this.channel.write(request);
+	}
+
+	public final Datagram request(Datagram request) {
+
+		/**
+		 * 内部类
+		 * 
+		 * @author XuYQ
+		 *
+		 */
+		class Demo implements DatagramObserver {
+
+			private Datagram msg;
 
 			@Override
 			public boolean receiveDatagram(Datagram datagram) {
 
-				System.out.println("第" + i++ + "接到了");
-
+				msg = datagram;
+				
+				System.out.println("111111111111111111111111111111");
 				return true;
 			}
-		});
 
-		this.channel.write(datagram);
+			public Datagram getDatagram() {
+
+				return msg;
+			}
+		}
+
+		Demo demo = new Demo();
+
+		// 添加观察者
+		DatagramHandler.addObserver(demo);
+		// 发送数据报文
+		this.channel.write(request);
+
+		while (demo.getDatagram() == null) {
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return demo.getDatagram();
 	}
 }

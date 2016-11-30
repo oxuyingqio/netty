@@ -10,12 +10,12 @@ import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
- * 被观察数据报文
+ * 数据报文处理
  * 
  * @author XuYQ
  *
  */
-public final class DatagramSubjectHandler extends ChannelHandlerAdapter {
+public final class DatagramHandler extends ChannelHandlerAdapter {
 
 	/**
 	 * 观察者
@@ -45,8 +45,11 @@ public final class DatagramSubjectHandler extends ChannelHandlerAdapter {
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
+		// 获取观察者集合
 		Iterator<DatagramObserver> iter = observers.iterator();
+		// 遍历观察者集合
 		while (iter.hasNext()) {
+			// 调用接收消息,当返回true时,移除本观察者
 			if (iter.next().receiveDatagram((Datagram) msg)) {
 				iter.remove();
 			}

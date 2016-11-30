@@ -15,5 +15,5 @@ public interface DatagramObserver {
 	 * 
 	 * @param datagram
 	 */
-	public void receiveDatagram(Datagram datagram);
+	public boolean receiveDatagram(Datagram datagram);
 }

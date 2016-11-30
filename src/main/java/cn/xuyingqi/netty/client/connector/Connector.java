@@ -138,11 +138,11 @@ public final class Connector {
 		DatagramSubjectHandler.addObserver(new DatagramObserver() {
 
 			@Override
-			public void receiveDatagram(Datagram datagram) {
+			public boolean receiveDatagram(Datagram datagram) {
 
 				System.out.println("第" + i++ + "接到了");
 
-				DatagramSubjectHandler.removeObserver(this);
+				return true;
 			}
 		});
 

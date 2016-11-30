@@ -1,8 +1,7 @@
 package cn.xuyingqi.netty.client.connector;
 
-import java.util.List;
-
-import cn.xuyingqi.netty.client.core.ClientXml.ServiceConfig.ConnectorConfig;
+import cn.xuyingqi.netty.client.connector.handler.ConnectLoggerHandler;
+import cn.xuyingqi.netty.protocol.Protocol;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -19,27 +18,50 @@ import io.netty.handler.timeout.ReadTimeoutHandler;
  * @author XuYQ
  *
  */
-public final class ClientConnector {
+public final class Connector {
 
 	/**
-	 * 连接器配置
+	 * 主机名
 	 */
-	private List<ConnectorConfig> configs;
+	private String host;
+	/**
+	 * 端口号
+	 */
+	private int port;
 
 	/**
-	 * 连接服务器
+	 * 协议
+	 */
+	private Protocol protocol;
+
+	/**
+	 * 连接器
 	 * 
 	 * @param host
 	 *            主机名
 	 * @param port
 	 *            端口号
+	 * @param protocol
+	 *            协议
 	 */
-	public final void connect(String host, int port) {
+	public Connector(String host, int port, Protocol protocol) {
+
+		this.host = host;
+		this.port = port;
+		this.protocol = protocol;
+	}
+
+	/**
+	 * 连接服务器
+	 */
+	public final void connect() {
 
 		// 客户端线程组
 		EventLoopGroup group = new NioEventLoopGroup();
 
+		// 客户端启动器
 		Bootstrap bootstrap = new Bootstrap();
+		// 客户端配置
 		bootstrap.group(group).channel(NioSocketChannel.class).option(ChannelOption.TCP_NODELAY, true)
 				.handler(new ChannelInitializer<SocketChannel>() {
 					@Override
@@ -47,6 +69,15 @@ public final class ClientConnector {
 
 						// 超时
 						ch.pipeline().addLast(new ReadTimeoutHandler(300));
+
+						// 连接日志
+						ch.pipeline().addLast(new ConnectLoggerHandler());
+
+						// 编码
+						ch.pipeline().addLast(protocol.getEncoder());
+						// 解码
+						ch.pipeline().addLast(protocol.getDecoder());
+
 						ch.pipeline().addLast(new ClientServletHandler());
 					}
 				});

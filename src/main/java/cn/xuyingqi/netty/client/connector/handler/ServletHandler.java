@@ -1,4 +1,4 @@
-package cn.xuyingqi.netty.server.connector.handler;
+package cn.xuyingqi.netty.client.connector.handler;
 
 import java.util.Iterator;
 

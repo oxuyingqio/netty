@@ -1,6 +1,9 @@
 package cn.xuyingqi.netty.client.connector;
 
 import cn.xuyingqi.netty.client.connector.handler.ConnectLoggerHandler;
+import cn.xuyingqi.netty.client.connector.handler.ExceptionHandler;
+import cn.xuyingqi.netty.client.connector.handler.ServletHandler;
+import cn.xuyingqi.netty.client.connector.handler.SessionHandler;
 import cn.xuyingqi.netty.protocol.Protocol;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
@@ -78,7 +81,14 @@ public final class Connector {
 						// 解码
 						ch.pipeline().addLast(protocol.getDecoder());
 
-						ch.pipeline().addLast(new ClientServletHandler());
+						// Servlet处理
+						ch.pipeline().addLast(new ServletHandler());
+
+						// 会话
+						ch.pipeline().addLast(new SessionHandler());
+
+						// 异常处理
+						ch.pipeline().addLast(new ExceptionHandler());
 					}
 				});
 

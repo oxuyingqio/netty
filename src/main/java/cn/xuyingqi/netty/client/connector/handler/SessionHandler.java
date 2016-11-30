@@ -1,7 +1,7 @@
 package cn.xuyingqi.netty.client.connector.handler;
 
 import cn.xuyingqi.netty.client.connector.Constant;
-import cn.xuyingqi.netty.client.connector.Session;
+import cn.xuyingqi.netty.session.Session;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.Attribute;

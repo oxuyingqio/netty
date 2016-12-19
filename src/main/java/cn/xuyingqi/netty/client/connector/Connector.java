@@ -138,49 +138,4 @@ public final class Connector {
 		// 发送数据报文
 		this.channel.write(request);
 	}
-
-	public final Datagram request(Datagram request) {
-
-		/**
-		 * 内部类
-		 * 
-		 * @author XuYQ
-		 *
-		 */
-		class Demo implements DatagramObserver {
-
-			private Datagram msg;
-
-			@Override
-			public boolean receiveDatagram(Datagram datagram) {
-
-				msg = datagram;
-				
-				System.out.println("111111111111111111111111111111");
-				return true;
-			}
-
-			public Datagram getDatagram() {
-
-				return msg;
-			}
-		}
-
-		Demo demo = new Demo();
-
-		// 添加观察者
-		DatagramHandler.addObserver(demo);
-		// 发送数据报文
-		this.channel.write(request);
-
-		while (demo.getDatagram() == null) {
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return demo.getDatagram();
-	}
 }

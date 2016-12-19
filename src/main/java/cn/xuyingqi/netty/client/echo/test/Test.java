@@ -11,7 +11,7 @@ public class Test {
 
 		Connector c = new Connector("127.0.0.1", 60000, new EchoProtocol());
 		c.connect();
-		Datagram datagram = c.request(new EchoDatagram(5, "12345"));
+//		Datagram datagram = c.request(new EchoDatagram(5, "12345"));
 //		c.request(new EchoDatagram(5, "12345"), new DatagramObserver() {
 //
 //			@Override
@@ -22,8 +22,8 @@ public class Test {
 //				return true;
 //			}
 //		});
-
-		System.out.println(datagram);
-		c.close();
+//
+//		System.out.println(datagram);
+//		c.close();
 	}
 }

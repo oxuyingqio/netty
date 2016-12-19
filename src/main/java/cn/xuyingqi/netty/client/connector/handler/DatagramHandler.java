@@ -49,13 +49,20 @@ public final class DatagramHandler extends ChannelHandlerAdapter {
 		Iterator<DatagramObserver> iter = observers.iterator();
 		// 遍历观察者集合
 		while (iter.hasNext()) {
+
 			// 调用接收消息,当返回true时,移除本观察者
-			if (iter.next().receiveDatagram((Datagram) msg)) {
+			if (iter.next().receiveDatagram(ctx, (Datagram) msg)) {
 				iter.remove();
 			}
 		}
 
 		// 后续处理
 		ctx.fireChannelRead(msg);
+	}
+
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+
+		cause.printStackTrace();
 	}
 }

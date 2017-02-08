@@ -1,32 +1,21 @@
 package cn.xuyingqi.netty;
 
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+
 import org.junit.Test;
 
 public class JUnitTest {
 
-	private int i = 0;
-
-	public synchronized void demo() {
-
-		while (i < 5) {
-			Thread t = new Thread(new Demo());
-			t.start();
-			System.out.println("当前i的值为：" + i);
-		}
-
-		System.out.println("当前i的值为(已经出来了)：" + i);
-	}
-
-	public class Demo implements Runnable {
-
-		@Override
-		public synchronized void run() {
-			i++;
-		}
-	}
-
 	@Test
 	public void test() {
-		new JUnitTest().demo();
+
+		try {
+			Socket socket = new Socket();
+			socket.connect(new InetSocketAddress("www.baidu.com", 80));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

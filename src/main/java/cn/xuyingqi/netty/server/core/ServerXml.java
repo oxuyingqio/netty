@@ -157,7 +157,7 @@ public final class ServerXml {
 		 * @author XuYQ
 		 *
 		 */
-		public static final class ConnectorConfig implements cn.xuyingqi.net.server.connector.ConnectorConfig {
+		public static final class ConnectorConfig implements cn.xuyingqi.net.connector.ConnectorConfig {
 
 			/**
 			 * 协议名称

@@ -1,6 +1,6 @@
 package cn.xuyingqi.netty.server.connector;
 
-import cn.xuyingqi.net.server.connector.ConnectorConfig;
+import cn.xuyingqi.net.connector.ConnectorConfig;
 import cn.xuyingqi.netty.protocol.Protocol;
 import cn.xuyingqi.netty.server.connector.handler.ChannelContainerHandler;
 import cn.xuyingqi.netty.server.connector.handler.ConnectLoggerHandler;
@@ -28,7 +28,7 @@ import io.netty.util.internal.logging.InternalLoggerFactory;
  * @author XuYQ
  *
  */
-public final class Connector implements cn.xuyingqi.net.server.connector.Connector {
+public final class Connector implements cn.xuyingqi.net.connector.Connector {
 
 	/**
 	 * 日志

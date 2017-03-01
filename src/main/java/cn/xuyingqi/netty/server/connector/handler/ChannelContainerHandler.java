@@ -11,7 +11,7 @@ import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 
 /**
- * 客户端通道
+ * 远程链接通道
  * 
  * @author XuYQ
  *
@@ -24,7 +24,7 @@ public class ChannelContainerHandler extends ChannelHandlerAdapter {
 	private final InternalLogger logger = InternalLoggerFactory.getInstance(ChannelHandlerAdapter.class);
 
 	/**
-	 * 属性:会话
+	 * 属性Key:会话
 	 */
 	private static AttributeKey<Session> sessionAttr = AttributeKey.valueOf(Constant.SESSION);
 
@@ -39,7 +39,7 @@ public class ChannelContainerHandler extends ChannelHandlerAdapter {
 		// 添加客户端通道
 		ChannelContainer.getInstance().addChannel(session.getId(), ctx.channel());
 		// 打印日志
-		this.logger.info("\n添加通道.\n会话: " + session + ";\n通道: " + ctx.channel());
+		this.logger.info("\n通道容器增加通道.\n会话: " + session + ";\n通道: " + ctx.channel());
 
 		// 后续处理
 		ctx.fireChannelActive();
@@ -56,7 +56,7 @@ public class ChannelContainerHandler extends ChannelHandlerAdapter {
 		// 移除客户端通道
 		ChannelContainer.getInstance().removeChannel(session.getId());
 		// 打印日志
-		this.logger.info("\n移除通道.\n会话: " + session + ";\n通道: " + ctx.channel());
+		this.logger.info("\n通道容器移除通道.\n会话: " + session + ";\n通道: " + ctx.channel());
 
 		// 后续处理
 		ctx.fireChannelInactive();
@@ -73,7 +73,7 @@ public class ChannelContainerHandler extends ChannelHandlerAdapter {
 		// 移除客户端通道
 		ChannelContainer.getInstance().removeChannel(session.getId());
 		// 打印日志
-		this.logger.info("\n移除通道.\n会话: " + session + ";\n通道: " + ctx.channel());
+		this.logger.info("\n通道容器移除通道.\n会话: " + session + ";\n通道: " + ctx.channel());
 
 		// 后续处理
 		ctx.fireExceptionCaught(cause);

@@ -7,7 +7,6 @@ import cn.xuyingqi.netty.server.connector.handler.ConnectLoggerHandler;
 import cn.xuyingqi.netty.server.connector.handler.ExceptionHandler;
 import cn.xuyingqi.netty.server.connector.handler.ServletHandler;
 import cn.xuyingqi.netty.server.connector.handler.SessionHandler;
-import cn.xuyingqi.netty.server.container.ProtocolContainer;
 import cn.xuyingqi.netty.server.container.ServletContainer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -40,6 +39,16 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 	 */
 	private ConnectorConfig config;
 
+	/**
+	 * 服务通道
+	 */
+	private ChannelFuture cf;
+
+	/**
+	 * 是否已启动
+	 */
+	private boolean started = false;
+
 	@Override
 	public final void init(ConnectorConfig config) {
 
@@ -50,70 +59,76 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 	@Override
 	public final void connect() {
 
-		// 服务器线程组
-		// 用于接收客户端连接
-		EventLoopGroup bossGroup = new NioEventLoopGroup();
-		// 用于客户端连接读写
-		EventLoopGroup workerGroup = new NioEventLoopGroup();
+		// 判断是否已经启动
+		if (!this.started) {
 
-		// 服务器启动器
-		ServerBootstrap bootstrap = new ServerBootstrap();
-		// 服务器配置
-		bootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
-				.option(ChannelOption.SO_BACKLOG, 1024).childHandler(new ChannelInitializer<SocketChannel>() {
-					@Override
-					protected void initChannel(SocketChannel ch) throws Exception {
+			// 服务器线程组
+			// 用于接收客户端连接
+			EventLoopGroup bossGroup = new NioEventLoopGroup();
+			// 用于客户端连接读写
+			EventLoopGroup workerGroup = new NioEventLoopGroup();
 
-						// 超时
-						ch.pipeline().addLast(new ReadTimeoutHandler(config.getTimeout()));
+			// 服务器启动器
+			ServerBootstrap bootstrap = new ServerBootstrap();
+			// 服务器配置
+			bootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
+					.option(ChannelOption.SO_BACKLOG, 1024).childHandler(new ChannelInitializer<SocketChannel>() {
+						@Override
+						protected void initChannel(SocketChannel ch) throws Exception {
 
-						// 连接日志
-						ch.pipeline().addLast(new ConnectLoggerHandler());
+							// 超时
+							ch.pipeline().addLast(new ReadTimeoutHandler(config.getTimeout()));
 
-						// 编码
-						ch.pipeline()
-								.addLast(((Protocol) ProtocolContainer.getInstance().getProtocol(config.getProtocol()))
-										.getEncoder());
-						// 解码
-						ch.pipeline()
-								.addLast(((Protocol) ProtocolContainer.getInstance().getProtocol(config.getProtocol()))
-										.getDecoder());
+							// 连接日志
+							ch.pipeline().addLast(new ConnectLoggerHandler());
 
-						// 会话
-						ch.pipeline().addLast(new SessionHandler());
+							// 编码器
+							ch.pipeline().addLast(((Protocol) config.getProtocol()).getEncoder());
+							// 解码器
+							ch.pipeline().addLast(((Protocol) config.getProtocol()).getDecoder());
 
-						// Servlet处理
-						ServletHandler servletHandler = new ServletHandler();
-						// 配置Servlet容器
-						servletHandler.init(ServletContainer.getInstance());
-						// Servlet处理
-						ch.pipeline().addLast((ChannelHandler) servletHandler);
+							// 会话
+							ch.pipeline().addLast(new SessionHandler());
 
-						// 客户端通道
-						ch.pipeline().addLast(new ChannelContainerHandler());
+							// Servlet处理
+							ServletHandler servletHandler = new ServletHandler();
+							// 配置Servlet容器
+							servletHandler.init(ServletContainer.getInstance());
+							// Servlet处理
+							ch.pipeline().addLast((ChannelHandler) servletHandler);
 
-						// 异常处理
-						ch.pipeline().addLast(new ExceptionHandler());
-					}
-				});
+							// 远程链接通道
+							ch.pipeline().addLast(new ChannelContainerHandler());
 
-		try {
+							// 异常处理
+							ch.pipeline().addLast(new ExceptionHandler());
+						}
+					});
 
-			// 同步绑定端口号
-			ChannelFuture future = bootstrap.bind(this.config.getHost(), this.config.getPort()).sync();
-			// 打印日志
-			this.logger.info(this.config.getHost() + ":" + this.config.getPort() + " 已启动.");
+			try {
 
-			// 同步等待端口关闭
-			future.channel().closeFuture().sync();
-		} catch (InterruptedException e) {
+				// 同步绑定端口号
+				this.cf = bootstrap.bind(this.config.getHost(), this.config.getPort()).sync();
+				// 打印日志
+				this.logger.info(this.config.getHost() + ":" + this.config.getPort() + " 已启动.");
 
-			e.printStackTrace();
-		} finally {
+				// 同步等待端口关闭
+				cf.channel().closeFuture().sync();
+			} catch (InterruptedException e) {
 
-			// 释放线程组资源
-			bossGroup.shutdownGracefully();
-			workerGroup.shutdownGracefully();
+				e.printStackTrace();
+			} finally {
+
+				// 释放线程组资源
+				bossGroup.shutdownGracefully();
+				workerGroup.shutdownGracefully();
+			}
 		}
+	}
+
+	@Override
+	public void terminate() {
+
+		this.cf.channel().close();
 	}
 }

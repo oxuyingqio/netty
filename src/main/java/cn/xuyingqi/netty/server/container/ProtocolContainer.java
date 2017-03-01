@@ -17,7 +17,7 @@ import cn.xuyingqi.util.util.MapFactory;
  * @author XuYQ
  *
  */
-public final class ProtocolContainer implements cn.xuyingqi.net.server.container.ProtocolContainer {
+public final class ProtocolContainer {
 
 	/**
 	 * 协议容器
@@ -83,7 +83,6 @@ public final class ProtocolContainer implements cn.xuyingqi.net.server.container
 		protocolClasses.put(name, protocol);
 	}
 
-	@Override
 	public Protocol getProtocol(String name) {
 
 		try {
@@ -97,7 +96,6 @@ public final class ProtocolContainer implements cn.xuyingqi.net.server.container
 		return null;
 	}
 
-	@Override
 	public Set<String> getProtocolNames() {
 
 		return protocolClasses.keySet();

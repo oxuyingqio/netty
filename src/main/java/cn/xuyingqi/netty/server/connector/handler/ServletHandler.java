@@ -3,12 +3,12 @@ package cn.xuyingqi.netty.server.connector.handler;
 import java.util.Iterator;
 
 import cn.xuyingqi.net.protocol.Datagram;
-import cn.xuyingqi.net.server.container.ServletContainer;
 import cn.xuyingqi.net.servlet.ServerServletRequest;
 import cn.xuyingqi.net.servlet.ServerServletResponse;
 import cn.xuyingqi.net.servlet.Servlet;
 import cn.xuyingqi.net.servlet.ServletSession;
 import cn.xuyingqi.netty.server.connector.Constant;
+import cn.xuyingqi.netty.server.container.ServletContainer;
 import cn.xuyingqi.netty.servlet.facade.ServerServletRequestFacade;
 import cn.xuyingqi.netty.servlet.facade.ServerServletResponseFacade;
 import cn.xuyingqi.netty.servlet.facade.ServletSessionFacade;
@@ -27,8 +27,7 @@ import io.netty.util.AttributeKey;
  * @author XuYQ
  *
  */
-public final class ServletHandler extends ChannelHandlerAdapter
-		implements cn.xuyingqi.net.server.servlet.ServletHandler {
+public final class ServletHandler extends ChannelHandlerAdapter {
 
 	/**
 	 * Servlet容器
@@ -46,7 +45,6 @@ public final class ServletHandler extends ChannelHandlerAdapter
 	private static AttributeKey<DefaultServletSession> servletSessionAttr = AttributeKey
 			.valueOf(Constant.SERVLET_SESSION);
 
-	@Override
 	public void init(ServletContainer servletContainer) {
 
 		// 获取Servlet容器

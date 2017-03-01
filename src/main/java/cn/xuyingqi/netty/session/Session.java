@@ -15,6 +15,9 @@ public final class Session {
 	 */
 	private String id;
 
+	/**
+	 * 会话
+	 */
 	public Session() {
 
 		this.id = UUID.randomUUID().toString();

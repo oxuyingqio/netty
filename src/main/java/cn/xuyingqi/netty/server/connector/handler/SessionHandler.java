@@ -23,7 +23,7 @@ public class SessionHandler extends ChannelHandlerAdapter {
 	private final InternalLogger logger = InternalLoggerFactory.getInstance(ChannelHandlerAdapter.class);
 
 	/**
-	 * 属性:会话
+	 * 属性Key:会话
 	 */
 	private static AttributeKey<Session> sessionAttr = AttributeKey.valueOf(Constant.SESSION);
 
@@ -32,10 +32,10 @@ public class SessionHandler extends ChannelHandlerAdapter {
 
 		// 获取会话属性
 		Attribute<Session> sessionAttr = ctx.attr(SessionHandler.sessionAttr);
-		// 设置一个新的会话
+		// 创建一个新的会话,并设置当前会话属性中
 		sessionAttr.set(new Session());
 		// 打印日志
-		this.logger.info("\n远程地址: " + ctx.channel().remoteAddress() + " 创建会话(" + sessionAttr.get() + ")");
+		this.logger.info("远程地址(" + ctx.channel().remoteAddress() + ")产生会话(" + sessionAttr.get() + ").");
 
 		// 后续处理
 		ctx.fireChannelActive();

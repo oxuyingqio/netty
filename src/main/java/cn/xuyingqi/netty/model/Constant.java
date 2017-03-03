@@ -1,4 +1,4 @@
-package cn.xuyingqi.netty.server.core;
+package cn.xuyingqi.netty.model;
 
 /**
  * 系统常量

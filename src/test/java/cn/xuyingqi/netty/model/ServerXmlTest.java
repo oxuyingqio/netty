@@ -1,6 +1,8 @@
-package cn.xuyingqi.netty.server.core;
+package cn.xuyingqi.netty.model;
 
 import org.junit.Test;
+
+import cn.xuyingqi.netty.model.ServerXml;
 
 public class ServerXmlTest {
 

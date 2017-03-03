@@ -1,4 +1,4 @@
-package cn.xuyingqi.netty.server.core;
+package cn.xuyingqi.netty.model;
 
 import java.io.File;
 import java.util.List;
@@ -15,8 +15,10 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import cn.xuyingqi.util.util.MapFactory;
+
 /**
- * server.app.xml配置
+ * server.app.xml
  * 
  * @author XuYQ
  *
@@ -26,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public final class ServerAppXml {
 
 	/**
-	 * server.app.xml配置
+	 * server.app.xml
 	 */
 	private static ServerAppXml serverAppXml;
 
@@ -34,7 +36,7 @@ public final class ServerAppXml {
 	 * Servlet配置集合
 	 */
 	@XmlElements(value = { @XmlElement(name = "servlet", type = ServletConfig.class) })
-	private List<ServletConfig> servletConfigs;
+	private List<ServletConfig> configs;
 
 	/**
 	 * 私有构造方法
@@ -58,7 +60,6 @@ public final class ServerAppXml {
 				Unmarshaller u = jc.createUnmarshaller();
 				serverAppXml = (ServerAppXml) u.unmarshal(new File(
 						ServerAppXml.class.getClassLoader().getResource(Constant.SERVER_APP_CONFIG_FILE).getPath()));
-
 			} catch (JAXBException e) {
 				e.printStackTrace();
 			}
@@ -73,7 +74,8 @@ public final class ServerAppXml {
 	 * @return
 	 */
 	public List<ServletConfig> getServletConfigs() {
-		return servletConfigs;
+
+		return configs;
 	}
 
 	/**
@@ -100,7 +102,7 @@ public final class ServerAppXml {
 		 * Servlet初始化参数
 		 */
 		@XmlElementWrapper(name = "init-param")
-		private Map<String, String> initParam;
+		private Map<String, String> initParam = MapFactory.newInstance();
 
 		/**
 		 * 获取Servlet名称
@@ -108,6 +110,7 @@ public final class ServerAppXml {
 		 * @return
 		 */
 		public String getName() {
+
 			return name;
 		}
 
@@ -117,6 +120,7 @@ public final class ServerAppXml {
 		 * @return
 		 */
 		public String getClassName() {
+
 			return className;
 		}
 
@@ -126,6 +130,7 @@ public final class ServerAppXml {
 		 * @return
 		 */
 		public Map<String, String> getInitParam() {
+
 			return initParam;
 		}
 	}

@@ -1,12 +1,12 @@
-package cn.xuyingqi.netty.server.container;
+package cn.xuyingqi.netty.container;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import cn.xuyingqi.netty.model.ServerXml;
+import cn.xuyingqi.netty.model.ServerXml.ProtocolConfig;
 import cn.xuyingqi.netty.protocol.Protocol;
-import cn.xuyingqi.netty.server.core.ServerXml;
-import cn.xuyingqi.netty.server.core.ServerXml.ProtocolConfig;
 import cn.xuyingqi.util.util.MapFactory;
 
 /**

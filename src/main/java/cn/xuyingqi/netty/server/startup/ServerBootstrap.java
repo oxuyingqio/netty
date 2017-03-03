@@ -1,8 +1,8 @@
 package cn.xuyingqi.netty.server.startup;
 
 import cn.xuyingqi.net.server.startup.Bootstrap;
+import cn.xuyingqi.netty.model.ServerXml;
 import cn.xuyingqi.netty.server.connector.Connector;
-import cn.xuyingqi.netty.server.core.ServerXml;
 
 /**
  * 启动程序

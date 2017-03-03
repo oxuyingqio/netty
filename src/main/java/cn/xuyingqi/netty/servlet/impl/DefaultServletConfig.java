@@ -68,4 +68,9 @@ public class DefaultServletConfig extends AbstractServletConfig {
 
 		return this.context;
 	}
+
+	@Override
+	public String getServletName() {
+		return null;
+	}
 }

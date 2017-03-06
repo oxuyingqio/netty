@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * server.xml配置
+ * server.xml
  * 
  * @author XuYQ
  *
@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public final class ServerXml {
 
 	/**
-	 * server.xml配置
+	 * server.xml
 	 */
 	private static ServerXml serverXml;
 
@@ -62,7 +62,6 @@ public final class ServerXml {
 				Unmarshaller u = jc.createUnmarshaller();
 				serverXml = (ServerXml) u.unmarshal(
 						new File(ServerXml.class.getClassLoader().getResource(Constant.SERVER_CONFIG_FILE).getPath()));
-
 			} catch (JAXBException e) {
 				e.printStackTrace();
 			}
@@ -77,6 +76,7 @@ public final class ServerXml {
 	 * @return
 	 */
 	public List<ProtocolConfig> getProtocolConfigs() {
+
 		return protocolConfigs;
 	}
 
@@ -86,6 +86,7 @@ public final class ServerXml {
 	 * @return
 	 */
 	public ServiceConfig getServiceConfig() {
+
 		return serviceConfig;
 	}
 
@@ -98,32 +99,34 @@ public final class ServerXml {
 	public static final class ProtocolConfig {
 
 		/**
-		 * 协议名称
+		 * 名称
 		 */
 		@XmlAttribute(name = "name")
 		private String name;
 
 		/**
-		 * 协议类路径
+		 * 类路径
 		 */
 		@XmlAttribute(name = "className")
 		private String className;
 
 		/**
-		 * 获取协议名称
+		 * 获取名称
 		 * 
 		 * @return
 		 */
 		public String getName() {
+
 			return name;
 		}
 
 		/**
-		 * 获取协议类路径
+		 * 获取类路径
 		 * 
 		 * @return
 		 */
 		public String getClassName() {
+
 			return className;
 		}
 	}
@@ -139,16 +142,17 @@ public final class ServerXml {
 		/**
 		 * 连接器配置
 		 */
-		@XmlElement(name = "connector")
-		private ConnectorConfig connectorConfig;
+		@XmlElements(value = { @XmlElement(name = "connector", type = ConnectorConfig.class) })
+		private List<ConnectorConfig> connectorConfigs;
 
 		/**
 		 * 获取连接器配置
 		 * 
 		 * @return
 		 */
-		public ConnectorConfig getConnectorConfig() {
-			return connectorConfig;
+		public List<ConnectorConfig> getConnectorConfigs() {
+
+			return connectorConfigs;
 		}
 
 		/**
@@ -157,7 +161,7 @@ public final class ServerXml {
 		 * @author XuYQ
 		 *
 		 */
-		public static final class ConnectorConfig implements cn.xuyingqi.net.connector.ConnectorConfig {
+		public static final class ConnectorConfig {
 
 			/**
 			 * 协议名称
@@ -183,35 +187,20 @@ public final class ServerXml {
 			@XmlAttribute(name = "timeout")
 			private int timeout;
 
-			/**
-			 * 最大连接数
-			 */
-			@XmlAttribute(name = "maxConnections")
-			private int maxConnections;
-
-			@Override
 			public String getProtocol() {
 				return protocol;
 			}
 
-			@Override
 			public String getHost() {
 				return host;
 			}
 
-			@Override
 			public int getPort() {
 				return port;
 			}
 
-			@Override
 			public int getTimeout() {
 				return timeout;
-			}
-
-			@Override
-			public int getMaxConnections() {
-				return maxConnections;
 			}
 		}
 	}

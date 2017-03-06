@@ -23,9 +23,9 @@ public final class ServletDescContainer {
 	private static ServletDescContainer container;
 
 	/**
-	 * 模型集合
+	 * 描述集合
 	 */
-	private Map<String, ServletDesc> models = MapFactory.newInstance();
+	private Map<String, ServletDesc> descs = MapFactory.newInstance();
 
 	/**
 	 * 私有构造方法
@@ -41,8 +41,8 @@ public final class ServletDescContainer {
 			// 配置
 			ServletConfig config = configs.get(i);
 
-			// 添加Servlet模型
-			this.models.put(config.getName(),
+			// 添加Servlet类描述
+			this.descs.put(config.getName(),
 					new ServletDesc(config.getName(), config.getClassName(), config.getInitParam()));
 		}
 	}
@@ -69,6 +69,6 @@ public final class ServletDescContainer {
 	 */
 	public Servlet getServlet(String name) {
 
-		return models.get(name).getInstance();
+		return descs.get(name).getInstance();
 	}
 }

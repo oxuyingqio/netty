@@ -19,7 +19,7 @@ public class ServletDesc {
 	 */
 	private String name;
 	/**
-	 * 类名称
+	 * 类路径
 	 */
 	private String className;
 	/**

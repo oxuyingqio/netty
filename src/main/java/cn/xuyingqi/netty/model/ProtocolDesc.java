@@ -20,11 +20,6 @@ public class ProtocolDesc {
 	private String className;
 
 	/**
-	 * 协议
-	 */
-	private Protocol protocl;
-
-	/**
 	 * 协议类描述
 	 * 
 	 * @param name
@@ -47,26 +42,28 @@ public class ProtocolDesc {
 	}
 
 	/**
-	 * 获取实例
+	 * 获取实例,每次都返回新的协议
 	 * 
 	 * @return
 	 */
 	public Protocol getInstance() {
 
-		if (this.protocl == null) {
+		try {
 
-			try {
-
-				this.protocl = (Protocol) this.getClass().getClassLoader().loadClass(this.className).newInstance();
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
+			// 实例化协议
+			Protocol protocol = (Protocol) this.getClass().getClassLoader().loadClass(this.className).newInstance();
+			if (protocol instanceof cn.xuyingqi.netty.protocol.impl.AbstractProtocol) {
+				((cn.xuyingqi.netty.protocol.impl.AbstractProtocol) protocol).setName(this.name);
 			}
+			return protocol;
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		}
 
-		return this.protocl;
+		return null;
 	}
 }

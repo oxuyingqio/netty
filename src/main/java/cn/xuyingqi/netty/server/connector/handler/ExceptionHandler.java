@@ -22,7 +22,7 @@ public class ExceptionHandler extends ChannelHandlerAdapter {
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 
 		// 打印日志
-		this.logger.error("\n远程地址: " + ctx.channel().remoteAddress() + " 异常,将中断连接.");
+		this.logger.error("远程地址(" + ctx.channel().remoteAddress() + ")异常,将中断连接.");
 
 		// 打印异常
 		cause.printStackTrace();

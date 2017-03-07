@@ -7,7 +7,7 @@ import cn.xuyingqi.net.servlet.ServerServletRequest;
 import cn.xuyingqi.net.servlet.ServerServletResponse;
 import cn.xuyingqi.net.servlet.Servlet;
 import cn.xuyingqi.net.servlet.ServletSession;
-import cn.xuyingqi.netty.container.ServletContainer;
+import cn.xuyingqi.netty.container.ServletDescContainer;
 import cn.xuyingqi.netty.server.connector.Constant;
 import cn.xuyingqi.netty.servlet.facade.ServerServletRequestFacade;
 import cn.xuyingqi.netty.servlet.facade.ServerServletResponseFacade;
@@ -30,11 +30,6 @@ import io.netty.util.AttributeKey;
 public final class ServletHandler extends ChannelHandlerAdapter {
 
 	/**
-	 * Servlet容器
-	 */
-	private ServletContainer servletContainer;
-
-	/**
 	 * 属性:会话
 	 */
 	private static AttributeKey<Session> sessionAttr = AttributeKey.valueOf(Constant.SESSION);
@@ -44,12 +39,6 @@ public final class ServletHandler extends ChannelHandlerAdapter {
 	 */
 	private static AttributeKey<DefaultServletSession> servletSessionAttr = AttributeKey
 			.valueOf(Constant.SERVLET_SESSION);
-
-	public void init(ServletContainer servletContainer) {
-
-		// 获取Servlet容器
-		this.servletContainer = servletContainer;
-	}
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -93,11 +82,11 @@ public final class ServletHandler extends ChannelHandlerAdapter {
 		ServerServletResponse responseFacade = new ServerServletResponseFacade(response);
 
 		// 获取Servlet名称集合
-		Iterator<String> it = this.servletContainer.getServletNames().iterator();
+		Iterator<String> it = ServletDescContainer.getInstance().getServletNames().iterator();
 		// 遍历Servlet名称集合
 		while (it.hasNext()) {
 			// 获取当前Servlet
-			Servlet servlet = this.servletContainer.getServlet(it.next());
+			Servlet servlet = ServletDescContainer.getInstance().getServlet(it.next());
 			// Servet会话中设置当前Servlet上下文
 			servletSession.setServletContext(servlet.getServletConfig().getServletContext());
 			// 调用Servlet服务方法

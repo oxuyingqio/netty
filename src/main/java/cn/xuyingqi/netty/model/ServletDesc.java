@@ -63,11 +63,14 @@ public class ServletDesc {
 	 */
 	public Servlet getInstance() {
 
+		// 判断Servlet是否已实例化
 		if (this.servlet == null) {
 
 			try {
 
+				// 实例化Servlet
 				this.servlet = (Servlet) this.getClass().getClassLoader().loadClass(this.className).newInstance();
+				// 设置初始化参数
 				this.servlet.init(new DefaultServletConfig(
 						this.initParam == null ? new HashMap<String, String>() : this.initParam));
 			} catch (InstantiationException e) {

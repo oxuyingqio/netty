@@ -18,12 +18,12 @@ import cn.xuyingqi.util.util.MapFactory;
 public final class ProtocolDescContainer {
 
 	/**
-	 * 描述容器
+	 * 容器
 	 */
 	private static ProtocolDescContainer container;
 
 	/**
-	 * 协议类对象集合
+	 * 协议类描述集合
 	 */
 	private Map<String, ProtocolDesc> descs = MapFactory.newInstance();
 

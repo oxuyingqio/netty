@@ -1,7 +1,6 @@
 package cn.xuyingqi.netty.server.connector;
 
 import cn.xuyingqi.net.connector.ConnectorConfig;
-import cn.xuyingqi.netty.container.ServletContainer;
 import cn.xuyingqi.netty.protocol.Protocol;
 import cn.xuyingqi.netty.server.connector.handler.ChannelContainerHandler;
 import cn.xuyingqi.netty.server.connector.handler.ConnectLoggerHandler;
@@ -91,11 +90,7 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 							ch.pipeline().addLast(new SessionHandler());
 
 							// Servlet处理
-							ServletHandler servletHandler = new ServletHandler();
-							// 配置Servlet容器
-							servletHandler.init(ServletContainer.getInstance());
-							// Servlet处理
-							ch.pipeline().addLast((ChannelHandler) servletHandler);
+							ch.pipeline().addLast((ChannelHandler) new ServletHandler());
 
 							// 远程链接通道
 							ch.pipeline().addLast(new ChannelContainerHandler());
@@ -110,7 +105,7 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 				// 同步绑定端口号
 				this.cf = bootstrap.bind(this.config.getHost(), this.config.getPort()).sync();
 				// 打印日志
-				this.logger.info(this.config.getHost() + ":" + this.config.getPort() + " 已启动.");
+				this.logger.info("服务(" + this.config.getHost() + ":" + this.config.getPort() + ")已启动.");
 
 				// 同步等待端口关闭
 				cf.channel().closeFuture().sync();
@@ -127,7 +122,7 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 	}
 
 	@Override
-	public void terminate() {
+	public void stop() {
 
 		this.cf.channel().close();
 	}

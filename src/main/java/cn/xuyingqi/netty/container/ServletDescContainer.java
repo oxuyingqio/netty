@@ -2,6 +2,7 @@ package cn.xuyingqi.netty.container;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import cn.xuyingqi.net.servlet.Servlet;
 import cn.xuyingqi.netty.model.ServerAppXml;
@@ -18,12 +19,12 @@ import cn.xuyingqi.util.util.MapFactory;
 public final class ServletDescContainer {
 
 	/**
-	 * 描述容器
+	 * 容器
 	 */
 	private static ServletDescContainer container;
 
 	/**
-	 * 描述集合
+	 * 类描述集合
 	 */
 	private Map<String, ServletDesc> descs = MapFactory.newInstance();
 
@@ -70,5 +71,15 @@ public final class ServletDescContainer {
 	public Servlet getServlet(String name) {
 
 		return descs.get(name).getInstance();
+	}
+
+	/**
+	 * 获取Servlet类描述名称集合
+	 * 
+	 * @return
+	 */
+	public Set<String> getServletNames() {
+
+		return descs.keySet();
 	}
 }

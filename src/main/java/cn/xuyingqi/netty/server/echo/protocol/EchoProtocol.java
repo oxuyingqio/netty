@@ -42,4 +42,10 @@ public class EchoProtocol implements Protocol {
 
 		return this.decoder;
 	}
+
+	@Override
+	public String getName() {
+
+		return "test";
+	}
 }

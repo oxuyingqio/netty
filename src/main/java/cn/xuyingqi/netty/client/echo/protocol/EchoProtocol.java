@@ -2,7 +2,7 @@ package cn.xuyingqi.netty.client.echo.protocol;
 
 import cn.xuyingqi.netty.protocol.Decoder;
 import cn.xuyingqi.netty.protocol.Encoder;
-import cn.xuyingqi.netty.protocol.Protocol;
+import cn.xuyingqi.netty.protocol.impl.AbstractProtocol;
 
 /**
  * 应答协议
@@ -10,7 +10,7 @@ import cn.xuyingqi.netty.protocol.Protocol;
  * @author XuYQ
  *
  */
-public class EchoProtocol implements Protocol {
+public class EchoProtocol extends AbstractProtocol {
 
 	/**
 	 * 编码器

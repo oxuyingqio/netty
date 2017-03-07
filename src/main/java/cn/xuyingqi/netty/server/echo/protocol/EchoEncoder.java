@@ -3,9 +3,6 @@ package cn.xuyingqi.netty.server.echo.protocol;
 import java.util.List;
 
 import cn.xuyingqi.netty.protocol.Encoder;
-import cn.xuyingqi.netty.server.echo.message.Message;
-import cn.xuyingqi.netty.server.echo.message.MessageContainer;
-import cn.xuyingqi.netty.server.echo.message.MessageType;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageEncoder;
@@ -20,9 +17,7 @@ public class EchoEncoder extends MessageToMessageEncoder<EchoDatagram> implement
 
 	@Override
 	protected void encode(ChannelHandlerContext ctx, EchoDatagram msg, List<Object> out) throws Exception {
-		
-		MessageContainer.getInstance().add(ctx.channel(), new Message(MessageType.RESPONSE, msg));
-		
+
 		byte[] data = msg.toByteArray();
 		ctx.writeAndFlush(Unpooled.buffer(data.length).writeBytes(data));
 	}

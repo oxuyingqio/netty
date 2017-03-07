@@ -1,9 +1,6 @@
 package cn.xuyingqi.netty.server.echo.protocol;
 
 import cn.xuyingqi.netty.protocol.Decoder;
-import cn.xuyingqi.netty.server.echo.message.Message;
-import cn.xuyingqi.netty.server.echo.message.MessageContainer;
-import cn.xuyingqi.netty.server.echo.message.MessageType;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
@@ -48,8 +45,6 @@ public class EchoDecoder extends LengthFieldBasedFrameDecoder implements Decoder
 
 		// 创建数据报文
 		EchoDatagram datagram = new EchoDatagram(length, new String(byteArray));
-
-		MessageContainer.getInstance().add(ctx.channel(), new Message(MessageType.REQUEST, datagram));
 
 		return datagram;
 	}

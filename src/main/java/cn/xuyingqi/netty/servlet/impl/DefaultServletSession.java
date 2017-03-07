@@ -17,7 +17,7 @@ import cn.xuyingqi.net.servlet.impl.AbstractServletSession;
 public class DefaultServletSession extends AbstractServletSession implements ServletSession {
 
 	/**
-	 * Servlet上下文
+	 * Servlet上下文,是在不断变化的
 	 */
 	private ServletContext context;
 
@@ -30,7 +30,6 @@ public class DefaultServletSession extends AbstractServletSession implements Ser
 	 * 本机地址
 	 */
 	private InetSocketAddress local;
-
 	/**
 	 * 远程地址
 	 */
@@ -39,8 +38,6 @@ public class DefaultServletSession extends AbstractServletSession implements Ser
 	/**
 	 * 默认的Servlet会话
 	 * 
-	 * @param servletContext
-	 *            Servlet上下文
 	 * @param id
 	 *            会话ID
 	 * @param local
@@ -52,9 +49,11 @@ public class DefaultServletSession extends AbstractServletSession implements Ser
 
 		super(id);
 
-		this.lastAccessedTime = this.getCreationTime();
 		this.local = (InetSocketAddress) local;
 		this.remote = (InetSocketAddress) remote;
+
+		// 初始使用创建时间
+		this.lastAccessedTime = this.getCreationTime();
 	}
 
 	@Override
@@ -64,7 +63,7 @@ public class DefaultServletSession extends AbstractServletSession implements Ser
 	}
 
 	/**
-	 * 设置Servlet上下文
+	 * 设置Servlet上下文,多个Servlet共用同一个Session对象,因此存在该方法,不停的去改变Session中Servlet的上下文
 	 * 
 	 * @param context
 	 */
@@ -113,7 +112,6 @@ public class DefaultServletSession extends AbstractServletSession implements Ser
 	public String getProtocol() {
 
 		// 未实现,不影响使用
-
 		return "";
 	}
 

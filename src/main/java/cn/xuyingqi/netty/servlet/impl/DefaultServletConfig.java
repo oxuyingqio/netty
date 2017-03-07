@@ -5,7 +5,6 @@ import java.util.Set;
 
 import cn.xuyingqi.net.servlet.ServletContext;
 import cn.xuyingqi.net.servlet.impl.AbstractServletConfig;
-import cn.xuyingqi.util.util.MapFactory;
 
 /**
  * 默认的Servlet配置
@@ -23,7 +22,12 @@ public class DefaultServletConfig extends AbstractServletConfig {
 	/**
 	 * 初始化参数
 	 */
-	private Map<String, String> initParamter = MapFactory.newInstance();
+	private Map<String, String> initParamter;
+
+	/**
+	 * Servlet名称
+	 */
+	private String servletName;
 
 	/**
 	 * Servlet上下文
@@ -35,13 +39,17 @@ public class DefaultServletConfig extends AbstractServletConfig {
 	 * 
 	 * @param initParamter
 	 *            初始化参数
+	 * @param servletName
+	 *            Servlet名称
 	 */
-	public DefaultServletConfig(Map<String, String> initParamter) {
+	public DefaultServletConfig(Map<String, String> initParamter, String servletName) {
 
 		this.initParamter = initParamter;
+		this.servletName = servletName;
 
 		try {
 
+			// 实例化Servlet上下文对象,每个Servlet都有自己独一的上下文
 			String contextClass = this.initParamter.get("context") == null ? DEFAULT_SERVLET_CONTEXT_CLASS
 					: this.initParamter.get("context");
 			this.context = (ServletContext) Class.forName(contextClass).newInstance();
@@ -70,6 +78,7 @@ public class DefaultServletConfig extends AbstractServletConfig {
 
 	@Override
 	public String getServletName() {
-		return null;
+
+		return this.servletName;
 	}
 }

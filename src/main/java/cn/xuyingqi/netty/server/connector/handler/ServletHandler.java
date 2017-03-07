@@ -85,6 +85,7 @@ public final class ServletHandler extends ChannelHandlerAdapter {
 		Iterator<String> it = ServletDescContainer.getInstance().getServletNames().iterator();
 		// 遍历Servlet名称集合
 		while (it.hasNext()) {
+
 			// 获取当前Servlet
 			Servlet servlet = ServletDescContainer.getInstance().getServlet(it.next());
 			// Servet会话中设置当前Servlet上下文
@@ -94,8 +95,9 @@ public final class ServletHandler extends ChannelHandlerAdapter {
 		}
 		// 判断响应报文不为空
 		if (response.getDatagram() != null) {
+
 			// 写入响应数据报文
-			ctx.write(response.getDatagram());
+			ctx.writeAndFlush(response.getDatagram());
 		}
 
 		// 后续处理

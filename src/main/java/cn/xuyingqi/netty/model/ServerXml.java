@@ -24,6 +24,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 public final class ServerXml {
 
 	/**
+	 * 服务器配置文件
+	 */
+	private static final String SERVER_CONFIG_FILE = "server.xml";
+
+	/**
 	 * server.xml
 	 */
 	private static ServerXml serverXml;
@@ -61,7 +66,7 @@ public final class ServerXml {
 				JAXBContext jc = JAXBContext.newInstance(ServerXml.class);
 				Unmarshaller u = jc.createUnmarshaller();
 				serverXml = (ServerXml) u.unmarshal(
-						new File(ServerXml.class.getClassLoader().getResource(Constant.SERVER_CONFIG_FILE).getPath()));
+						new File(ServerXml.class.getClassLoader().getResource(ServerXml.SERVER_CONFIG_FILE).getPath()));
 			} catch (JAXBException e) {
 				e.printStackTrace();
 			}
@@ -188,18 +193,22 @@ public final class ServerXml {
 			private int timeout;
 
 			public String getProtocol() {
+
 				return protocol;
 			}
 
 			public String getHost() {
+
 				return host;
 			}
 
 			public int getPort() {
+
 				return port;
 			}
 
 			public int getTimeout() {
+
 				return timeout;
 			}
 		}

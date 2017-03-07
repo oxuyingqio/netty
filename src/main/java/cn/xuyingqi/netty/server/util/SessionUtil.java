@@ -26,6 +26,7 @@ public class SessionUtil {
 	 *            session ID
 	 */
 	public SessionUtil(String session) {
+
 		this.session = session;
 	}
 

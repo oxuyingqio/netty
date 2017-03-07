@@ -72,7 +72,7 @@ public class ServletDesc {
 				this.servlet = (Servlet) this.getClass().getClassLoader().loadClass(this.className).newInstance();
 				// 设置初始化参数
 				this.servlet.init(new DefaultServletConfig(
-						this.initParam == null ? new HashMap<String, String>() : this.initParam));
+						this.initParam == null ? new HashMap<String, String>() : this.initParam, this.name));
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {

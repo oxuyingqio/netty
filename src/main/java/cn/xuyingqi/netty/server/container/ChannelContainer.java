@@ -6,7 +6,7 @@ import cn.xuyingqi.util.util.MapFactory;
 import io.netty.channel.Channel;
 
 /**
- * 客户端通道容器
+ * 通道容器
  * 
  * @author XuYQ
  *
@@ -14,34 +14,34 @@ import io.netty.channel.Channel;
 public final class ChannelContainer {
 
 	/**
-	 * 客户端通道容器
+	 * 容器
 	 */
-	private static ChannelContainer channelContainer;
+	private static ChannelContainer container;
 
 	/**
-	 * 客户端通道集合
+	 * 通道集合
 	 */
 	private Map<String, Channel> channels = MapFactory.newInstance();
 
 	/**
-	 * 客户端通道容器
+	 * 通道容器
 	 */
 	private ChannelContainer() {
 
 	}
 
 	/**
-	 * 获取客户端通道容器
+	 * 获取通道容器
 	 * 
 	 * @return
 	 */
 	public static final synchronized ChannelContainer getInstance() {
 
-		if (channelContainer == null) {
-			channelContainer = new ChannelContainer();
+		if (container == null) {
+			container = new ChannelContainer();
 		}
 
-		return channelContainer;
+		return container;
 	}
 
 	/**

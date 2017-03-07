@@ -28,6 +28,11 @@ import cn.xuyingqi.util.util.MapFactory;
 public final class ServerAppXml {
 
 	/**
+	 * 服务器项目配置文件
+	 */
+	private static final String SERVER_APP_CONFIG_FILE = "server.app.xml";
+
+	/**
 	 * server.app.xml
 	 */
 	private static ServerAppXml serverAppXml;
@@ -58,8 +63,8 @@ public final class ServerAppXml {
 
 				JAXBContext jc = JAXBContext.newInstance(ServerAppXml.class);
 				Unmarshaller u = jc.createUnmarshaller();
-				serverAppXml = (ServerAppXml) u.unmarshal(new File(
-						ServerAppXml.class.getClassLoader().getResource(Constant.SERVER_APP_CONFIG_FILE).getPath()));
+				serverAppXml = (ServerAppXml) u.unmarshal(new File(ServerAppXml.class.getClassLoader()
+						.getResource(ServerAppXml.SERVER_APP_CONFIG_FILE).getPath()));
 			} catch (JAXBException e) {
 				e.printStackTrace();
 			}

@@ -124,6 +124,9 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 	@Override
 	public void stop() {
 
+		// 关闭
 		this.cf.channel().close();
+		// 打印日志
+		this.logger.info("服务(" + this.config.getHost() + ":" + this.config.getPort() + ")已停止.");
 	}
 }

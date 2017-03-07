@@ -17,7 +17,6 @@ public class DefaultServletContext extends AbstractServletContext {
 	public Set<String> getInitParamterNames() {
 
 		// 未实现,不影响使用
-
 		return SetFactory.newInstance();
 	}
 
@@ -25,7 +24,6 @@ public class DefaultServletContext extends AbstractServletContext {
 	public Object getInitParameter(String name) {
 
 		// 未实现,不影响使用
-
 		return null;
 	}
 }

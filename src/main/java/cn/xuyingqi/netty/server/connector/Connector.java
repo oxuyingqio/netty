@@ -8,7 +8,7 @@ import cn.xuyingqi.netty.server.connector.handler.ExceptionHandler;
 import cn.xuyingqi.netty.server.connector.handler.ServletHandler;
 import cn.xuyingqi.netty.server.connector.handler.SessionHandler;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelFuture;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -41,7 +41,7 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 	/**
 	 * 服务通道
 	 */
-	private ChannelFuture cf;
+	private Channel channel;
 
 	/**
 	 * 是否已启动
@@ -103,12 +103,12 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 			try {
 
 				// 同步绑定端口号
-				this.cf = bootstrap.bind(this.config.getHost(), this.config.getPort()).sync();
+				this.channel = bootstrap.bind(this.config.getHost(), this.config.getPort()).sync().channel();
 				// 打印日志
 				this.logger.info("服务(" + this.config.getHost() + ":" + this.config.getPort() + ")已启动.");
 
 				// 同步等待端口关闭
-				cf.channel().closeFuture().sync();
+				channel.closeFuture().sync();
 			} catch (InterruptedException e) {
 
 				e.printStackTrace();
@@ -125,7 +125,7 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 	public void stop() {
 
 		// 关闭
-		this.cf.channel().close();
+		this.channel.close();
 		// 打印日志
 		this.logger.info("服务(" + this.config.getHost() + ":" + this.config.getPort() + ")已停止.");
 	}

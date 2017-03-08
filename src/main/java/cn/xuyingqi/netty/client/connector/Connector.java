@@ -1,10 +1,12 @@
 package cn.xuyingqi.netty.client.connector;
 
+import cn.xuyingqi.net.connector.ConnectorConfig;
 import cn.xuyingqi.net.protocol.Datagram;
 import cn.xuyingqi.netty.client.connector.handler.ConnectLoggerHandler;
 import cn.xuyingqi.netty.client.connector.handler.DatagramHandler;
 import cn.xuyingqi.netty.client.connector.handler.ExceptionHandler;
 import cn.xuyingqi.netty.client.connector.handler.SessionHandler;
+import cn.xuyingqi.netty.client.container.DatagramObserverContainer;
 import cn.xuyingqi.netty.client.observer.DatagramObserver;
 import cn.xuyingqi.netty.protocol.Protocol;
 import io.netty.bootstrap.Bootstrap;
@@ -16,6 +18,8 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.timeout.ReadTimeoutHandler;
+import io.netty.util.internal.logging.InternalLogger;
+import io.netty.util.internal.logging.InternalLoggerFactory;
 
 /**
  * 连接器
@@ -23,71 +27,54 @@ import io.netty.handler.timeout.ReadTimeoutHandler;
  * @author XuYQ
  *
  */
-public final class Connector {
+public final class Connector implements cn.xuyingqi.net.connector.Connector {
 
 	/**
-	 * 主机名
+	 * 日志
 	 */
-	private String host;
-	/**
-	 * 端口号
-	 */
-	private int port;
+	private final InternalLogger logger = InternalLoggerFactory.getInstance(Connector.class);
 
 	/**
-	 * 协议
+	 * 连接器配置
 	 */
-	private Protocol protocol;
+	private ConnectorConfig config;
 
-	/**
-	 * 线程组
-	 */
-	private EventLoopGroup group = new NioEventLoopGroup();
 	/**
 	 * 通道
 	 */
 	private Channel channel;
 
-	/**
-	 * 连接器
-	 * 
-	 * @param host
-	 *            主机名
-	 * @param port
-	 *            端口号
-	 * @param protocol
-	 *            协议
-	 */
-	public Connector(String host, int port, Protocol protocol) {
+	@Override
+	public final void init(ConnectorConfig config) {
 
-		this.host = host;
-		this.port = port;
-		this.protocol = protocol;
+		// 获取连接器配置
+		this.config = config;
 	}
 
-	/**
-	 * 连接服务器
-	 */
+	@Override
 	public final void connect() {
+
+		// 线程组
+		EventLoopGroup group = new NioEventLoopGroup();
 
 		// 启动器
 		Bootstrap bootstrap = new Bootstrap();
 		// 配置
-		bootstrap.group(this.group).channel(NioSocketChannel.class).option(ChannelOption.TCP_NODELAY, true)
+		bootstrap.group(group).channel(NioSocketChannel.class).option(ChannelOption.TCP_NODELAY, true)
 				.handler(new ChannelInitializer<SocketChannel>() {
 					@Override
 					protected void initChannel(SocketChannel ch) throws Exception {
 
 						// 超时
-						ch.pipeline().addLast(new ReadTimeoutHandler(300));
+						ch.pipeline().addLast(new ReadTimeoutHandler(config.getTimeout()));
 
 						// 连接日志
 						ch.pipeline().addLast(new ConnectLoggerHandler());
 
 						// 编码
-						ch.pipeline().addLast(protocol.getEncoder());
+						ch.pipeline().addLast(((Protocol) config.getProtocol()).getEncoder());
 						// 解码
-						ch.pipeline().addLast(protocol.getDecoder());
+						ch.pipeline().addLast(((Protocol) config.getProtocol()).getDecoder());
 
 						// 会话
 						ch.pipeline().addLast(new SessionHandler());
@@ -103,27 +90,21 @@ public final class Connector {
 		try {
 
 			// 同步连接主机,端口号
-			this.channel = bootstrap.connect(this.host, this.port).sync().channel();
+			this.channel = bootstrap.connect(this.config.getHost(), this.config.getPort()).sync().channel();
+			// 打印日志
+			this.logger.info("远程地址(" + this.config.getHost() + ":" + this.config.getPort() + ")已连接.");
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
 
-	/**
-	 * 关闭连接
-	 */
-	public final void close() {
+	@Override
+	public void stop() {
 
-		// 同步等待链路关闭
-		try {
-
-			this.channel.closeFuture().sync();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} finally {
-			// 释放线程组资源
-			this.group.shutdownGracefully();
-		}
+		// 关闭
+		this.channel.close();
+		// 打印日志
+		this.logger.info("远程地址(" + this.config.getHost() + ":" + this.config.getPort() + ")已断开.");
 	}
 
 	/**
@@ -134,7 +115,7 @@ public final class Connector {
 	public final void request(Datagram request, DatagramObserver observer) {
 
 		// 添加观察者
-		DatagramHandler.addObserver(observer);
+		DatagramObserverContainer.getInstance().addObserver(this.channel, observer);
 		// 发送数据报文
 		this.channel.write(request);
 	}

@@ -34,4 +34,26 @@ public final class DatagramHandler extends ChannelHandlerAdapter {
 		// 后续处理
 		ctx.fireChannelRead(msg);
 	}
+
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+
+		// 获取观察者集合
+		Iterator<DatagramObserver> iter = DatagramObserverContainer.getInstance().getObservers(ctx.channel())
+				.iterator();
+		// 遍历观察者集合
+		while (iter.hasNext()) {
+
+			// 调用异常处理
+			iter.next().exception(cause);
+			// 移除本观察者
+			iter.remove();
+		}
+
+		// 移除通道观察者集合
+		DatagramObserverContainer.getInstance().clearObservers(ctx.channel());
+
+		// 后续处理
+		ctx.fireExceptionCaught(cause);
+	}
 }

@@ -1,10 +1,9 @@
 package cn.xuyingqi.netty.client.container;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import cn.xuyingqi.netty.client.observer.DatagramObserver;
-import cn.xuyingqi.util.util.ListFactory;
 import cn.xuyingqi.util.util.MapFactory;
 import io.netty.channel.Channel;
 
@@ -22,9 +21,9 @@ public final class DatagramObserverContainer {
 	private static DatagramObserverContainer container;
 
 	/**
-	 * 通道集合
+	 * 通道观察者集合
 	 */
-	private Map<Channel, List<DatagramObserver>> observers = MapFactory.newInstance();
+	private Map<Channel, Vector<DatagramObserver>> channelObservers = MapFactory.newInstance();
 
 	/**
 	 * 数据报文观察者容器
@@ -48,7 +47,7 @@ public final class DatagramObserverContainer {
 	}
 
 	/**
-	 * 添加观察者
+	 * 给指定通道添加观察者
 	 * 
 	 * @param channel
 	 * @param observer
@@ -56,33 +55,35 @@ public final class DatagramObserverContainer {
 	 */
 	public DatagramObserverContainer addObserver(Channel channel, DatagramObserver observer) {
 
-		// 获取对应通道的观察者
-		List<DatagramObserver> observers = this.observers.get(channel);
-		// 若观察者为空,则创建,并设置观察者
+		// 获取通道的观察者集合
+		Vector<DatagramObserver> observers = this.channelObservers.get(channel);
+		// 若观察者集合为空,则创建对应集合
 		if (observers == null) {
 
-			observers = ListFactory.newInstance();
-			this.observers.put(channel, observers);
+			observers = new Vector<DatagramObserver>();
+			this.channelObservers.put(channel, observers);
 		}
-		// 添加观察者
-		observers.add(observer);
+		// 判断观察者是否存在,不存在则添加
+		if (!observers.contains(observer)) {
+			observers.addElement(observer);
+		}
 
 		return this;
 	}
 
 	/**
-	 * 获取观察者集合
+	 * 获取指定通道观察者集合
 	 * 
 	 * @param channel
 	 * @return
 	 */
-	public List<DatagramObserver> getObservers(Channel channel) {
+	public Vector<DatagramObserver> getObservers(Channel channel) {
 
-		return this.observers.get(channel);
+		return this.channelObservers.get(channel);
 	}
 
 	/**
-	 * 移除观察者
+	 * 移除指定通道观察者
 	 * 
 	 * @param channel
 	 * @param observer
@@ -90,26 +91,26 @@ public final class DatagramObserverContainer {
 	 */
 	public DatagramObserverContainer removeObserver(Channel channel, DatagramObserver observer) {
 
-		// 获取对应通道的观察者
-		List<DatagramObserver> observers = this.observers.get(channel);
-		// 若观察者不为空,则移除观察者
+		// 获取通道的观察者集合
+		Vector<DatagramObserver> observers = this.channelObservers.get(channel);
+		// 若观察者集合不为空,则移除观察者
 		if (observers != null) {
 
-			observers.remove(observer);
+			observers.removeElement(observer);
 		}
 
 		return this;
 	}
 
 	/**
-	 * 移除通道所有观察者
+	 * 移除通道观察者集合
 	 * 
 	 * @param channel
 	 * @return
 	 */
 	public DatagramObserverContainer clearObservers(Channel channel) {
 
-		this.observers.remove(channel);
+		this.channelObservers.remove(channel);
 
 		return this;
 	}

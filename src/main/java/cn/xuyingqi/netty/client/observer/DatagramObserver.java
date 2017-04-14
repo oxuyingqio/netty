@@ -19,4 +19,11 @@ public interface DatagramObserver {
 	 * @return
 	 */
 	public boolean receiveDatagram(ChannelHandlerContext ctx, Datagram datagram);
+
+	/**
+	 * 异常
+	 * 
+	 * @param exception
+	 */
+	public void exception(Throwable exception);
 }

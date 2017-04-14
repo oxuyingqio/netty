@@ -46,6 +46,11 @@ public class Test {
 
 				return true;
 			}
+
+			@Override
+			public void exception(Throwable exception) {
+				
+			}
 		});
 
 		System.out.println("直接来了么？");

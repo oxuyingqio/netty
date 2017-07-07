@@ -23,9 +23,9 @@ public class ExceptionHandler extends ChannelHandlerAdapter {
 
 		// 打印日志
 		this.logger.error("远程地址(" + ctx.channel().remoteAddress() + ")程序异常,将中断连接.");
-
 		// 打印异常
 		cause.printStackTrace();
+
 		// 关闭连接
 		ctx.close();
 	}

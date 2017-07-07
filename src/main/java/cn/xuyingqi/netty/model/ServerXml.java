@@ -83,7 +83,7 @@ public final class ServerXml {
 	 */
 	public List<ProtocolConfig> getProtocolConfigs() {
 
-		return protocolConfigs;
+		return this.protocolConfigs;
 	}
 
 	/**
@@ -93,7 +93,7 @@ public final class ServerXml {
 	 */
 	public ServiceConfig getServiceConfig() {
 
-		return serviceConfig;
+		return this.serviceConfig;
 	}
 
 	/**
@@ -123,7 +123,7 @@ public final class ServerXml {
 		 */
 		public String getName() {
 
-			return name;
+			return this.name;
 		}
 
 		/**
@@ -133,7 +133,7 @@ public final class ServerXml {
 		 */
 		public String getClassName() {
 
-			return className;
+			return this.className;
 		}
 	}
 
@@ -158,7 +158,7 @@ public final class ServerXml {
 		 */
 		public List<ConnectorConfig> getConnectorConfigs() {
 
-			return connectorConfigs;
+			return this.connectorConfigs;
 		}
 
 		/**
@@ -195,22 +195,22 @@ public final class ServerXml {
 
 			public String getProtocol() {
 
-				return protocol;
+				return this.protocol;
 			}
 
 			public String getHost() {
 
-				return host;
+				return this.host;
 			}
 
 			public int getPort() {
 
-				return port;
+				return this.port;
 			}
 
 			public int getTimeout() {
 
-				return timeout;
+				return this.timeout;
 			}
 		}
 	}

@@ -38,6 +38,7 @@ public final class ChannelContainer {
 	public static final synchronized ChannelContainer getInstance() {
 
 		if (container == null) {
+
 			container = new ChannelContainer();
 		}
 
@@ -51,7 +52,7 @@ public final class ChannelContainer {
 	 */
 	public ChannelContainer addChannel(String id, Channel channel) {
 
-		channels.put(id, channel);
+		this.channels.put(id, channel);
 
 		return this;
 	}
@@ -75,7 +76,7 @@ public final class ChannelContainer {
 	 */
 	public ChannelContainer removeChannel(String id) {
 
-		channels.remove(id);
+		this.channels.remove(id);
 
 		return this;
 	}

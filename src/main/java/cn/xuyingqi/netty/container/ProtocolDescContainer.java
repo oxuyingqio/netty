@@ -69,6 +69,6 @@ public final class ProtocolDescContainer {
 	 */
 	public Protocol getProtocol(String name) {
 
-		return descs.get(name).getInstance();
+		return this.descs.get(name).getInstance();
 	}
 }

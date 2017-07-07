@@ -81,7 +81,7 @@ public final class ServerAppXml {
 	 */
 	public List<ServletConfig> getServletConfigs() {
 
-		return configs;
+		return this.configs;
 	}
 
 	/**
@@ -117,7 +117,7 @@ public final class ServerAppXml {
 		 */
 		public String getName() {
 
-			return name;
+			return this.name;
 		}
 
 		/**
@@ -127,7 +127,7 @@ public final class ServerAppXml {
 		 */
 		public String getClassName() {
 
-			return className;
+			return this.className;
 		}
 
 		/**
@@ -137,7 +137,7 @@ public final class ServerAppXml {
 		 */
 		public Map<String, String> getInitParam() {
 
-			return initParam;
+			return this.initParam;
 		}
 	}
 }

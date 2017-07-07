@@ -54,6 +54,7 @@ public class ProtocolDesc {
 			Protocol protocol = (Protocol) this.getClass().getClassLoader().loadClass(this.className).newInstance();
 			// 若继承默认抽象协议,则调用设置名称方法
 			if (protocol instanceof cn.xuyingqi.netty.protocol.impl.AbstractProtocol) {
+
 				((cn.xuyingqi.netty.protocol.impl.AbstractProtocol) protocol).setName(this.name);
 			}
 

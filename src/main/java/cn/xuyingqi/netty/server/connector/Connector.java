@@ -108,7 +108,7 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 				this.logger.info("服务(" + this.config.getHost() + ":" + this.config.getPort() + ")已启动.");
 
 				// 同步等待端口关闭
-				channel.closeFuture().sync();
+				this.channel.closeFuture().sync();
 			} catch (InterruptedException e) {
 
 				e.printStackTrace();

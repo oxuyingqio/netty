@@ -26,7 +26,8 @@ public final class DatagramHandler extends ChannelHandlerAdapter {
 		while (iter.hasNext()) {
 
 			// 调用接收消息,当返回true时,移除本观察者
-			if (iter.next().receiveDatagram(ctx, (Datagram) msg)) {
+			if (iter.next().receiveDatagram((Datagram) msg)) {
+
 				iter.remove();
 			}
 		}

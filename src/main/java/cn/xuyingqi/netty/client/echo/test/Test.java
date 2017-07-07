@@ -7,7 +7,6 @@ import cn.xuyingqi.netty.client.connector.Connector;
 import cn.xuyingqi.netty.client.echo.protocol.EchoDatagram;
 import cn.xuyingqi.netty.client.echo.protocol.EchoProtocol;
 import cn.xuyingqi.netty.client.observer.DatagramObserver;
-import io.netty.channel.ChannelHandlerContext;
 
 public class Test {
 
@@ -40,7 +39,7 @@ public class Test {
 		c.request(new EchoDatagram(4, "1234"), new DatagramObserver() {
 
 			@Override
-			public boolean receiveDatagram(ChannelHandlerContext ctx, Datagram datagram) {
+			public boolean receiveDatagram(Datagram datagram) {
 
 				System.out.println("来了" + ((EchoDatagram) datagram).getMsg());
 
@@ -49,7 +48,7 @@ public class Test {
 
 			@Override
 			public void exception(Throwable exception) {
-				
+
 			}
 		});
 

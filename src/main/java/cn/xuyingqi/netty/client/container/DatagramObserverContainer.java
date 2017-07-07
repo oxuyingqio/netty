@@ -40,6 +40,7 @@ public final class DatagramObserverContainer {
 	public static final synchronized DatagramObserverContainer getInstance() {
 
 		if (container == null) {
+
 			container = new DatagramObserverContainer();
 		}
 
@@ -65,6 +66,7 @@ public final class DatagramObserverContainer {
 		}
 		// 判断观察者是否存在,不存在则添加
 		if (!observers.contains(observer)) {
+
 			observers.addElement(observer);
 		}
 

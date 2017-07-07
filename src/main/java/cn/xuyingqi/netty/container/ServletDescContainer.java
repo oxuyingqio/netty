@@ -71,7 +71,7 @@ public final class ServletDescContainer {
 	 */
 	public Servlet getServlet(String name) {
 
-		return descs.get(name).getInstance();
+		return this.descs.get(name).getInstance();
 	}
 
 	/**
@@ -81,6 +81,6 @@ public final class ServletDescContainer {
 	 */
 	public Set<String> getServletNames() {
 
-		return descs.keySet();
+		return this.descs.keySet();
 	}
 }

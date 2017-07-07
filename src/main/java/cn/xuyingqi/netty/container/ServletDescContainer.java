@@ -56,6 +56,7 @@ public final class ServletDescContainer {
 	public static final synchronized ServletDescContainer getInstance() {
 
 		if (container == null) {
+
 			container = new ServletDescContainer();
 		}
 

@@ -12,6 +12,9 @@ import cn.xuyingqi.netty.protocol.Protocol;
  */
 public abstract class AbstractProtocol implements Protocol {
 
+	/**
+	 * 协议名称
+	 */
 	private String name;
 
 	@Override

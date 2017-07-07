@@ -74,10 +74,13 @@ public class ServletDesc {
 				this.servlet.init(new DefaultServletConfig(
 						this.initParam == null ? new HashMap<String, String>() : this.initParam, this.name));
 			} catch (InstantiationException e) {
+
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
+
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
+
 				e.printStackTrace();
 			}
 		}

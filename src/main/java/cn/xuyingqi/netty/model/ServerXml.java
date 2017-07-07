@@ -68,6 +68,7 @@ public final class ServerXml {
 				serverXml = (ServerXml) u.unmarshal(
 						new File(ServerXml.class.getClassLoader().getResource(ServerXml.SERVER_CONFIG_FILE).getPath()));
 			} catch (JAXBException e) {
+
 				e.printStackTrace();
 			}
 		}

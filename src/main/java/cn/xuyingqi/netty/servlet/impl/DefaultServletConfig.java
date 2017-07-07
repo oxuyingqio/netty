@@ -54,6 +54,7 @@ public class DefaultServletConfig extends AbstractServletConfig {
 					: this.initParamter.get("context");
 			this.context = (ServletContext) Class.forName(contextClass).newInstance();
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+
 			e.printStackTrace();
 		}
 	}

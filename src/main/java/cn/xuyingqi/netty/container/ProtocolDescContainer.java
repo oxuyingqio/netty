@@ -54,6 +54,7 @@ public final class ProtocolDescContainer {
 	public static final synchronized ProtocolDescContainer getInstance() {
 
 		if (container == null) {
+
 			container = new ProtocolDescContainer();
 		}
 

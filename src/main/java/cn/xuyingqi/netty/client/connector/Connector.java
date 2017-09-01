@@ -89,11 +89,22 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 			// 同步连接主机,端口号,获取通信通道
 			this.channel = this.bootstrap.connect(this.config.getHost(), this.config.getPort()).sync().channel();
 			// 打印日志
-			this.logger.info("远程地址(" + this.config.getHost() + ":" + this.config.getPort() + ")已连接.");
+			this.logger.info("远程地址(" + this.channel.remoteAddress() + ")已连接.");
 		} catch (InterruptedException e) {
 
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * 请求
+	 * 
+	 * @param request
+	 */
+	public final void request(Datagram request) {
+
+		// 发送数据报文
+		this.channel.writeAndFlush(request);
 	}
 
 	/**
@@ -106,8 +117,8 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 
 		// 添加观察者
 		DatagramObserverContainer.getInstance().addObserver(this.channel, observer);
-		// 发送数据报文
-		this.channel.writeAndFlush(request);
+		// 发送请求
+		this.request(request);
 	}
 
 	@Override
@@ -116,7 +127,7 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 		// 关闭通信通道
 		this.channel.close();
 		// 打印日志
-		this.logger.info("远程地址(" + this.config.getHost() + ":" + this.config.getPort() + ")已断开.");
+		this.logger.info("远程地址(" + this.channel.remoteAddress() + ")已断开.");
 	}
 
 	/**

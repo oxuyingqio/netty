@@ -48,6 +48,8 @@ public final class ChannelContainer {
 	/**
 	 * 添加客户端通道
 	 * 
+	 * @param id
+	 * @param channel
 	 * @return
 	 */
 	public ChannelContainer addChannel(String id, Channel channel) {

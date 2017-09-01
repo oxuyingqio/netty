@@ -11,7 +11,7 @@ import cn.xuyingqi.net.protocol.Datagram;
 public interface DatagramObserver {
 
 	/**
-	 * 接收数据报文,处理成功返回true
+	 * 接收数据报文.返回true,则移除本观察者不再通知;返回false,则收到数据报文后继续通知
 	 * 
 	 * @param datagram
 	 * @return

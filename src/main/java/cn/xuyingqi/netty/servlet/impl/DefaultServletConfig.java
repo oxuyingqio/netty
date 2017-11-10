@@ -25,34 +25,32 @@ public class DefaultServletConfig extends AbstractServletConfig {
 	private Map<String, String> initParamter;
 
 	/**
-	 * Servlet名称
-	 */
-	private String servletName;
-
-	/**
 	 * Servlet上下文
 	 */
 	private ServletContext context;
+
+	/**
+	 * Servlet名称
+	 */
+	private String servletName;
 
 	/**
 	 * 默认的Servlet配置
 	 * 
 	 * @param initParamter
 	 *            初始化参数
-	 * @param servletName
-	 *            Servlet名称
 	 */
-	public DefaultServletConfig(Map<String, String> initParamter, String servletName) {
+	public DefaultServletConfig(Map<String, String> initParamter) {
 
+		// 初始化参数
 		this.initParamter = initParamter;
-		this.servletName = servletName;
 
 		try {
 
 			// 实例化Servlet上下文对象,每个Servlet都有自己独一的上下文
-			String contextClass = this.initParamter.get("context") == null ? DEFAULT_SERVLET_CONTEXT_CLASS
+			String contextClassName = this.initParamter.get("context") == null ? DEFAULT_SERVLET_CONTEXT_CLASS
 					: this.initParamter.get("context");
-			this.context = (ServletContext) Class.forName(contextClass).newInstance();
+			this.context = (ServletContext) Class.forName(contextClassName).newInstance();
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 
 			e.printStackTrace();
@@ -81,5 +79,15 @@ public class DefaultServletConfig extends AbstractServletConfig {
 	public String getServletName() {
 
 		return this.servletName;
+	}
+
+	/**
+	 * 设置Servlet名称
+	 * 
+	 * @param servletName
+	 */
+	public void setServletName(String servletName) {
+
+		this.servletName = servletName;
 	}
 }

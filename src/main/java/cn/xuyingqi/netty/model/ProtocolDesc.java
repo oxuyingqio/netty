@@ -46,7 +46,7 @@ public class ProtocolDesc {
 	 * 
 	 * @return
 	 */
-	public Protocol getInstance() {
+	public Protocol newInstance() {
 
 		try {
 

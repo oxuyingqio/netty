@@ -1,10 +1,10 @@
 package cn.xuyingqi.netty.client.connector;
 
 import cn.xuyingqi.net.connector.ConnectorConfig;
+import cn.xuyingqi.net.connector.SSLConfig;
 import cn.xuyingqi.net.protocol.Datagram;
 import cn.xuyingqi.netty.client.connector.handler.DatagramHandler;
 import cn.xuyingqi.netty.client.connector.handler.ExceptionHandler;
-import cn.xuyingqi.netty.client.connector.handler.SessionHandler;
 import cn.xuyingqi.netty.client.container.DatagramObserverContainer;
 import cn.xuyingqi.netty.client.observer.DatagramObserver;
 import cn.xuyingqi.netty.protocol.Protocol;
@@ -68,9 +68,6 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 						ch.pipeline().addLast(((Protocol) config.getProtocol()).getEncoder());
 						// 解码
 						ch.pipeline().addLast(((Protocol) config.getProtocol()).getDecoder());
-
-						// 会话
-						ch.pipeline().addLast(new SessionHandler());
 
 						// 数据报文处理
 						ch.pipeline().addLast(new DatagramHandler());
@@ -148,6 +145,12 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 			}
 
 			@Override
+			public cn.xuyingqi.net.protocol.Protocol getProtocol() {
+
+				return null;
+			}
+
+			@Override
 			public int getPort() {
 
 				return 60000;
@@ -160,7 +163,7 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 			}
 
 			@Override
-			public cn.xuyingqi.net.protocol.Protocol getProtocol() {
+			public SSLConfig getSSLConfig() {
 
 				return null;
 			}

@@ -70,9 +70,15 @@ public class ServletDesc {
 
 				// 实例化Servlet
 				this.servlet = (Servlet) this.getClass().getClassLoader().loadClass(this.className).newInstance();
+
+				// 实例化Servlet配置
+				DefaultServletConfig servletConfig = new DefaultServletConfig(
+						this.initParam == null ? new HashMap<String, String>() : this.initParam);
+				// 设置Servlet名称
+				servletConfig.setServletName(this.name);
+
 				// 设置初始化参数
-				this.servlet.init(new DefaultServletConfig(
-						this.initParam == null ? new HashMap<String, String>() : this.initParam, this.name));
+				this.servlet.init(servletConfig);
 			} catch (InstantiationException e) {
 
 				e.printStackTrace();

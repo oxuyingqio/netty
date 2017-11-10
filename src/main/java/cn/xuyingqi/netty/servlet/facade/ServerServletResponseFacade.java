@@ -4,7 +4,6 @@ import cn.xuyingqi.net.protocol.Datagram;
 import cn.xuyingqi.net.servlet.ServerServletResponse;
 import cn.xuyingqi.net.servlet.ServletRequest;
 import cn.xuyingqi.net.servlet.ServletResponse;
-import cn.xuyingqi.netty.servlet.impl.DefaultServerServletResponse;
 
 /**
  * 服务器端Servlet响应外观类
@@ -25,7 +24,7 @@ public class ServerServletResponseFacade implements ServerServletResponse {
 	 * @param response
 	 *            Servlet响应
 	 */
-	public ServerServletResponseFacade(DefaultServerServletResponse response) {
+	public ServerServletResponseFacade(ServerServletResponse response) {
 
 		this.response = response;
 	}

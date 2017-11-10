@@ -22,19 +22,25 @@ public class DefaultServerServletRequest extends AbstractServerServletRequest {
 	 * 
 	 * @param servletSession
 	 *            Servlet会话
-	 * @param datagram
-	 *            数据报文
 	 */
-	public DefaultServerServletRequest(ServletSession servletSession, Datagram datagram) {
+	public DefaultServerServletRequest(ServletSession servletSession) {
 
 		super(servletSession);
-
-		this.datagram = datagram;
 	}
 
 	@Override
 	public Datagram getDatagram() {
 
 		return this.datagram;
+	}
+
+	/**
+	 * 设置数据报文
+	 * 
+	 * @param datagram
+	 */
+	public void setDatagram(Datagram datagram) {
+
+		this.datagram = datagram;
 	}
 }

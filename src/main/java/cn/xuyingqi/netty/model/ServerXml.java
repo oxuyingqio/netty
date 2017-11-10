@@ -193,25 +193,217 @@ public final class ServerXml {
 			@XmlAttribute(name = "timeout")
 			private int timeout;
 
+			/**
+			 * SSL配置
+			 */
+			@XmlElement(name = "ssl")
+			private SSLConfig ssl;
+
+			/**
+			 * 获取协议
+			 * 
+			 * @return
+			 */
 			public String getProtocol() {
 
 				return this.protocol;
 			}
 
+			/**
+			 * 获取主机名
+			 * 
+			 * @return
+			 */
 			public String getHost() {
 
 				return this.host;
 			}
 
+			/**
+			 * 获取端口号
+			 * 
+			 * @return
+			 */
 			public int getPort() {
 
 				return this.port;
 			}
 
+			/**
+			 * 获取超时时间
+			 * 
+			 * @return
+			 */
 			public int getTimeout() {
 
 				return this.timeout;
 			}
+
+			/**
+			 * 获取SSL配置
+			 * 
+			 * @return
+			 */
+			public SSLConfig getSsl() {
+
+				return this.ssl;
+			}
+
+			/**
+			 * SSL配置
+			 * 
+			 * @author XuYQ
+			 *
+			 */
+			public static final class SSLConfig implements cn.xuyingqi.net.connector.SSLConfig {
+
+				/**
+				 * 协议
+				 */
+				@XmlAttribute(name = "protocol")
+				private String protocol;
+
+				/**
+				 * 私钥
+				 */
+				@XmlElement(name = "private-key")
+				private KeyConfig privateKey;
+
+				/**
+				 * 信任证书
+				 */
+				@XmlElement(name = "trust-certificate")
+				private KeyConfig trustCertificate;
+
+				/**
+				 * 获取协议
+				 * 
+				 * @return
+				 */
+				public String getProtocol() {
+
+					return this.protocol;
+				}
+
+				/**
+				 * 获取私钥
+				 * 
+				 * @return
+				 */
+				public KeyConfig getPrivateKey() {
+
+					return this.privateKey;
+				}
+
+				/**
+				 * 获取信任证书
+				 * 
+				 * @return
+				 */
+				public KeyConfig getTrustCertificate() {
+
+					return this.trustCertificate;
+				}
+
+				/**
+				 * 密钥配置
+				 * 
+				 * @author XuYQ
+				 *
+				 */
+				public static final class KeyConfig {
+
+					/**
+					 * 密钥路径
+					 */
+					@XmlAttribute(name = "path")
+					private String path;
+
+					/**
+					 * 密钥密码
+					 */
+					@XmlAttribute(name = "password")
+					private String password;
+
+					/**
+					 * 类型
+					 */
+					@XmlAttribute(name = "type")
+					private String type;
+
+					/**
+					 * 算法
+					 */
+					@XmlAttribute(name = "algorithm")
+					private String algorithm;
+
+					/**
+					 * 获取密钥路径
+					 * 
+					 * @return
+					 */
+					public String getPath() {
+
+						return this.path;
+					}
+
+					/**
+					 * 获取密钥密码
+					 * 
+					 * @return
+					 */
+					public String getPassword() {
+
+						return this.password;
+					}
+
+					/**
+					 * 获取类型
+					 * 
+					 * @return
+					 */
+					public String getType() {
+
+						return this.type;
+					}
+
+					/**
+					 * 获取算法
+					 */
+					public String getAlgorithm() {
+
+						return this.algorithm;
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Main函数测试
+	 * 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+
+		System.out.println(ServerXml.getInstance().getServiceConfig().getConnectorConfigs().get(0).getSsl());
+
+		if (ServerXml.getInstance().getServiceConfig().getConnectorConfigs().get(0).getSsl() != null) {
+
+			System.out.println(
+					ServerXml.getInstance().getServiceConfig().getConnectorConfigs().get(0).getSsl().getProtocol());
+			System.out.println(ServerXml.getInstance().getServiceConfig().getConnectorConfigs().get(0).getSsl()
+					.getPrivateKey().getPath());
+			System.out.println(ServerXml.getInstance().getServiceConfig().getConnectorConfigs().get(0).getSsl()
+					.getPrivateKey().getPassword());
+			System.out.println(ServerXml.getInstance().getServiceConfig().getConnectorConfigs().get(0).getSsl()
+					.getPrivateKey().getType());
+			System.out.println(ServerXml.getInstance().getServiceConfig().getConnectorConfigs().get(0).getSsl()
+					.getTrustCertificate().getPath());
+			System.out.println(ServerXml.getInstance().getServiceConfig().getConnectorConfigs().get(0).getSsl()
+					.getTrustCertificate().getPassword());
+			System.out.println(ServerXml.getInstance().getServiceConfig().getConnectorConfigs().get(0).getSsl()
+					.getTrustCertificate().getType());
 		}
 	}
 }

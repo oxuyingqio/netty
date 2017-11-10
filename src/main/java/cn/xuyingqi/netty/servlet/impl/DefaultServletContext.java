@@ -16,14 +16,14 @@ public class DefaultServletContext extends AbstractServletContext {
 	@Override
 	public Set<String> getInitParamterNames() {
 
-		// 未实现,不影响使用
+		// 默认Servlet上下文不实现该功能
 		return SetFactory.newInstance();
 	}
 
 	@Override
 	public Object getInitParameter(String name) {
 
-		// 未实现,不影响使用
+		// 默认Servlet上下文不实现该功能
 		return null;
 	}
 }

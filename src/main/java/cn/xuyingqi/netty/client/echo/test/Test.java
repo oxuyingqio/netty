@@ -1,6 +1,7 @@
 package cn.xuyingqi.netty.client.echo.test;
 
 import cn.xuyingqi.net.connector.ConnectorConfig;
+import cn.xuyingqi.net.connector.SSLConfig;
 import cn.xuyingqi.net.protocol.Datagram;
 import cn.xuyingqi.net.protocol.Protocol;
 import cn.xuyingqi.netty.client.connector.Connector;
@@ -33,6 +34,12 @@ public class Test {
 			@Override
 			public int getTimeout() {
 				return 60;
+			}
+
+			@Override
+			public SSLConfig getSSLConfig() {
+
+				return null;
 			}
 		});
 		c.connect();

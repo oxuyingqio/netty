@@ -16,13 +16,13 @@ public class ExceptionHandler extends ChannelHandlerAdapter {
 	/**
 	 * 日志
 	 */
-	private final InternalLogger logger = InternalLoggerFactory.getInstance(ChannelHandlerAdapter.class);
+	private static final InternalLogger LOGGER = InternalLoggerFactory.getInstance(ChannelHandlerAdapter.class);
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 
 		// 打印日志
-		this.logger.error("远程地址(" + ctx.channel().remoteAddress() + ")程序异常,将中断连接.");
+		LOGGER.error("远程地址(" + ctx.channel().remoteAddress() + ")程序异常,将中断连接.异常信息:" + cause.getMessage());
 		// 打印异常
 		cause.printStackTrace();
 

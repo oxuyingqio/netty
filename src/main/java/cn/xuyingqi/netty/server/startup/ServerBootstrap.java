@@ -2,6 +2,7 @@ package cn.xuyingqi.netty.server.startup;
 
 import java.util.List;
 
+import cn.xuyingqi.net.connector.SSLConfig;
 import cn.xuyingqi.net.protocol.Protocol;
 import cn.xuyingqi.netty.container.ProtocolDescContainer;
 import cn.xuyingqi.netty.model.ServerXml;
@@ -63,6 +64,12 @@ public final class ServerBootstrap {
 
 							return config.getTimeout();
 						}
+
+						@Override
+						public SSLConfig getSSLConfig() {
+
+							return config.getSsl();
+						}
 					});
 
 					// 连接
@@ -72,6 +79,11 @@ public final class ServerBootstrap {
 		}
 	}
 
+	/**
+	 * Main函数测试
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
 		new ServerBootstrap().startup();

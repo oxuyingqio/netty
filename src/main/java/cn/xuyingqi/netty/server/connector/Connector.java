@@ -1,21 +1,23 @@
 package cn.xuyingqi.netty.server.connector;
 
+import javax.net.ssl.SSLEngine;
+
 import cn.xuyingqi.net.connector.ConnectorConfig;
 import cn.xuyingqi.netty.protocol.Protocol;
 import cn.xuyingqi.netty.server.connector.handler.ChannelContainerHandler;
 import cn.xuyingqi.netty.server.connector.handler.ConnectLoggerHandler;
 import cn.xuyingqi.netty.server.connector.handler.ExceptionHandler;
 import cn.xuyingqi.netty.server.connector.handler.ServletHandler;
-import cn.xuyingqi.netty.server.connector.handler.SessionHandler;
+import cn.xuyingqi.netty.util.SSLContextFactory;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
-import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
@@ -31,7 +33,7 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 	/**
 	 * 日志
 	 */
-	private final InternalLogger logger = InternalLoggerFactory.getInstance(Connector.class);
+	private static final InternalLogger LOGGER = InternalLoggerFactory.getInstance(Connector.class);
 
 	/**
 	 * 连接器配置
@@ -75,6 +77,18 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 						@Override
 						protected void initChannel(SocketChannel ch) throws Exception {
 
+							// 判断是否启用SSL
+							if (config.getSSLConfig() != null) {
+
+								// 获取SSL引擎
+								SSLEngine engine = SSLContextFactory.getInstance(config.getSSLConfig())
+										.createSSLEngine();
+								engine.setUseClientMode(false);
+								engine.setNeedClientAuth(true);
+								// 添加SSL
+								ch.pipeline().addLast(new SslHandler(engine));
+							}
+
 							// 超时
 							ch.pipeline().addLast(new ReadTimeoutHandler(config.getTimeout()));
 
@@ -86,11 +100,8 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 							// 解码器
 							ch.pipeline().addLast(((Protocol) config.getProtocol()).getDecoder());
 
-							// 会话
-							ch.pipeline().addLast(new SessionHandler());
-
 							// Servlet处理
-							ch.pipeline().addLast((ChannelHandler) new ServletHandler());
+							ch.pipeline().addLast(new ServletHandler());
 
 							// 远程链接通道
 							ch.pipeline().addLast(new ChannelContainerHandler());
@@ -104,8 +115,10 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 
 				// 同步绑定端口号
 				this.channel = bootstrap.bind(this.config.getHost(), this.config.getPort()).sync().channel();
+				// 修改启动状态
+				this.started = true;
 				// 打印日志
-				this.logger.info("服务(" + this.config.getHost() + ":" + this.config.getPort() + ")已启动.");
+				LOGGER.info("服务(" + this.config.getHost() + ":" + this.config.getPort() + ")已启动.");
 
 				// 同步等待端口关闭
 				this.channel.closeFuture().sync();
@@ -126,7 +139,9 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 
 		// 关闭
 		this.channel.close();
+		// 修改启动状态
+		this.started = false;
 		// 打印日志
-		this.logger.info("服务(" + this.config.getHost() + ":" + this.config.getPort() + ")已停止.");
+		LOGGER.info("服务(" + this.config.getHost() + ":" + this.config.getPort() + ")已停止.");
 	}
 }

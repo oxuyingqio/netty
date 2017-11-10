@@ -5,7 +5,6 @@ import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 
 import cn.xuyingqi.net.servlet.ServletContext;
-import cn.xuyingqi.net.servlet.ServletSession;
 import cn.xuyingqi.net.servlet.impl.AbstractServletSession;
 
 /**
@@ -14,7 +13,16 @@ import cn.xuyingqi.net.servlet.impl.AbstractServletSession;
  * @author XuYQ
  *
  */
-public class DefaultServletSession extends AbstractServletSession implements ServletSession {
+public class DefaultServletSession extends AbstractServletSession {
+
+	/**
+	 * 本机地址
+	 */
+	private InetSocketAddress local;
+	/**
+	 * 远程地址
+	 */
+	private InetSocketAddress remote;
 
 	/**
 	 * Servlet上下文,是在不断变化的
@@ -27,27 +35,24 @@ public class DefaultServletSession extends AbstractServletSession implements Ser
 	private long lastAccessedTime;
 
 	/**
-	 * 本机地址
+	 * 最大间隔时间
 	 */
-	private InetSocketAddress local;
+	private int maxInactiveInterval;
+
 	/**
-	 * 远程地址
+	 * 协议名称
 	 */
-	private InetSocketAddress remote;
+	private String protocol;
 
 	/**
 	 * 默认的Servlet会话
 	 * 
-	 * @param id
-	 *            会话ID
 	 * @param local
 	 *            本机地址
 	 * @param remote
 	 *            远程地址
 	 */
-	public DefaultServletSession(String id, SocketAddress local, SocketAddress remote) {
-
-		super(id);
+	public DefaultServletSession(SocketAddress local, SocketAddress remote) {
 
 		this.local = (InetSocketAddress) local;
 		this.remote = (InetSocketAddress) remote;
@@ -91,6 +96,22 @@ public class DefaultServletSession extends AbstractServletSession implements Ser
 	}
 
 	@Override
+	public int getMaxInactiveInterval() {
+
+		return this.maxInactiveInterval;
+	}
+
+	/**
+	 * 设置最大间隔时间
+	 * 
+	 * @param maxInactiveInterval
+	 */
+	public void setMaxInactiveInterval(int maxInactiveInterval) {
+
+		this.maxInactiveInterval = maxInactiveInterval;
+	}
+
+	@Override
 	public InetAddress getLocalAddr() {
 
 		return this.local.getAddress();
@@ -111,8 +132,17 @@ public class DefaultServletSession extends AbstractServletSession implements Ser
 	@Override
 	public String getProtocol() {
 
-		// 未实现,不影响使用
-		return "";
+		return this.protocol;
+	}
+
+	/**
+	 * 设置协议名称
+	 * 
+	 * @param protocol
+	 */
+	public void setProtocol(String protocol) {
+
+		this.protocol = protocol;
 	}
 
 	@Override

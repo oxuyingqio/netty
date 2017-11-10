@@ -55,6 +55,12 @@ public class ServletSessionFacade implements ServletSession {
 	}
 
 	@Override
+	public int getMaxInactiveInterval() {
+
+		return this.session.getMaxInactiveInterval();
+	}
+
+	@Override
 	public InetAddress getLocalAddr() {
 
 		return this.session.getLocalAddr();

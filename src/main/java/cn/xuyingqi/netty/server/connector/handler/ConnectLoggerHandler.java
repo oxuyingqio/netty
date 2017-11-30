@@ -22,7 +22,7 @@ public class ConnectLoggerHandler extends ChannelHandlerAdapter {
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 
 		// 打印日志
-		LOGGER.info("远程地址(" + ctx.channel().remoteAddress() + ")已连接.");
+		LOGGER.info("远程地址({})已连接.", ctx.channel().remoteAddress());
 
 		// 后续处理
 		ctx.fireChannelActive();
@@ -32,7 +32,7 @@ public class ConnectLoggerHandler extends ChannelHandlerAdapter {
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
 
 		// 打印日志
-		LOGGER.info("远程地址(" + ctx.channel().remoteAddress() + ")已断开.");
+		LOGGER.info("远程地址({})已断开.", ctx.channel().remoteAddress());
 
 		// 后续处理
 		ctx.fireChannelInactive();

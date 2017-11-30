@@ -12,6 +12,7 @@ import cn.xuyingqi.netty.server.connector.Constant;
 import cn.xuyingqi.netty.servlet.facade.ServerServletRequestFacade;
 import cn.xuyingqi.netty.servlet.facade.ServerServletResponseFacade;
 import cn.xuyingqi.netty.servlet.facade.ServletSessionFacade;
+import cn.xuyingqi.netty.servlet.impl.AbstractNettyServlet;
 import cn.xuyingqi.netty.servlet.impl.DefaultServerServletRequest;
 import cn.xuyingqi.netty.servlet.impl.DefaultServerServletResponse;
 import cn.xuyingqi.netty.servlet.impl.DefaultServletSession;
@@ -31,7 +32,7 @@ public final class ServletHandler extends ChannelHandlerAdapter {
 	/**
 	 * 属性:Servlet会话
 	 */
-	private static final AttributeKey<DefaultServletSession> SERVLET_SESSION_ATTR = AttributeKey
+	private static final AttributeKey<DefaultServletSession> SERVLET_SESSION = AttributeKey
 			.valueOf(Constant.SERVLET_SESSION);
 
 	@Override
@@ -50,7 +51,7 @@ public final class ServletHandler extends ChannelHandlerAdapter {
 		servletSession.setProtocol("");
 
 		// 获取Servlet会话属性
-		Attribute<DefaultServletSession> servletSessionAttr = ctx.attr(ServletHandler.SERVLET_SESSION_ATTR);
+		Attribute<DefaultServletSession> servletSessionAttr = ctx.attr(ServletHandler.SERVLET_SESSION);
 		// 设置Servlet会话
 		servletSessionAttr.set(servletSession);
 
@@ -62,7 +63,7 @@ public final class ServletHandler extends ChannelHandlerAdapter {
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
 		// Servlet会话
-		DefaultServletSession servletSession = ctx.attr(SERVLET_SESSION_ATTR).get();
+		DefaultServletSession servletSession = ctx.attr(ServletHandler.SERVLET_SESSION).get();
 		// 修改最后一次请求时间
 		servletSession.updateLastAccessedTime();
 		// Servlet会话外观类
@@ -101,5 +102,43 @@ public final class ServletHandler extends ChannelHandlerAdapter {
 
 		// 后续处理
 		ctx.fireChannelRead(msg);
+	}
+
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+
+		// 是否进行后续异常处理
+		boolean fireExceptionCaught = true;
+
+		// Servlet会话
+		DefaultServletSession servletSession = ctx.attr(ServletHandler.SERVLET_SESSION).get();
+		// Servlet会话外观类
+		ServletSession servletSessionFacade = new ServletSessionFacade(servletSession);
+
+		// 获取Servlet名称集合
+		Iterator<String> it = ServletDescContainer.getInstance().getServletNames().iterator();
+		// 遍历Servlet名称集合
+		while (it.hasNext()) {
+
+			// 获取当前Servlet
+			Servlet servlet = ServletDescContainer.getInstance().getServlet(it.next());
+			// 判断是否为AbstractNettyServlet
+			if (servlet instanceof AbstractNettyServlet) {
+
+				// Servet会话中设置当前Servlet上下文
+				servletSession.setServletContext(servlet.getServletConfig().getServletContext());
+				// 捕获异常
+				((AbstractNettyServlet) servlet).exceptionCaught(servletSessionFacade, cause);
+
+				// 不再进行后续异常处理
+				fireExceptionCaught = false;
+			}
+		}
+
+		// 后续处理
+		if (fireExceptionCaught) {
+
+			ctx.fireExceptionCaught(cause);
+		}
 	}
 }

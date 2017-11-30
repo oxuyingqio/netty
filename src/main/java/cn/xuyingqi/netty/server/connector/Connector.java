@@ -118,7 +118,7 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 				// 修改启动状态
 				this.started = true;
 				// 打印日志
-				LOGGER.info("服务(" + this.config.getHost() + ":" + this.config.getPort() + ")已启动.");
+				LOGGER.info("服务({}:{})已启动.", this.config.getHost(), this.config.getPort());
 
 				// 同步等待端口关闭
 				this.channel.closeFuture().sync();
@@ -142,6 +142,6 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 		// 修改启动状态
 		this.started = false;
 		// 打印日志
-		LOGGER.info("服务(" + this.config.getHost() + ":" + this.config.getPort() + ")已停止.");
+		LOGGER.info("服务({}:{})已停止.", this.config.getHost(), this.config.getPort());
 	}
 }

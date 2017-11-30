@@ -1,5 +1,8 @@
 package cn.xuyingqi.netty.client.connector.handler;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.internal.logging.InternalLogger;
@@ -16,15 +19,16 @@ public class ExceptionHandler extends ChannelHandlerAdapter {
 	/**
 	 * 日志
 	 */
-	private final InternalLogger logger = InternalLoggerFactory.getInstance(ChannelHandlerAdapter.class);
+	private static final InternalLogger LOGGER = InternalLoggerFactory.getInstance(ChannelHandlerAdapter.class);
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 
+		// 异常信息
+		StringWriter sw = new StringWriter();
+		cause.printStackTrace(new PrintWriter(sw));
 		// 打印日志
-		this.logger.error("远程地址(" + ctx.channel().remoteAddress() + ")程序异常,将中断连接.");
-		// 打印异常
-		cause.printStackTrace();
+		LOGGER.error("远程地址({})程序异常,将中断连接.异常信息:{}", ctx.channel().remoteAddress(), sw.getBuffer().toString());
 
 		// 关闭连接
 		ctx.close();

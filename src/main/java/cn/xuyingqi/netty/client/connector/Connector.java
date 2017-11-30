@@ -30,7 +30,7 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 	/**
 	 * 日志
 	 */
-	private final InternalLogger logger = InternalLoggerFactory.getInstance(Connector.class);
+	private static final InternalLogger LOGGER = InternalLoggerFactory.getInstance(Connector.class);
 
 	/**
 	 * 连接器配置
@@ -86,7 +86,7 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 			// 同步连接主机,端口号,获取通信通道
 			this.channel = this.bootstrap.connect(this.config.getHost(), this.config.getPort()).sync().channel();
 			// 打印日志
-			this.logger.info("远程地址(" + this.channel.remoteAddress() + ")已连接.");
+			LOGGER.info("远程地址({})已连接.", this.channel.remoteAddress());
 		} catch (InterruptedException e) {
 
 			e.printStackTrace();
@@ -124,7 +124,7 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 		// 关闭通信通道
 		this.channel.close();
 		// 打印日志
-		this.logger.info("远程地址(" + this.channel.remoteAddress() + ")已断开.");
+		LOGGER.info("远程地址({})已断开.", this.channel.remoteAddress());
 	}
 
 	/**

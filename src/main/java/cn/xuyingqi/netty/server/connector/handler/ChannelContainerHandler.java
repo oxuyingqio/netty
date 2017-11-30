@@ -26,21 +26,21 @@ public class ChannelContainerHandler extends ChannelHandlerAdapter {
 	/**
 	 * 属性:Servlet会话
 	 */
-	private static final AttributeKey<DefaultServletSession> SERVLET_SESSION_ATTR = AttributeKey
+	private static final AttributeKey<DefaultServletSession> SERVLET_SESSION = AttributeKey
 			.valueOf(Constant.SERVLET_SESSION);
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 
 		// 获取会话属性
-		Attribute<DefaultServletSession> servletSessionAttr = ctx.attr(ChannelContainerHandler.SERVLET_SESSION_ATTR);
+		Attribute<DefaultServletSession> servletSessionAttr = ctx.attr(ChannelContainerHandler.SERVLET_SESSION);
 		// 获取会话
 		DefaultServletSession servletSession = servletSessionAttr.get();
 
 		// 添加客户端通道
 		ChannelContainer.getInstance().addChannel(servletSession.getId(), ctx.channel());
 		// 打印日志
-		LOGGER.info("新增通道(ID:" + servletSession.getId() + ";通道:" + ctx.channel() + ").");
+		LOGGER.info("新增通道(ID:{};通道:{}).", servletSession.getId(), ctx.channel());
 
 		// 后续处理
 		ctx.fireChannelActive();
@@ -50,7 +50,7 @@ public class ChannelContainerHandler extends ChannelHandlerAdapter {
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
 
 		// 获取会话属性
-		Attribute<DefaultServletSession> servletSessionAttr = ctx.attr(ChannelContainerHandler.SERVLET_SESSION_ATTR);
+		Attribute<DefaultServletSession> servletSessionAttr = ctx.attr(ChannelContainerHandler.SERVLET_SESSION);
 		// 获取会话
 		DefaultServletSession servletSession = servletSessionAttr.get();
 

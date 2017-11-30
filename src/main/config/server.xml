@@ -5,6 +5,5 @@
 
 	<service>
 		<connector protocol="echoProtocol" host="127.0.0.1" port="60000" timeout="200" />
-		<connector protocol="echoProtocol" host="127.0.0.1" port="50000" timeout="200" />
 	</service>
 </server>

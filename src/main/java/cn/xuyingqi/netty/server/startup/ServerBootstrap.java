@@ -1,5 +1,8 @@
 package cn.xuyingqi.netty.server.startup;
 
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.util.List;
 
 import cn.xuyingqi.net.connector.SSLConfig;
@@ -87,5 +90,32 @@ public final class ServerBootstrap {
 	public static void main(String[] args) {
 
 		new ServerBootstrap().startup();
+
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		for (int i = 0; i < 1000; i++) {
+			
+			new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+
+					try {
+						
+						Socket sokcet = new Socket();
+						sokcet.connect(new InetSocketAddress("127.0.0.1", 60000));
+						sokcet.getOutputStream().write(new byte[] { 0, 0, 0, 1, 0 });
+						sokcet.getOutputStream().close();
+						sokcet.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}).start();
+		}
 	}
 }

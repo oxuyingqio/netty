@@ -26,10 +26,13 @@ public class ExceptionHandler extends ChannelHandlerAdapter {
 
 		// 异常信息
 		StringWriter sw = new StringWriter();
-		cause.printStackTrace(new PrintWriter(sw));
+		PrintWriter pw = new PrintWriter(sw);
+		cause.printStackTrace(pw);
 		// 打印日志
 		LOGGER.error("远程地址({})程序异常,将中断连接.异常信息:{}", ctx.channel().remoteAddress(), sw.getBuffer().toString());
 
+		cause.printStackTrace();
+		
 		// 关闭连接
 		ctx.close();
 	}

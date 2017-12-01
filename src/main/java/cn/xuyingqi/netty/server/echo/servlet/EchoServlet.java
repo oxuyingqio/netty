@@ -11,7 +11,7 @@ import cn.xuyingqi.netty.server.echo.protocol.EchoDatagram;
 
 public class EchoServlet extends AbstractServlet {
 
-	private int count = 0;
+	private static int count = 0;
 
 	@Override
 	public void service(ServletRequest request, ServletResponse response) {
@@ -21,7 +21,7 @@ public class EchoServlet extends AbstractServlet {
 
 	private void service(ServerServletRequest request, ServerServletResponse response) {
 
-		System.out.println("客户端" + (count++) + "发送消息:" + ((EchoDatagram) request.getDatagram()).getMsg());
+		System.out.println("客户端" + demo() + "发送消息:" + ((EchoDatagram) request.getDatagram()).getMsg());
 
 		try {
 
@@ -40,5 +40,10 @@ public class EchoServlet extends AbstractServlet {
 	@Override
 	public void destroy() {
 
+	}
+
+	private static final synchronized int demo() {
+
+		return count++;
 	}
 }

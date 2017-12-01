@@ -68,17 +68,17 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 			// 用于接收客户端连接
 			EventLoopGroup bossGroup = new NioEventLoopGroup();
 			// 用于客户端连接读写
-			EventLoopGroup workerGroup = new NioEventLoopGroup(10);
+			EventLoopGroup workerGroup = new NioEventLoopGroup();
 
 			// 服务器启动器
 			ServerBootstrap bootstrap = new ServerBootstrap();
 			// 服务器配置
 			bootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
-					.option(ChannelOption.SO_BACKLOG, 128).option(ChannelOption.TCP_NODELAY, true)
+					.option(ChannelOption.SO_BACKLOG, 1024)
+					.option(ChannelOption.TCP_NODELAY, true)
 					.option(ChannelOption.SO_KEEPALIVE, true).option(ChannelOption.SO_REUSEADDR, true)
 					.option(ChannelOption.SO_RCVBUF, 10 * 1024).option(ChannelOption.SO_SNDBUF, 10 * 1024)
 					.option(EpollChannelOption.SO_REUSEPORT, true).childOption(ChannelOption.SO_KEEPALIVE, true)
-
 					.childHandler(new ChannelInitializer<SocketChannel>() {
 						@Override
 						protected void initChannel(SocketChannel ch) throws Exception {

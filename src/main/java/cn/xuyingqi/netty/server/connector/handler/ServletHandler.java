@@ -81,25 +81,31 @@ public final class ServletHandler extends ChannelHandlerAdapter {
 		// Servlet响应外观类
 		ServerServletResponse responseFacade = new ServerServletResponseFacade(response);
 
-		// 获取Servlet名称集合
-		Iterator<String> it = ServletDescContainer.getInstance().getServletNames().iterator();
-		// 遍历Servlet名称集合
-		while (it.hasNext()) {
+		new Thread(new Runnable() {
 
-			// 获取当前Servlet
-			Servlet servlet = ServletDescContainer.getInstance().getServlet(it.next());
-			// Servet会话中设置当前Servlet上下文
-			servletSession.setServletContext(servlet.getServletConfig().getServletContext());
-			// 调用Servlet服务方法
-			servlet.service(requestFacade, responseFacade);
-		}
-		// 判断响应报文不为空
-		if (response.getDatagram() != null) {
+			@Override
+			public void run() {
 
-			// 写入响应数据报文
-			ctx.writeAndFlush(response.getDatagram());
-		}
+				// 获取Servlet名称集合
+				Iterator<String> it = ServletDescContainer.getInstance().getServletNames().iterator();
+				// 遍历Servlet名称集合
+				while (it.hasNext()) {
 
+					// 获取当前Servlet
+					Servlet servlet = ServletDescContainer.getInstance().getServlet(it.next());
+					// Servet会话中设置当前Servlet上下文
+					servletSession.setServletContext(servlet.getServletConfig().getServletContext());
+					// 调用Servlet服务方法
+					servlet.service(requestFacade, responseFacade);
+				}
+				// 判断响应报文不为空
+				if (response.getDatagram() != null) {
+
+					// 写入响应数据报文
+					ctx.writeAndFlush(response.getDatagram());
+				}
+			}
+		}).start();
 		// 后续处理
 		ctx.fireChannelRead(msg);
 	}

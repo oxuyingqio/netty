@@ -97,25 +97,30 @@ public final class ServerBootstrap {
 			e.printStackTrace();
 		}
 
-		for (int i = 0; i < 1000; i++) {
-			
-			new Thread(new Runnable() {
-
-				@Override
-				public void run() {
-
-					try {
-						
-						Socket sokcet = new Socket();
-						sokcet.connect(new InetSocketAddress("127.0.0.1", 60000));
-						sokcet.getOutputStream().write(new byte[] { 0, 0, 0, 1, 0 });
-						sokcet.getOutputStream().close();
-						sokcet.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}).start();
-		}
+//		for (int i = 0; i < 5000; i++) {
+//
+//			new Thread(new Runnable() {
+//
+//				@Override
+//				public void run() {
+//
+//					try {
+//
+//						Socket sokcet = new Socket();
+//						sokcet.connect(new InetSocketAddress("127.0.0.1", 60000));
+//						sokcet.getOutputStream().write(new byte[] { 0, 0, 0, 1, 0 });
+//
+//						Thread.sleep(20000);
+//
+//						sokcet.getOutputStream().close();
+//						sokcet.close();
+//					} catch (IOException e) {
+//						e.printStackTrace();
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+//				}
+//			}).start();
+//		}
 	}
 }

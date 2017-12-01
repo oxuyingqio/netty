@@ -54,7 +54,7 @@ public final class DatagramObserverContainer {
 	 * @param observer
 	 * @return
 	 */
-	public DatagramObserverContainer addObserver(Channel channel, DatagramObserver observer) {
+	public synchronized DatagramObserverContainer addObserver(Channel channel, DatagramObserver observer) {
 
 		// 获取通道的观察者集合
 		Vector<DatagramObserver> observers = this.channelObservers.get(channel);
@@ -79,7 +79,7 @@ public final class DatagramObserverContainer {
 	 * @param channel
 	 * @return
 	 */
-	public Vector<DatagramObserver> getObservers(Channel channel) {
+	public synchronized Vector<DatagramObserver> getObservers(Channel channel) {
 
 		return this.channelObservers.get(channel);
 	}
@@ -91,7 +91,7 @@ public final class DatagramObserverContainer {
 	 * @param observer
 	 * @return
 	 */
-	public DatagramObserverContainer removeObserver(Channel channel, DatagramObserver observer) {
+	public synchronized DatagramObserverContainer removeObserver(Channel channel, DatagramObserver observer) {
 
 		// 获取通道的观察者集合
 		Vector<DatagramObserver> observers = this.channelObservers.get(channel);
@@ -110,7 +110,7 @@ public final class DatagramObserverContainer {
 	 * @param channel
 	 * @return
 	 */
-	public DatagramObserverContainer clearObservers(Channel channel) {
+	public synchronized DatagramObserverContainer clearObservers(Channel channel) {
 
 		this.channelObservers.remove(channel);
 

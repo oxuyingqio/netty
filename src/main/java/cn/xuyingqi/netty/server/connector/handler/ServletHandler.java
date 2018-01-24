@@ -1,6 +1,8 @@
 package cn.xuyingqi.netty.server.connector.handler;
 
 import java.util.Iterator;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import cn.xuyingqi.net.protocol.Datagram;
 import cn.xuyingqi.net.servlet.ServerServletRequest;
@@ -34,6 +36,11 @@ public final class ServletHandler extends ChannelHandlerAdapter {
 	 */
 	private static final AttributeKey<DefaultServletSession> SERVLET_SESSION = AttributeKey
 			.valueOf(Constant.SERVLET_SESSION);
+
+	/**
+	 * 线程池
+	 */
+	private static final ExecutorService EXECUTOR = Executors.newFixedThreadPool(10);
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -81,7 +88,8 @@ public final class ServletHandler extends ChannelHandlerAdapter {
 		// Servlet响应外观类
 		ServerServletResponse responseFacade = new ServerServletResponseFacade(response);
 
-		new Thread(new Runnable() {
+		// 放入线程池处理
+		EXECUTOR.execute(new Runnable() {
 
 			@Override
 			public void run() {
@@ -105,7 +113,8 @@ public final class ServletHandler extends ChannelHandlerAdapter {
 					ctx.writeAndFlush(response.getDatagram());
 				}
 			}
-		}).start();
+		});
+
 		// 后续处理
 		ctx.fireChannelRead(msg);
 	}

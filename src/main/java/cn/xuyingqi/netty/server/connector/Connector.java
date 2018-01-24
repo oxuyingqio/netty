@@ -74,8 +74,7 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 			ServerBootstrap bootstrap = new ServerBootstrap();
 			// 服务器配置
 			bootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
-					.option(ChannelOption.SO_BACKLOG, 1024)
-					.option(ChannelOption.TCP_NODELAY, true)
+					.option(ChannelOption.SO_BACKLOG, 1024).option(ChannelOption.TCP_NODELAY, true)
 					.option(ChannelOption.SO_KEEPALIVE, true).option(ChannelOption.SO_REUSEADDR, true)
 					.option(ChannelOption.SO_RCVBUF, 10 * 1024).option(ChannelOption.SO_SNDBUF, 10 * 1024)
 					.option(EpollChannelOption.SO_REUSEPORT, true).childOption(ChannelOption.SO_KEEPALIVE, true)

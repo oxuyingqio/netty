@@ -57,7 +57,7 @@ public class ChannelContainerHandler extends ChannelHandlerAdapter {
 		// 移除客户端通道
 		ChannelContainer.getInstance().removeChannel(servletSession.getId());
 		// 打印日志
-		LOGGER.info("移除通道(ID:" + servletSession.getId() + ";通道:" + ctx.channel() + ").");
+		LOGGER.info("移除通道(ID:{};通道:{}).", servletSession.getId(), ctx.channel());
 
 		// 后续处理
 		ctx.fireChannelInactive();

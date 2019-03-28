@@ -12,7 +12,7 @@ import cn.xuyingqi.net.servlet.impl.AbstractServletConfig;
  * @author XuYQ
  *
  */
-public class DefaultServletConfig extends AbstractServletConfig {
+public final class DefaultServletConfig extends AbstractServletConfig {
 
 	/**
 	 * 默认的Servlet上下文类路径

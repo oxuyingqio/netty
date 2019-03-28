@@ -14,7 +14,7 @@ import io.netty.util.internal.logging.InternalLoggerFactory;
  * @author XuYQ
  *
  */
-public class ExceptionHandler extends ChannelHandlerAdapter {
+public final class ExceptionHandler extends ChannelHandlerAdapter {
 
 	/**
 	 * 日志
@@ -28,7 +28,8 @@ public class ExceptionHandler extends ChannelHandlerAdapter {
 		StringWriter sw = new StringWriter();
 		cause.printStackTrace(new PrintWriter(sw));
 		// 打印日志
-		LOGGER.error("远程地址({})程序异常,将中断连接.异常信息:{}", ctx.channel().remoteAddress(), sw.getBuffer().toString());
+		LOGGER.error("\n【Netty】[服务器-异常处理]远程地址({})程序异常,将中断连接.异常信息：{}", ctx.channel().remoteAddress(),
+				sw.getBuffer().toString());
 
 		// 关闭连接
 		ctx.close();

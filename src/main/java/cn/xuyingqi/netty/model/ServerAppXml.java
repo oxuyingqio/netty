@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import cn.xuyingqi.util.util.MapFactory;
+import cn.xuyingqi.util.MapFactory;
 
 /**
  * server.app.xml
@@ -55,7 +55,7 @@ public final class ServerAppXml {
 	 * 
 	 * @return
 	 */
-	public static final ServerAppXml getInstance() {
+	public synchronized static final ServerAppXml getInstance() {
 
 		if (serverAppXml == null) {
 

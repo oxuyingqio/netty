@@ -3,7 +3,7 @@ package cn.xuyingqi.netty.server.echo.protocol;
 import java.io.UnsupportedEncodingException;
 
 import cn.xuyingqi.net.protocol.Datagram;
-import cn.xuyingqi.util.util.ByteUtils;
+import cn.xuyingqi.util.ByteUtils;
 
 /**
  * 应答数据报文

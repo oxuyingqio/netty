@@ -12,7 +12,7 @@ import cn.xuyingqi.netty.servlet.impl.DefaultServletConfig;
  * @author XuYQ
  *
  */
-public class ServletDesc {
+public final class ServletDesc {
 
 	/**
 	 * 名称

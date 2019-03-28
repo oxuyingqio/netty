@@ -1,4 +1,4 @@
-package cn.xuyingqi.netty.client.observer;
+package cn.xuyingqi.netty.client.model;
 
 import cn.xuyingqi.net.protocol.Datagram;
 
@@ -16,10 +16,10 @@ public interface DatagramObserver {
 	 * @param datagram
 	 * @return
 	 */
-	public boolean receiveDatagram(Datagram datagram);
+	public boolean notify(Datagram datagram);
 
 	/**
-	 * 异常
+	 * 异常.移除观察者.
 	 * 
 	 * @param exception
 	 */

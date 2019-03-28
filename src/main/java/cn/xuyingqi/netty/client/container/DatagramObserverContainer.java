@@ -3,8 +3,9 @@ package cn.xuyingqi.netty.client.container;
 import java.util.Map;
 import java.util.Vector;
 
-import cn.xuyingqi.netty.client.observer.DatagramObserver;
-import cn.xuyingqi.util.util.MapFactory;
+import cn.xuyingqi.netty.client.model.DatagramObserver;
+import cn.xuyingqi.util.MapFactory;
+import cn.xuyingqi.util.VectorFactory;
 import io.netty.channel.Channel;
 
 /**
@@ -18,7 +19,7 @@ public final class DatagramObserverContainer {
 	/**
 	 * 容器
 	 */
-	private static DatagramObserverContainer container;
+	private static DatagramObserverContainer CONTAINER;
 
 	/**
 	 * 通道观察者集合
@@ -37,14 +38,14 @@ public final class DatagramObserverContainer {
 	 * 
 	 * @return
 	 */
-	public static final synchronized DatagramObserverContainer getInstance() {
+	public synchronized static final DatagramObserverContainer getInstance() {
 
-		if (container == null) {
+		if (CONTAINER == null) {
 
-			container = new DatagramObserverContainer();
+			CONTAINER = new DatagramObserverContainer();
 		}
 
-		return container;
+		return CONTAINER;
 	}
 
 	/**
@@ -57,13 +58,14 @@ public final class DatagramObserverContainer {
 	public synchronized DatagramObserverContainer addObserver(Channel channel, DatagramObserver observer) {
 
 		// 获取通道的观察者集合
-		Vector<DatagramObserver> observers = this.channelObservers.get(channel);
+		Vector<DatagramObserver> observers = this.getObservers(channel);
 		// 若观察者集合为空,则创建对应集合
 		if (observers == null) {
 
-			observers = new Vector<DatagramObserver>();
+			observers = VectorFactory.newInstance();
 			this.channelObservers.put(channel, observers);
 		}
+
 		// 判断观察者是否存在,不存在则添加
 		if (!observers.contains(observer)) {
 
@@ -94,7 +96,8 @@ public final class DatagramObserverContainer {
 	public synchronized DatagramObserverContainer removeObserver(Channel channel, DatagramObserver observer) {
 
 		// 获取通道的观察者集合
-		Vector<DatagramObserver> observers = this.channelObservers.get(channel);
+		Vector<DatagramObserver> observers = this.getObservers(channel);
+
 		// 若观察者集合不为空,则移除观察者
 		if (observers != null) {
 

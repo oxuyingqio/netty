@@ -9,7 +9,7 @@ package cn.xuyingqi.netty.server.connector;
 public final class Constant {
 
 	/**
-	 * 应用程序会话
+	 * 会话
 	 */
-	public static final String SERVLET_SESSION = "SERVLET_SESSION";
+	public static final String SESSION = "SESSION";
 }

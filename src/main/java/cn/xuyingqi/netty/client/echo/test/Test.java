@@ -7,7 +7,7 @@ import cn.xuyingqi.net.protocol.Protocol;
 import cn.xuyingqi.netty.client.connector.Connector;
 import cn.xuyingqi.netty.client.echo.protocol.EchoDatagram;
 import cn.xuyingqi.netty.client.echo.protocol.EchoProtocol;
-import cn.xuyingqi.netty.client.observer.DatagramObserver;
+import cn.xuyingqi.netty.client.model.DatagramObserver;
 
 public class Test {
 
@@ -46,16 +46,16 @@ public class Test {
 		c.request(new EchoDatagram(4, "1234"), new DatagramObserver() {
 
 			@Override
-			public boolean receiveDatagram(Datagram datagram) {
+			public void exception(Throwable exception) {
+
+			}
+
+			@Override
+			public boolean notify(Datagram datagram) {
 
 				System.out.println("来了" + ((EchoDatagram) datagram).getMsg());
 
 				return true;
-			}
-
-			@Override
-			public void exception(Throwable exception) {
-
 			}
 		});
 

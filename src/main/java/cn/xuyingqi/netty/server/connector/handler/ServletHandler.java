@@ -4,6 +4,12 @@ import java.util.Iterator;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import io.netty.channel.ChannelHandlerAdapter;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.util.Attribute;
+import io.netty.util.AttributeKey;
+import io.netty.util.internal.logging.InternalLogger;
+import io.netty.util.internal.logging.InternalLoggerFactory;
 import cn.xuyingqi.net.protocol.Datagram;
 import cn.xuyingqi.net.servlet.ServerServletRequest;
 import cn.xuyingqi.net.servlet.ServerServletResponse;
@@ -18,13 +24,9 @@ import cn.xuyingqi.netty.servlet.impl.AbstractNettyServlet;
 import cn.xuyingqi.netty.servlet.impl.DefaultServerServletRequest;
 import cn.xuyingqi.netty.servlet.impl.DefaultServerServletResponse;
 import cn.xuyingqi.netty.servlet.impl.DefaultServletSession;
-import io.netty.channel.ChannelHandlerAdapter;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.util.Attribute;
-import io.netty.util.AttributeKey;
 
 /**
- * Servlet处理
+ * 应用程序处理
  * 
  * @author XuYQ
  *
@@ -32,11 +34,13 @@ import io.netty.util.AttributeKey;
 public final class ServletHandler extends ChannelHandlerAdapter {
 
 	/**
-	 * 属性:Servlet会话
+	 * 日志
 	 */
-	private static final AttributeKey<DefaultServletSession> SERVLET_SESSION = AttributeKey
-			.valueOf(Constant.SERVLET_SESSION);
-
+	private static final InternalLogger LOGGER = InternalLoggerFactory.getInstance(ChannelHandlerAdapter.class);
+	/**
+	 * 属性:会话
+	 */
+	private static final AttributeKey<DefaultServletSession> SESSION = AttributeKey.valueOf(Constant.SESSION);
 	/**
 	 * 线程池
 	 */
@@ -46,21 +50,21 @@ public final class ServletHandler extends ChannelHandlerAdapter {
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 
 		// 创建Servlet会话对象
-		DefaultServletSession servletSession = new DefaultServletSession(ctx.channel().localAddress(),
+		DefaultServletSession session = new DefaultServletSession(ctx.channel().localAddress(),
 				ctx.channel().remoteAddress());
 		/**
 		 * 设置最大间隔时间,未实现
 		 */
-		servletSession.setMaxInactiveInterval(0);
+		session.setMaxInactiveInterval(0);
 		/**
 		 * 设置协议名称,未实现
 		 */
-		servletSession.setProtocol("");
+		session.setProtocol("");
 
-		// 获取Servlet会话属性
-		Attribute<DefaultServletSession> servletSessionAttr = ctx.attr(ServletHandler.SERVLET_SESSION);
-		// 设置Servlet会话
-		servletSessionAttr.set(servletSession);
+		// 获取会话属性
+		Attribute<DefaultServletSession> sessionAttr = ctx.attr(ServletHandler.SESSION);
+		// 设置会话
+		sessionAttr.set(session);
 
 		// 后续处理
 		ctx.fireChannelActive();
@@ -69,15 +73,18 @@ public final class ServletHandler extends ChannelHandlerAdapter {
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
-		// Servlet会话
-		DefaultServletSession servletSession = ctx.attr(ServletHandler.SERVLET_SESSION).get();
+		// 打印日志
+		LOGGER.info("\n【Netty】[服务器-应用程序处理]开始.");
+
+		// 会话
+		DefaultServletSession session = ctx.attr(ServletHandler.SESSION).get();
 		// 修改最后一次请求时间
-		servletSession.updateLastAccessedTime();
+		session.updateLastAccessedTime();
 		// Servlet会话外观类
-		ServletSession servletSessionFacade = new ServletSessionFacade(servletSession);
+		ServletSession sessionFacade = new ServletSessionFacade(session);
 
 		// Servlet请求
-		DefaultServerServletRequest request = new DefaultServerServletRequest(servletSessionFacade);
+		DefaultServerServletRequest request = new DefaultServerServletRequest(sessionFacade);
 		// 设置数据报文
 		request.setDatagram((Datagram) msg);
 		// Servlet请求外观类
@@ -88,23 +95,35 @@ public final class ServletHandler extends ChannelHandlerAdapter {
 		// Servlet响应外观类
 		ServerServletResponse responseFacade = new ServerServletResponseFacade(response);
 
-		// 放入线程池处理
+		// 线程池处理
 		EXECUTOR.execute(new Runnable() {
 
 			@Override
 			public void run() {
 
-				// 获取Servlet名称集合
-				Iterator<String> it = ServletDescContainer.getInstance().getServletNames().iterator();
-				// 遍历Servlet名称集合
-				while (it.hasNext()) {
+				// 打印日志
+				LOGGER.info("\n【Netty】[服务器-应用程序处理]新开线程,处理应用程序.");
+
+				// 获取Servlet Key集合
+				Iterator<String> iterator = ServletDescContainer.getInstance().getServletDescKeys().iterator();
+				// 遍历Servlet Key集合
+				while (iterator.hasNext()) {
+
+					// 获取Servlet Key
+					String key = iterator.next();
+
+					// 打印日志
+					LOGGER.info("\n【Netty】[服务器-应用程序处理]应用程序({}),开始处理.", key);
 
 					// 获取当前Servlet
-					Servlet servlet = ServletDescContainer.getInstance().getServlet(it.next());
+					Servlet servlet = ServletDescContainer.getInstance().getServlet(key);
 					// Servet会话中设置当前Servlet上下文
-					servletSession.setServletContext(servlet.getServletConfig().getServletContext());
+					session.setServletContext(servlet.getServletConfig().getServletContext());
 					// 调用Servlet服务方法
 					servlet.service(requestFacade, responseFacade);
+
+					// 打印日志
+					LOGGER.info("\n【Netty】[服务器-应用程序处理]应用程序({}),处理结束.", key);
 				}
 				// 判断响应报文不为空
 				if (response.getDatagram() != null) {
@@ -117,33 +136,39 @@ public final class ServletHandler extends ChannelHandlerAdapter {
 
 		// 后续处理
 		ctx.fireChannelRead(msg);
+
+		// 打印日志
+		LOGGER.info("\n【Netty】[服务器-应用程序处理]结束.");
 	}
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 
-		// 是否进行后续异常处理
+		// 实例化是否进行后续异常处理
 		boolean fireExceptionCaught = true;
 
 		// Servlet会话
-		DefaultServletSession servletSession = ctx.attr(ServletHandler.SERVLET_SESSION).get();
+		DefaultServletSession session = ctx.attr(ServletHandler.SESSION).get();
 		// Servlet会话外观类
-		ServletSession servletSessionFacade = new ServletSessionFacade(servletSession);
+		ServletSession sessionFacade = new ServletSessionFacade(session);
 
 		// 获取Servlet名称集合
-		Iterator<String> it = ServletDescContainer.getInstance().getServletNames().iterator();
+		Iterator<String> iterator = ServletDescContainer.getInstance().getServletDescKeys().iterator();
 		// 遍历Servlet名称集合
-		while (it.hasNext()) {
+		while (iterator.hasNext()) {
+
+			// 获取Servlet Key
+			String key = iterator.next();
 
 			// 获取当前Servlet
-			Servlet servlet = ServletDescContainer.getInstance().getServlet(it.next());
+			Servlet servlet = ServletDescContainer.getInstance().getServlet(key);
 			// 判断是否为AbstractNettyServlet
 			if (servlet instanceof AbstractNettyServlet) {
 
 				// Servet会话中设置当前Servlet上下文
-				servletSession.setServletContext(servlet.getServletConfig().getServletContext());
+				session.setServletContext(servlet.getServletConfig().getServletContext());
 				// 捕获异常
-				((AbstractNettyServlet) servlet).exceptionCaught(servletSessionFacade, cause);
+				((AbstractNettyServlet) servlet).exceptionCaught(sessionFacade, cause);
 
 				// 不再进行后续异常处理
 				fireExceptionCaught = false;

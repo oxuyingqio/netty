@@ -37,13 +37,13 @@ public final class ServerXml {
 	 * 协议配置集合
 	 */
 	@XmlElements(value = { @XmlElement(name = "protocol", type = ProtocolConfig.class) })
-	private List<ProtocolConfig> protocolConfigs;
+	private List<ProtocolConfig> protocols;
 
 	/**
 	 * 服务配置
 	 */
 	@XmlElement(name = "service")
-	private ServiceConfig serviceConfig;
+	private ServiceConfig service;
 
 	/**
 	 * 私有构造方法
@@ -57,7 +57,7 @@ public final class ServerXml {
 	 * 
 	 * @return
 	 */
-	public static final ServerXml getInstance() {
+	public synchronized static final ServerXml getInstance() {
 
 		if (serverXml == null) {
 
@@ -83,7 +83,7 @@ public final class ServerXml {
 	 */
 	public List<ProtocolConfig> getProtocolConfigs() {
 
-		return this.protocolConfigs;
+		return this.protocols;
 	}
 
 	/**
@@ -93,7 +93,7 @@ public final class ServerXml {
 	 */
 	public ServiceConfig getServiceConfig() {
 
-		return this.serviceConfig;
+		return this.service;
 	}
 
 	/**
@@ -149,7 +149,7 @@ public final class ServerXml {
 		 * 连接器配置
 		 */
 		@XmlElements(value = { @XmlElement(name = "connector", type = ConnectorConfig.class) })
-		private List<ConnectorConfig> connectorConfigs;
+		private List<ConnectorConfig> connectors;
 
 		/**
 		 * 获取连接器配置
@@ -158,7 +158,7 @@ public final class ServerXml {
 		 */
 		public List<ConnectorConfig> getConnectorConfigs() {
 
-			return this.connectorConfigs;
+			return this.connectors;
 		}
 
 		/**

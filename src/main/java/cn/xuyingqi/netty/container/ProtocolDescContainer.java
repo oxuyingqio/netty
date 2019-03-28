@@ -7,7 +7,7 @@ import cn.xuyingqi.netty.model.ProtocolDesc;
 import cn.xuyingqi.netty.model.ServerXml;
 import cn.xuyingqi.netty.model.ServerXml.ProtocolConfig;
 import cn.xuyingqi.netty.protocol.Protocol;
-import cn.xuyingqi.util.util.MapFactory;
+import cn.xuyingqi.util.MapFactory;
 
 /**
  * 协议类描述容器
@@ -20,7 +20,7 @@ public final class ProtocolDescContainer {
 	/**
 	 * 容器
 	 */
-	private static ProtocolDescContainer container;
+	private static ProtocolDescContainer CONTAINER;
 
 	/**
 	 * 协议类描述集合
@@ -40,9 +40,8 @@ public final class ProtocolDescContainer {
 
 			// 配置
 			ProtocolConfig config = configs.get(i);
-
 			// 添加协议类描述
-			this.descs.put(config.getName(), new ProtocolDesc(config.getName(), config.getClassName()));
+			this.addProtocolDesc(config.getName(), new ProtocolDesc(config.getName(), config.getClassName()));
 		}
 	}
 
@@ -51,24 +50,56 @@ public final class ProtocolDescContainer {
 	 * 
 	 * @return
 	 */
-	public static final synchronized ProtocolDescContainer getInstance() {
+	public synchronized static final ProtocolDescContainer getInstance() {
 
-		if (container == null) {
+		if (CONTAINER == null) {
 
-			container = new ProtocolDescContainer();
+			CONTAINER = new ProtocolDescContainer();
 		}
 
-		return container;
+		return CONTAINER;
 	}
 
 	/**
-	 * 获取指定名称的协议
+	 * 添加协议类描述
 	 * 
-	 * @param name
+	 * @param key
+	 * @param protocolDesc
+	 */
+	public void addProtocolDesc(String key, ProtocolDesc protocolDesc) {
+
+		this.descs.put(key, protocolDesc);
+	}
+
+	/**
+	 * 移除协议类描述
+	 * 
+	 * @param key
+	 */
+	public void removeProtocolDesc(String key) {
+
+		this.descs.remove(key);
+	}
+
+	/**
+	 * 获取协议类描述
+	 * 
+	 * @param key
 	 * @return
 	 */
-	public Protocol getProtocol(String name) {
+	public ProtocolDesc getProtocolDesc(String key) {
 
-		return this.descs.get(name).newInstance();
+		return this.descs.get(key);
+	}
+
+	/**
+	 * 获取协议
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public Protocol getProtocol(String key) {
+
+		return this.getProtocolDesc(key).newInstance();
 	}
 }

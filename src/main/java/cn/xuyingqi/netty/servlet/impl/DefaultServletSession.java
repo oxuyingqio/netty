@@ -13,7 +13,7 @@ import cn.xuyingqi.net.servlet.impl.AbstractServletSession;
  * @author XuYQ
  *
  */
-public class DefaultServletSession extends AbstractServletSession {
+public final class DefaultServletSession extends AbstractServletSession {
 
 	/**
 	 * 本机地址

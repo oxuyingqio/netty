@@ -2,8 +2,8 @@ package cn.xuyingqi.netty.server.container;
 
 import java.util.Map;
 
-import cn.xuyingqi.util.util.MapFactory;
 import io.netty.channel.Channel;
+import cn.xuyingqi.util.MapFactory;
 
 /**
  * 通道容器
@@ -16,18 +16,19 @@ public final class ChannelContainer {
 	/**
 	 * 容器
 	 */
-	private static ChannelContainer container;
+	private static ChannelContainer CONTAINER;
 
 	/**
 	 * 通道集合
 	 */
-	private Map<String, Channel> channels = MapFactory.newInstance();
+	private Map<String, Channel> channels;
 
 	/**
 	 * 通道容器
 	 */
 	private ChannelContainer() {
 
+		this.channels = MapFactory.newInstance();
 	}
 
 	/**
@@ -35,14 +36,14 @@ public final class ChannelContainer {
 	 * 
 	 * @return
 	 */
-	public static final synchronized ChannelContainer getInstance() {
+	public synchronized static final ChannelContainer getInstance() {
 
-		if (container == null) {
+		if (CONTAINER == null) {
 
-			container = new ChannelContainer();
+			CONTAINER = new ChannelContainer();
 		}
 
-		return container;
+		return CONTAINER;
 	}
 
 	/**

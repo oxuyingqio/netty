@@ -8,7 +8,7 @@ import cn.xuyingqi.netty.protocol.Protocol;
  * @author XuYQ
  *
  */
-public class ProtocolDesc {
+public final class ProtocolDesc {
 
 	/**
 	 * 名称

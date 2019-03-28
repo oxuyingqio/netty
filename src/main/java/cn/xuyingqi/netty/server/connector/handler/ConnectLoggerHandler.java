@@ -11,7 +11,7 @@ import io.netty.util.internal.logging.InternalLoggerFactory;
  * @author XuYQ
  *
  */
-public class ConnectLoggerHandler extends ChannelHandlerAdapter {
+public final class ConnectLoggerHandler extends ChannelHandlerAdapter {
 
 	/**
 	 * 日志
@@ -22,7 +22,7 @@ public class ConnectLoggerHandler extends ChannelHandlerAdapter {
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 
 		// 打印日志
-		LOGGER.info("远程地址({})已连接.", ctx.channel().remoteAddress());
+		LOGGER.info("\n【Netty】[服务器-连接日志]远程地址({})已连接.", ctx.channel().remoteAddress());
 
 		// 后续处理
 		ctx.fireChannelActive();
@@ -32,7 +32,7 @@ public class ConnectLoggerHandler extends ChannelHandlerAdapter {
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
 
 		// 打印日志
-		LOGGER.info("远程地址({})已断开.", ctx.channel().remoteAddress());
+		LOGGER.info("\n【Netty】[服务器-连接日志]远程地址({})已断开.", ctx.channel().remoteAddress());
 
 		// 后续处理
 		ctx.fireChannelInactive();

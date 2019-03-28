@@ -2,13 +2,6 @@ package cn.xuyingqi.netty.server.connector;
 
 import javax.net.ssl.SSLEngine;
 
-import cn.xuyingqi.net.connector.ConnectorConfig;
-import cn.xuyingqi.netty.protocol.Protocol;
-import cn.xuyingqi.netty.server.connector.handler.ChannelContainerHandler;
-import cn.xuyingqi.netty.server.connector.handler.ConnectLoggerHandler;
-import cn.xuyingqi.netty.server.connector.handler.ExceptionHandler;
-import cn.xuyingqi.netty.server.connector.handler.ServletHandler;
-import cn.xuyingqi.netty.util.SSLContextFactory;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
@@ -22,6 +15,13 @@ import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
+import cn.xuyingqi.net.connector.ConnectorConfig;
+import cn.xuyingqi.netty.protocol.Protocol;
+import cn.xuyingqi.netty.server.connector.handler.ChannelContainerHandler;
+import cn.xuyingqi.netty.server.connector.handler.ConnectLoggerHandler;
+import cn.xuyingqi.netty.server.connector.handler.ExceptionHandler;
+import cn.xuyingqi.netty.server.connector.handler.ServletHandler;
+import cn.xuyingqi.netty.util.SSLContextFactory;
 
 /**
  * 连接器
@@ -40,12 +40,10 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 	 * 连接器配置
 	 */
 	private ConnectorConfig config;
-
 	/**
 	 * 服务通道
 	 */
 	private Channel channel;
-
 	/**
 	 * 是否已启动
 	 */
@@ -86,7 +84,9 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 							if (config.getSSLConfig() != null) {
 
 								// 获取SSL引擎
-								SSLEngine engine = SSLContextFactory.getInstance(config.getSSLConfig())
+								SSLEngine engine = SSLContextFactory.getInstance(
+										(cn.xuyingqi.netty.model.ServerXml.ServiceConfig.ConnectorConfig.SSLConfig) config
+												.getSSLConfig())
 										.createSSLEngine();
 								engine.setUseClientMode(false);
 								engine.setNeedClientAuth(true);
@@ -123,7 +123,7 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 				// 修改启动状态
 				this.started = true;
 				// 打印日志
-				LOGGER.info("服务({}:{})已启动.", this.config.getHost(), this.config.getPort());
+				LOGGER.info("\n【Netty】[服务器-连接器]服务({}:{})已启动.", this.config.getHost(), this.config.getPort());
 
 				// 同步等待端口关闭
 				this.channel.closeFuture().sync();
@@ -147,6 +147,6 @@ public final class Connector implements cn.xuyingqi.net.connector.Connector {
 		// 修改启动状态
 		this.started = false;
 		// 打印日志
-		LOGGER.info("服务({}:{})已停止.", this.config.getHost(), this.config.getPort());
+		LOGGER.info("\n【Netty】[服务器-连接器]服务({}:{})已停止.", this.config.getHost(), this.config.getPort());
 	}
 }

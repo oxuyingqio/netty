@@ -24,21 +24,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 public final class ServerXml {
 
 	/**
-	 * 服务器配置文件
+	 * 配置文件
 	 */
-	private static final String SERVER_CONFIG_FILE = "server.xml";
+	private static final String CONFIG_FILE = "server.xml";
 
 	/**
-	 * server.xml
+	 * XML
 	 */
-	private static ServerXml serverXml;
+	private static ServerXml xml;
 
 	/**
 	 * 协议配置集合
 	 */
 	@XmlElements(value = { @XmlElement(name = "protocol", type = ProtocolConfig.class) })
 	private List<ProtocolConfig> protocols;
-
 	/**
 	 * 服务配置
 	 */
@@ -53,27 +52,27 @@ public final class ServerXml {
 	}
 
 	/**
-	 * 获取server.xml配置实例
+	 * 获取XML配置实例
 	 * 
 	 * @return
 	 */
 	public synchronized static final ServerXml getInstance() {
 
-		if (serverXml == null) {
+		if (xml == null) {
 
 			try {
 
 				JAXBContext jc = JAXBContext.newInstance(ServerXml.class);
 				Unmarshaller u = jc.createUnmarshaller();
-				serverXml = (ServerXml) u.unmarshal(
-						new File(ServerXml.class.getClassLoader().getResource(ServerXml.SERVER_CONFIG_FILE).getPath()));
+				xml = (ServerXml) u.unmarshal(
+						new File(ServerXml.class.getClassLoader().getResource(ServerXml.CONFIG_FILE).getPath()));
 			} catch (JAXBException e) {
 
 				e.printStackTrace();
 			}
 		}
 
-		return serverXml;
+		return xml;
 	}
 
 	/**
@@ -109,7 +108,6 @@ public final class ServerXml {
 		 */
 		@XmlAttribute(name = "name")
 		private String name;
-
 		/**
 		 * 类路径
 		 */
@@ -174,25 +172,21 @@ public final class ServerXml {
 			 */
 			@XmlAttribute(name = "protocol")
 			private String protocol;
-
 			/**
 			 * 主机地址
 			 */
 			@XmlAttribute(name = "host")
 			private String host;
-
 			/**
 			 * 端口号
 			 */
 			@XmlAttribute(name = "port")
 			private int port;
-
 			/**
 			 * 超时时间
 			 */
 			@XmlAttribute(name = "timeout")
 			private int timeout;
-
 			/**
 			 * SSL配置
 			 */
@@ -262,13 +256,11 @@ public final class ServerXml {
 				 */
 				@XmlAttribute(name = "protocol")
 				private String protocol;
-
 				/**
 				 * 私钥
 				 */
 				@XmlElement(name = "private-key")
 				private KeyConfig privateKey;
-
 				/**
 				 * 信任证书
 				 */
@@ -318,19 +310,16 @@ public final class ServerXml {
 					 */
 					@XmlAttribute(name = "path")
 					private String path;
-
 					/**
 					 * 密钥密码
 					 */
 					@XmlAttribute(name = "password")
 					private String password;
-
 					/**
 					 * 类型
 					 */
 					@XmlAttribute(name = "type")
 					private String type;
-
 					/**
 					 * 算法
 					 */

@@ -21,7 +21,7 @@ public final class ServletDescContainer {
 	/**
 	 * 容器
 	 */
-	private static ServletDescContainer CONTAINER;
+	private static ServletDescContainer container;
 
 	/**
 	 * Servlet类描述集合
@@ -54,12 +54,12 @@ public final class ServletDescContainer {
 	 */
 	public synchronized static final ServletDescContainer getInstance() {
 
-		if (CONTAINER == null) {
+		if (container == null) {
 
-			CONTAINER = new ServletDescContainer();
+			container = new ServletDescContainer();
 		}
 
-		return CONTAINER;
+		return container;
 	}
 
 	/**

@@ -7,7 +7,7 @@ import cn.xuyingqi.netty.client.container.DatagramObserverContainer;
 import cn.xuyingqi.netty.client.model.DatagramObserver;
 import cn.xuyingqi.netty.protocol.Decoder;
 
-public abstract class AbstractDecoder implements Decoder {
+public abstract class AbstractDecoder implements Decoder{
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {

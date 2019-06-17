@@ -20,7 +20,7 @@ public final class ProtocolDescContainer {
 	/**
 	 * 容器
 	 */
-	private static ProtocolDescContainer CONTAINER;
+	private static ProtocolDescContainer container;
 
 	/**
 	 * 协议类描述集合
@@ -52,12 +52,12 @@ public final class ProtocolDescContainer {
 	 */
 	public synchronized static final ProtocolDescContainer getInstance() {
 
-		if (CONTAINER == null) {
+		if (container == null) {
 
-			CONTAINER = new ProtocolDescContainer();
+			container = new ProtocolDescContainer();
 		}
 
-		return CONTAINER;
+		return container;
 	}
 
 	/**

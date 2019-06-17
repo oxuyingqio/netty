@@ -11,7 +11,7 @@ import cn.xuyingqi.net.servlet.impl.AbstractServerServletResponse;
  * @author XuYQ
  *
  */
-public class DefaultServerServletResponse extends AbstractServerServletResponse {
+public final class DefaultServerServletResponse extends AbstractServerServletResponse {
 
 	/**
 	 * 数据报文

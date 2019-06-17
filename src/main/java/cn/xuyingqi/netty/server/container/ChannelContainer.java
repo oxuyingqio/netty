@@ -16,7 +16,7 @@ public final class ChannelContainer {
 	/**
 	 * 容器
 	 */
-	private static ChannelContainer CONTAINER;
+	private static ChannelContainer container;
 
 	/**
 	 * 通道集合
@@ -38,12 +38,12 @@ public final class ChannelContainer {
 	 */
 	public synchronized static final ChannelContainer getInstance() {
 
-		if (CONTAINER == null) {
+		if (container == null) {
 
-			CONTAINER = new ChannelContainer();
+			container = new ChannelContainer();
 		}
 
-		return CONTAINER;
+		return container;
 	}
 
 	/**

@@ -10,7 +10,7 @@ import cn.xuyingqi.net.servlet.impl.AbstractServerServletRequest;
  * @author XuYQ
  *
  */
-public class DefaultServerServletRequest extends AbstractServerServletRequest {
+public final class DefaultServerServletRequest extends AbstractServerServletRequest {
 
 	/**
 	 * 数据报文

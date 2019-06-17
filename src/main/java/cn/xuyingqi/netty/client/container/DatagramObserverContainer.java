@@ -19,7 +19,7 @@ public final class DatagramObserverContainer {
 	/**
 	 * 容器
 	 */
-	private static DatagramObserverContainer CONTAINER;
+	private static DatagramObserverContainer container;
 
 	/**
 	 * 通道观察者集合
@@ -40,12 +40,12 @@ public final class DatagramObserverContainer {
 	 */
 	public synchronized static final DatagramObserverContainer getInstance() {
 
-		if (CONTAINER == null) {
+		if (container == null) {
 
-			CONTAINER = new DatagramObserverContainer();
+			container = new DatagramObserverContainer();
 		}
 
-		return CONTAINER;
+		return container;
 	}
 
 	/**

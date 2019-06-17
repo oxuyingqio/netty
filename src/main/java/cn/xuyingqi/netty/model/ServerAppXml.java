@@ -28,14 +28,14 @@ import cn.xuyingqi.util.MapFactory;
 public final class ServerAppXml {
 
 	/**
-	 * 服务器项目配置文件
+	 * 配置文件
 	 */
-	private static final String SERVER_APP_CONFIG_FILE = "server.app.xml";
+	private static final String CONFIG_FILE = "server.app.xml";
 
 	/**
-	 * server.app.xml
+	 * XML
 	 */
-	private static ServerAppXml serverAppXml;
+	private static ServerAppXml xml;
 
 	/**
 	 * Servlet配置集合
@@ -51,27 +51,27 @@ public final class ServerAppXml {
 	}
 
 	/**
-	 * 获取server.app.xml配置实例
+	 * 获取XML配置实例
 	 * 
 	 * @return
 	 */
 	public synchronized static final ServerAppXml getInstance() {
 
-		if (serverAppXml == null) {
+		if (xml == null) {
 
 			try {
 
 				JAXBContext jc = JAXBContext.newInstance(ServerAppXml.class);
 				Unmarshaller u = jc.createUnmarshaller();
-				serverAppXml = (ServerAppXml) u.unmarshal(new File(ServerAppXml.class.getClassLoader()
-						.getResource(ServerAppXml.SERVER_APP_CONFIG_FILE).getPath()));
+				xml = (ServerAppXml) u.unmarshal(
+						new File(ServerAppXml.class.getClassLoader().getResource(ServerAppXml.CONFIG_FILE).getPath()));
 			} catch (JAXBException e) {
 
 				e.printStackTrace();
 			}
 		}
 
-		return serverAppXml;
+		return xml;
 	}
 
 	/**
@@ -97,13 +97,11 @@ public final class ServerAppXml {
 		 */
 		@XmlAttribute(name = "name")
 		private String name;
-
 		/**
 		 * Servlet类路径
 		 */
 		@XmlAttribute(name = "className")
 		private String className;
-
 		/**
 		 * Servlet初始化参数
 		 */

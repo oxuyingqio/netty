@@ -23,12 +23,10 @@ public final class DefaultServletConfig extends AbstractServletConfig {
 	 * 初始化参数
 	 */
 	private Map<String, String> initParamter;
-
 	/**
 	 * Servlet上下文
 	 */
 	private ServletContext context;
-
 	/**
 	 * Servlet名称
 	 */

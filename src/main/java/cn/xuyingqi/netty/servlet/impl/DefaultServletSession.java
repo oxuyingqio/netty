@@ -23,22 +23,18 @@ public final class DefaultServletSession extends AbstractServletSession {
 	 * 远程地址
 	 */
 	private InetSocketAddress remote;
-
 	/**
 	 * Servlet上下文,是在不断变化的
 	 */
 	private ServletContext context;
-
 	/**
 	 * 最后一次请求的时间
 	 */
 	private long lastAccessedTime;
-
 	/**
 	 * 最大间隔时间
 	 */
 	private int maxInactiveInterval;
-
 	/**
 	 * 协议名称
 	 */
